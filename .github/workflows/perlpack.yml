@@ -65,10 +65,10 @@ jobs:
           $RUNNER_WORKSPACE/localperldynamic/bin/cpan -T Test::More IPC::Cmd Unicode::Normalize PerlIO::utf8_strict Storable
           #./mycpan.sh Pod::Simple::TranscodeSmart Pod::Simple::TranscodeDumb List::SomeUtils::XS List::MoreUtils::PP HTTP::Status HTTP::Date File::Find::Rule IO::Socket::SSL DateTime  Encode::
           $RUNNER_WORKSPACE/localperldynamic/bin/cpan -T PAR PAR::Packer
-#          $RUNNER_WORKSPACE/localperldynamic/bin/perl ./Build.PL
-#          #$RUNNER_WORKSPACE/localperldynamic/bin/perl ./Build installdeps --cpan_client ./mycpan.sh
-#          $RUNNER_WORKSPACE/localperldynamic/bin/perl ./Build test
-#          $RUNNER_WORKSPACE/localperldynamic/bin/perl ./Build install
+          $RUNNER_WORKSPACE/localperldynamic/bin/perl ./Build.PL
+          #$RUNNER_WORKSPACE/localperldynamic/bin/perl ./Build installdeps --cpan_client ./mycpan.sh
+          $RUNNER_WORKSPACE/localperldynamic/bin/perl ./Build test
+          $RUNNER_WORKSPACE/localperldynamic/bin/perl ./Build install
 #          sudo ln -s /usr/local/perl/lib/5.32.0/x86_64-linux /usr/local/perl/lib/5.32.0/x86_64-linux-thread-multi
 #          cd ./dist/linux_x86_64
 #          #export PP_OPTS='-vvv'
