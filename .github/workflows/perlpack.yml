@@ -69,7 +69,7 @@ jobs:
           #$RUNNER_WORKSPACE/localperldynamic/bin/perl ./Build installdeps --cpan_client ./mycpan.sh
           $RUNNER_WORKSPACE/localperldynamic/bin/perl ./Build test
           $RUNNER_WORKSPACE/localperldynamic/bin/perl ./Build install
-          sudo ln -s /usr/local/perl/lib/5.32.0/x86_64-linux /usr/local/perl/lib/5.32.0/x86_64-linux-thread-multi
+          #sudo ln -s /usr/local/perl/lib/5.32.0/x86_64-linux /usr/local/perl/lib/5.32.0/x86_64-linux-thread-multi
           cd ./dist/linux_x86_64
           #export PP_OPTS='-vvv'
           # https://github.com/plk/biber/blob/master/dist/linux_x86_64/build.sh
