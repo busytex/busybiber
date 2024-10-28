@@ -3,9 +3,9 @@ name: perlpack
 on: workflow_dispatch
 
 env:
-  MAKEFLAGS: -j2
   URLPERL: https://www.cpan.org/src/5.0/perl-5.32.0.tar.gz
   URLBIBER: https://github.com/plk/biber/archive/v2.19.tar.gz
+  MAKEFLAGS: -j2
   BIBER_DEV_TESTS: 0
 
 jobs:
