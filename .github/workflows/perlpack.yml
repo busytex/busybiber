@@ -14,7 +14,7 @@ jobs:
     container: alpine:3.14
     steps:
       - name: Install Prerequisites
-        run:  apk add --update --no-cache libnsl libnsl-dev build-base coreutils gdb cmake git xz wget curl perl gperf p7zip zip python3 strace autoconf automake libtool pkgconfig && ln -sf python3 /usr/bin/python
+        run:  apk add --update --no-cache libnsl libnsl-dev build-base coreutils gdb cmake git xz wget curl perl gperf p7zip zip python3 strace autoconf automake libtool pkgconfig libxml2-dev libxslt-dev && ln -sf python3 /usr/bin/python
 
       - uses: actions/checkout@v4
       
