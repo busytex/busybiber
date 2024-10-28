@@ -41,19 +41,19 @@ jobs:
 
       - name: Install Biber
         run: mkdir biber && wget $URLBIBER && tar -xf $(basename $URLBIBER) --strip-components=1 --directory biber
-#       
-#       - name: Install Perl dynamic
-#         run: |
-#           mkdir perlsourcedynamic
-#           wget -nc $URLPERL
-#           tar -xf $(basename $URLPERL) --strip-components=1 --directory=perlsourcedynamic
-#           cd perlsourcedynamic
-#           bash +x ./Configure -sde -Dprefix="$RUNNER_WORKSPACE/localperldynamic"
-#           make
-#           make install
-#           sudo rm -rf /usr/local/perl && sudo ln -s $RUNNER_WORKSPACE/localperldynamic /usr/local/perl
-#           echo "LD_LIBRARY_PATH=$RUNNER_WORKSPACE/localperldynamic/lib:$LD_LIBRARY_PATH" >> $GITHUB_ENV
-#
+       
+      - name: Install Perl dynamic
+        run: |
+          mkdir perlsourcedynamic
+          wget -nc $URLPERL
+          tar -xf $(basename $URLPERL) --strip-components=1 --directory=perlsourcedynamic
+          cd perlsourcedynamic
+          bash +x ./Configure -sde -Dprefix="$RUNNER_WORKSPACE/localperldynamic"
+          make
+          make install
+          sudo rm -rf /usr/local/perl && sudo ln -s $RUNNER_WORKSPACE/localperldynamic /usr/local/perl
+          echo "LD_LIBRARY_PATH=$RUNNER_WORKSPACE/localperldynamic/lib:$LD_LIBRARY_PATH" >> $GITHUB_ENV
+
 
 
 #       - name: Install Biber Dependencies Without Test
