@@ -35,3 +35,24 @@ jobs:
             perlpackstatic
             perlpack.h
             libc_perlpack.a
+
+#        run:  apk add --update --no-cache libnsl libnsl-dev build-base coreutils gdb cmake git xz wget curl perl gperf p7zip zip python3 strace autoconf automake libtool pkgconfig libxml2-dev libxslt-dev && ln -sf python3 /usr/bin/python
+#  BIBER_DEV_TESTS: 0
+#  URLPERL: https://www.cpan.org/src/5.0/perl-5.32.0.tar.gz
+#  URLBIBER: https://github.com/plk/biber/archive/v2.19.tar.gz
+#       
+#       - name: Install Biber
+#         run: mkdir biber && wget $URLBIBER && tar -xf $(basename $URLBIBER) --strip-components=1 --directory biber
+#       
+#       - name: Install Perl dynamic
+#         run: |
+#           mkdir perlsourcedynamic
+#           wget -nc $URLPERL
+#           tar -xf $(basename $URLPERL) --strip-components=1 --directory=perlsourcedynamic
+#           cd perlsourcedynamic
+#           bash +x ./Configure -sde -Dprefix="$RUNNER_WORKSPACE/localperldynamic"
+#           make
+#           make install
+#           sudo rm -rf /usr/local/perl && sudo ln -s $RUNNER_WORKSPACE/localperldynamic /usr/local/perl
+#           echo "LD_LIBRARY_PATH=$RUNNER_WORKSPACE/localperldynamic/lib:$LD_LIBRARY_PATH" >> $GITHUB_ENV
+#
