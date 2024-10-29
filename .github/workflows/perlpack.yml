@@ -53,10 +53,11 @@ jobs:
           make
           make install
           sudo rm -rf /usr/local/perl && sudo ln -s $RUNNER_WORKSPACE/localperldynamic /usr/local/perl
-          echo "LD_LIBRARY_PATH=$RUNNER_WORKSPACE/localperldynamic/lib:$LD_LIBRARY_PATH" >> $GITHUB_ENV
+          export LD_LIBRARY_PATH="$RUNNER_WORKSPACE/localperldynamic/lib:$LD_LIBRARY_PATH"
+          #echo "LD_LIBRARY_PATH=$RUNNER_WORKSPACE/localperldynamic/lib:$LD_LIBRARY_PATH" >> $GITHUB_ENV
 
-      - name: Install Biber Dependencies Without Test
-        run: |
+#      - name: Install Biber Dependencies Without Test
+#        run: |
           # libbtparse-dev
           # /home/runner/work/busyperl/localperldynamic/bin
           cd biber
