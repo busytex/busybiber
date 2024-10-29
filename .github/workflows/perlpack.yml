@@ -114,32 +114,32 @@ jobs:
               cd ../..
            done
 
-#      - name: Install Brotli
-#        run: |
-#          export PERLBIN=$RUNNER_WORKSPACE/localperlstatic/bin/perl5.32.0
-#          URL=$(wget -q -O - https://fastapi.metacpan.org/v1/download_url/IO::Compress::Brotli | grep download_url | cut -d'"' -f4)
-#          mkdir -p myextsource myext/IO-Compress-Brotli
-#          wget -nc $URL -P myextsource
-#          tar -xf myextsource/$(basename $URL) --strip-components=1 --directory myext/IO-Compress-Brotli
-#          cd myext/IO-Compress-Brotli
-#          $PERLBIN Makefile.PL LINKTYPE=static
-#          sed -i 's/$(CP) $(MYEXTLIB) "$@"/$(CP) $(MYEXTLIB) "$(dir $@)"/' Makefile
-#          make
-#          make install
-#      
-#      - name: Install Params/Validate/XS
-#        run: |
-#          export PERLBIN=$RUNNER_WORKSPACE/localperlstatic/bin/perl5.32.0
-#          URL=$(wget -q -O - https://fastapi.metacpan.org/v1/download_url/Params::Validate::XS | grep download_url | cut -d'"' -f4)
-#          mkdir -p myextsource myext/Params-Validate-XS
-#          wget -nc $URL -P myextsource
-#          tar -xf myextsource/$(basename $URL) --strip-components=1 --directory myext/Params-Validate-XS
-#          cd myext/Params-Validate-XS
-#          $PERLBIN ./Build.PL
-#          $PERLBIN ./Build
-#          $PERLBIN ./Build install
-#          ar crs ../../../localperlstatic/lib/site_perl/5.32.0/x86_64-linux/auto/Params/Validate/XS/XS.a lib/Params/Validate/XS.o
-#      
+      - name: Install Brotli
+        run: |
+          export PERLBIN=$RUNNER_WORKSPACE/localperlstatic/bin/perl5.32.0
+          URL=$(wget -q -O - https://fastapi.metacpan.org/v1/download_url/IO::Compress::Brotli | grep download_url | cut -d'"' -f4)
+          mkdir -p myextsource myext/IO-Compress-Brotli
+          wget -nc $URL -P myextsource
+          tar -xf myextsource/$(basename $URL) --strip-components=1 --directory myext/IO-Compress-Brotli
+          cd myext/IO-Compress-Brotli
+          $PERLBIN Makefile.PL LINKTYPE=static
+          sed -i 's/$(CP) $(MYEXTLIB) "$@"/$(CP) $(MYEXTLIB) "$(dir $@)"/' Makefile
+          make
+          make install
+      
+      - name: Install Params/Validate/XS
+        run: |
+          export PERLBIN=$RUNNER_WORKSPACE/localperlstatic/bin/perl5.32.0
+          URL=$(wget -q -O - https://fastapi.metacpan.org/v1/download_url/Params::Validate::XS | grep download_url | cut -d'"' -f4)
+          mkdir -p myextsource myext/Params-Validate-XS
+          wget -nc $URL -P myextsource
+          tar -xf myextsource/$(basename $URL) --strip-components=1 --directory myext/Params-Validate-XS
+          cd myext/Params-Validate-XS
+          $PERLBIN ./Build.PL
+          $PERLBIN ./Build
+          $PERLBIN ./Build install
+          ar crs ../../../localperlstatic/lib/site_perl/5.32.0/x86_64-linux/auto/Params/Validate/XS/XS.a lib/Params/Validate/XS.o
+      
 #      - name: Install Text/BibTeX
 #        run: |
 #          export PERLBIN=$RUNNER_WORKSPACE/localperlstatic/bin/perl5.32.0
