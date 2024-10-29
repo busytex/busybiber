@@ -53,7 +53,7 @@ jobs:
           make
           make install
           sudo rm -rf /usr/local/perl && sudo ln -s $RUNNER_WORKSPACE/localperldynamic /usr/local/perl
-          #export LD_LIBRARY_PATH="$RUNNER_WORKSPACE/localperldynamic/lib:$LD_LIBRARY_PATH"
+          export LD_LIBRARY_PATH="$RUNNER_WORKSPACE/localperldynamic/lib:$LD_LIBRARY_PATH"
           #echo "LD_LIBRARY_PATH=$RUNNER_WORKSPACE/localperldynamic/lib:$LD_LIBRARY_PATH" >> $GITHUB_ENV
           cd biber
           $RUNNER_WORKSPACE/localperldynamic/bin/cpan -T Module::Build
