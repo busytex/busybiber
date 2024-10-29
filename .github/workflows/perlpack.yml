@@ -40,9 +40,6 @@ jobs:
 #            perlpack.h
 #            libc_perlpack.a
 
-#      - name: Install Biber
-#        run: mkdir biber && wget $URLBIBER && tar -xf $(basename $URLBIBER) --strip-components=1 --directory biber
-       
       - name: Install Perl dynamic
         run: |
           mkdir perlsourcedynamic
