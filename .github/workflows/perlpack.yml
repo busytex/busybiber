@@ -74,12 +74,12 @@ jobs:
           # https://github.com/plk/biber/blob/master/dist/linux_x86_64/build.sh
           # Unicode::Collate has a site_perl version so has been updated since this perl was released
           ucpath="/usr/local/perl/lib/${perlv}/Unicode/Collate"
-          
-      - name: Install Biber Dependencies Without Test
-        run: |
           if [ -d "/usr/local/perl/lib/site_perl/${perlv}/x86_64-linux-thread-multi/Unicode/Collate" ]; then ucpath="/usr/local/perl/lib/site_perl/${perlv}/x86_64-linux-thread-multi/Unicode/Collate"; fi
           echo "USING Unicode::Collate at: ${ucpath}"
           PARMODULE="deprecate Biber::Input::file::bibtex Biber::Input::file::biblatexml Biber::Output::dot Biber::Output::bbl Biber::Output::bblxml Biber::Output::bibtex Biber::Output::biblatexml Pod::Simple::TranscodeSmart Pod::Simple::TranscodeDumb List::MoreUtils::XS List::SomeUtils::XS List::MoreUtils::PP HTTP::Status HTTP::Date Encode:: File::Find::Rule IO::Socket::SSL IO::String PerlIO::utf8_strict Text::CSV_XS DateTime"
+          
+      - name: Install Biber Dependencies Without Test
+        run: |
           PARADDFILE="../../data/biber-tool.conf;lib/Biber/biber-tool.conf ../../data/schemata/config.rnc;lib/Biber/config.rnc ../../data/schemata/config.rng;lib/Biber/config.rng ../../data/schemata/bcf.rnc;lib/Biber/bcf.rnc ../../data/schemata/bcf.rng;lib/Biber/bcf.rng ../../lib/Biber/LaTeX/recode_data.xml;lib/Biber/LaTeX/recode_data.xml ../../data/bcf.xsl;lib/Biber/bcf.xsl ${ucpath}/Locale;lib/Unicode/Collate/Locale ${ucpath}/CJK;lib/Unicode/Collate/CJK ${ucpath}/allkeys.txt;lib/Unicode/Collate/allkeys.txt ${ucpath}/keys.txt;lib/Unicode/Collate/keys.txt /usr/local/perl/lib/site_perl/${perlv}/Mozilla/CA/cacert.pem;lib/Mozilla/CA/cacert.pem /usr/local/perl/lib/${perlv}/x86_64-linux-thread-multi/PerlIO;lib/PerlIO /usr/local/perl/lib/${perlv}/x86_64-linux-thread-multi/auto/PerlIO;lib/auto/PerlIO /usr/local/perl/lib/site_perl/${perlv}/Business/ISBN/RangeMessage.xml;lib/Business/ISBN/RangeMessage.xml"
           #PARLINK="/usr/local/perl/lib/libbtparse.so /usr/lib/x86_64-linux-gnu/libxml2.so.2 /usr/lib/x86_64-linux-gnu/libz.so.1 /usr/lib/x86_64-linux-gnu/libxslt.so.1 /usr/lib/x86_64-linux-gnu/libexslt.so.0 /usr/lib/x86_64-linux-gnu/libssl.so /usr/lib/x86_64-linux-gnu/libcrypto.so"
           PARLINK="$RUNNER_WORKSPACE/localperldynamic/lib/libbtparse.so /usr/lib/libxml2.so /lib/libz.so.1 /usr/lib/libxslt.so.1 /usr/lib/libexslt.so.0 /usr/lib/libssl.so.1.1 /usr/lib/libcrypto.so.1.1"
