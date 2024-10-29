@@ -140,19 +140,19 @@ jobs:
           $PERLBIN ./Build install
           ar crs ../../../localperlstatic/lib/site_perl/5.32.0/x86_64-linux/auto/Params/Validate/XS/XS.a lib/Params/Validate/XS.o
       
-#      - name: Install Text/BibTeX
-#        run: |
-#          export PERLBIN=$RUNNER_WORKSPACE/localperlstatic/bin/perl5.32.0
-#          URL=$(wget -q -O - https://fastapi.metacpan.org/v1/download_url/Text::BibTeX | grep download_url | cut -d'"' -f4)
-#          mkdir -p myextsource myext/Text-BibTeX
-#          wget -nc $URL -P myextsource
-#          tar -xf myextsource/$(basename $URL) --strip-components=1 --directory myext/Text-BibTeX
-#          cd myext/Text-BibTeX
-#          $PERLBIN ./Build.PL
-#          $PERLBIN ./Build
-#          $PERLBIN ./Build install
-#          ar crs  ../../../localperlstatic/lib/site_perl/5.32.0/x86_64-linux/auto/Text/BibTeX/BibTeX.a    xscode/BibTeX.o xscode/btxs_support.o btparse/src/init.o btparse/src/input.o btparse/src/bibtex.o btparse/src/err.o btparse/src/scan.o btparse/src/error.o btparse/src/lex_auxiliary.o btparse/src/parse_auxiliary.o btparse/src/bibtex_ast.o btparse/src/sym.o btparse/src/util.o btparse/src/postprocess.o btparse/src/macros.o btparse/src/traversal.o btparse/src/modify.o btparse/src/names.o btparse/src/tex_tree.o btparse/src/string_util.o
-#
+      - name: Install Text/BibTeX
+        run: |
+          export PERLBIN=$RUNNER_WORKSPACE/localperlstatic/bin/perl5.32.0
+          URL=$(wget -q -O - https://fastapi.metacpan.org/v1/download_url/Text::BibTeX | grep download_url | cut -d'"' -f4)
+          mkdir -p myextsource myext/Text-BibTeX
+          wget -nc $URL -P myextsource
+          tar -xf myextsource/$(basename $URL) --strip-components=1 --directory myext/Text-BibTeX
+          cd myext/Text-BibTeX
+          $PERLBIN ./Build.PL
+          $PERLBIN ./Build
+          $PERLBIN ./Build install
+          ar crs  ../../../localperlstatic/lib/site_perl/5.32.0/x86_64-linux/auto/Text/BibTeX/BibTeX.a    xscode/BibTeX.o xscode/btxs_support.o btparse/src/init.o btparse/src/input.o btparse/src/bibtex.o btparse/src/err.o btparse/src/scan.o btparse/src/error.o btparse/src/lex_auxiliary.o btparse/src/parse_auxiliary.o btparse/src/bibtex_ast.o btparse/src/sym.o btparse/src/util.o btparse/src/postprocess.o btparse/src/macros.o btparse/src/traversal.o btparse/src/modify.o btparse/src/names.o btparse/src/tex_tree.o btparse/src/string_util.o
+
 #      - name: Build Perl embedded
 #        run: |
 #          gcc -o staticperl_biber staticperl_biber.c -I$PWD/perlsourcestatic -I/usr/local/include -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -I$RUNNER_WORKSPACE/localperlstatic/lib/5.32.0/x86_64-linux/CORE      -Wl,-E -fstack-protector-strong -fwrapv -fno-strict-aliasing -L/usr/local/lib                         $RUNNER_WORKSPACE/localperlstatic/lib/5.32.0/x86_64-linux/auto/Fcntl/Fcntl.a $RUNNER_WORKSPACE/localperlstatic/lib/5.32.0/x86_64-linux/auto/IO/IO.a $RUNNER_WORKSPACE/localperlstatic/lib/5.32.0/x86_64-linux/CORE/libperl.a -lpthread -ldl -lm -lutil -lc -lm 
