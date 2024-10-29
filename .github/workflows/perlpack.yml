@@ -98,22 +98,22 @@ jobs:
       - name: Install build-time deps
         run: $RUNNER_WORKSPACE/localperlstatic/bin/cpan5.32.0 -T Alien::Base::Wrapper Alien::Build Alien::Build::MM Alien::cmake3 Alien::Libxml2 inc::Module::Install Module::Implementation Config::AutoConf ExtUtils::LibBuilder # DBI
       
-#      - name: Install Perl static extra packages
-#        run: |
-#          export PERLBIN=$RUNNER_WORKSPACE/localperlstatic/bin/perl5.32.0
-#          for MOD in Sort::Key Encode::EUCJPASCII Encode::JIS2K Encode::HanExtra XML::LibXML autovivification Devel::Caller Devel::LexAlias XML::LibXSLT XML::Parser::Expat Unicode::LineBreak Clone PadWalker  PerlIO::utf8_strict HTML::Parser List::MoreUtils::XS List::SomeUtils::XS DBI Net::SSLeay Sub::Identify DateTime Storable Variable::Magic Class::XSAccessor Package::Stash::XS Params::Util DBD::SQLite; do 
-#              URL=$(wget -q -O - https://fastapi.metacpan.org/v1/download_url/$MOD | grep download_url | cut -d'"' -f4)
-#              PKG=${MOD//::/-}
-#              mkdir -p myextsource myext/$PKG
-#              wget -nc $URL -P myextsource
-#              tar -xf myextsource/$(basename $URL) --strip-components=1 --directory myext/$PKG
-#              cd myext/$PKG
-#              $PERLBIN Makefile.PL LINKTYPE=static
-#              make
-#              make install
-#              cd ../..
-#           done
-#
+      - name: Install Perl static extra packages
+        run: |
+          export PERLBIN=$RUNNER_WORKSPACE/localperlstatic/bin/perl5.32.0
+          for MOD in Sort::Key Encode::EUCJPASCII Encode::JIS2K Encode::HanExtra XML::LibXML autovivification Devel::Caller Devel::LexAlias XML::LibXSLT XML::Parser::Expat Unicode::LineBreak Clone PadWalker  PerlIO::utf8_strict HTML::Parser List::MoreUtils::XS List::SomeUtils::XS DBI Net::SSLeay Sub::Identify DateTime Storable Variable::Magic Class::XSAccessor Package::Stash::XS Params::Util DBD::SQLite; do 
+              URL=$(wget -q -O - https://fastapi.metacpan.org/v1/download_url/$MOD | grep download_url | cut -d'"' -f4)
+              PKG=${MOD//::/-}
+              mkdir -p myextsource myext/$PKG
+              wget -nc $URL -P myextsource
+              tar -xf myextsource/$(basename $URL) --strip-components=1 --directory myext/$PKG
+              cd myext/$PKG
+              $PERLBIN Makefile.PL LINKTYPE=static
+              make
+              make install
+              cd ../..
+           done
+
 #      - name: Install Brotli
 #        run: |
 #          export PERLBIN=$RUNNER_WORKSPACE/localperlstatic/bin/perl5.32.0
