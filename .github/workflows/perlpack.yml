@@ -68,15 +68,15 @@ jobs:
           #$RUNNER_WORKSPACE/localperldynamic/bin/perl ./Build installdeps --cpan_client ./mycpan.sh
           $RUNNER_WORKSPACE/localperldynamic/bin/perl ./Build test
           $RUNNER_WORKSPACE/localperldynamic/bin/perl ./Build install
-          
-      - name: Install Biber Dependencies Without Test
-        run: |
           #sudo ln -s /usr/local/perl/lib/5.32.0/x86_64-linux /usr/local/perl/lib/5.32.0/x86_64-linux-thread-multi
           cd ./dist/linux_x86_64
           #export PP_OPTS='-vvv'
           # https://github.com/plk/biber/blob/master/dist/linux_x86_64/build.sh
           # Unicode::Collate has a site_perl version so has been updated since this perl was released
           ucpath="/usr/local/perl/lib/${perlv}/Unicode/Collate"
+          
+      - name: Install Biber Dependencies Without Test
+        run: |
           if [ -d "/usr/local/perl/lib/site_perl/${perlv}/x86_64-linux-thread-multi/Unicode/Collate" ]; then ucpath="/usr/local/perl/lib/site_perl/${perlv}/x86_64-linux-thread-multi/Unicode/Collate"; fi
           echo "USING Unicode::Collate at: ${ucpath}"
           PARMODULE="deprecate Biber::Input::file::bibtex Biber::Input::file::biblatexml Biber::Output::dot Biber::Output::bbl Biber::Output::bblxml Biber::Output::bibtex Biber::Output::biblatexml Pod::Simple::TranscodeSmart Pod::Simple::TranscodeDumb List::MoreUtils::XS List::SomeUtils::XS List::MoreUtils::PP HTTP::Status HTTP::Date Encode:: File::Find::Rule IO::Socket::SSL IO::String PerlIO::utf8_strict Text::CSV_XS DateTime"
