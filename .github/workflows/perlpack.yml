@@ -76,6 +76,7 @@ jobs:
           PAR_VERBATIM=1 "$RUNNER_WORKSPACE/localperldynamic/bin/pp" -vvv $(printf -- "--module=%s " $PARMODULE) $(printf -- "--link=%s " $PARLINK) $(printf -- "--addfile=%s " $PARADDFILE) --output=biber-linux_x86_64 ../../bin/biber
           ./biber-linux_x86_64 --help
           mkdir -p biberunzip && unzip -qq -o ./biber-linux_x86_64 -d biberunzip && find biberunzip # -name '*.so*'
+          wget $(printf "https://master.dl.sourceforge.net/project/biblatex-biber/biblatex-biber/testfiles/%s " test.bib test.bcf test-dev.bcf unifont.ttf)
           ./biber-linux_x86_64 --validate-control --convert-control test
        
 #      - name: Install Package Dependencies
