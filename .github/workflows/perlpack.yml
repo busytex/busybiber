@@ -40,8 +40,8 @@ jobs:
 #            perlpack.h
 #            libc_perlpack.a
 
-      - name: Install Biber
-        run: mkdir biber && wget $URLBIBER && tar -xf $(basename $URLBIBER) --strip-components=1 --directory biber
+#      - name: Install Biber
+#        run: mkdir biber && wget $URLBIBER && tar -xf $(basename $URLBIBER) --strip-components=1 --directory biber
        
       - name: Install Perl dynamic
         run: |
@@ -55,6 +55,7 @@ jobs:
           sudo rm -rf /usr/local/perl && sudo ln -s $RUNNER_WORKSPACE/localperldynamic /usr/local/perl
           export LD_LIBRARY_PATH="$RUNNER_WORKSPACE/localperldynamic/lib:$LD_LIBRARY_PATH"
           #echo "LD_LIBRARY_PATH=$RUNNER_WORKSPACE/localperldynamic/lib:$LD_LIBRARY_PATH" >> $GITHUB_ENV
+          mkdir biber && wget $URLBIBER && tar -xf $(basename $URLBIBER) --strip-components=1 --directory biber
           cd biber
           $RUNNER_WORKSPACE/localperldynamic/bin/cpan -T Module::Build
           $RUNNER_WORKSPACE/localperldynamic/bin/cpan -T Config::AutoConf ExtUtils::LibBuilder Business::ISBN Business::ISMN Business::ISSN    Class::Accessor Data::Compare Data::Dump Data::Uniqid DateTime::Calendar::Julian DateTime::Format::Builder    Encode::EUCJPASCII Encode::HanExtra Encode::JIS2K Encode::Locale File::Slurper IO::String IPC::Run3 LWP::Protocol::https LWP::UserAgent    Lingua::Translit List::AllUtils List::MoreUtils List::MoreUtils::XS Log::Log4perl Mozilla::CA    Parse::RecDescent PerlIO::utf8_strict Regexp::Common Sort::Key Text::BibTeX Text::CSV Text::CSV_XS Text::Roman URI Unicode::Collate Unicode::GCString Unicode::LineBreak    XML::LibXML XML::LibXML::Simple XML::LibXSLT XML::Writer     autovivification File::Which Test::Differences
