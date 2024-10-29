@@ -81,9 +81,7 @@ jobs:
           PAR_VERBATIM=1 "$RUNNER_WORKSPACE/localperldynamic/bin/pp" $(printf -- "--module=%s " $PARMODULE) $(printf -- "--link=%s " $PARLINK) $(printf -- "--addfile=%s " $PARADDFILE) --output=biber-linux_x86_64 ../../bin/biber
           ./biber-linux_x86_64 --help
           #./biber-linux_x86_64 --validate-control --convert-control test
-          mkdir -p biberunzip
-          unzip -qq -o biber/dist/linux_x86_64/biber-linux_x86_64 -d biberunzip
-          find biberunzip -name '*.so*'
+          mkdir -p biberunzip && unzip -qq -o ./biber-linux_x86_64 -d biberunzip && find biberunzip -name '*.so*'
        
 #      - name: Install Package Dependencies
 #        run: sudo apt install -y libxml2-dev libxslt-dev libbtparse-dev p7zip-full cmake
