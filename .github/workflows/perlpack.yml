@@ -89,98 +89,99 @@ jobs:
           cd perlsourcestatic && sh +x ./Configure -sde -Dprefix="$RUNNER_WORKSPACE/localperlstatic" -Dextras="DBI" -Dstatic_ext="attributes B Cwd Data/Dumper Devel/Peek Digest/MD5 Digest/SHA Encode Encode/Unicode Encode/CN Encode/KR Encode/TW Encode/JP  Encode/Symbol Encode/EBCDIC Encode/Byte Fcntl File/Glob Hash/Util I18N/Langinfo IO List/Util mro Opcode PerlIO/encoding PerlIO/scalar PerlIO/via POSIX PerlIO/mmap Time/HiRes re Socket  Unicode/Normalize Unicode/Collate Compress/Raw/Zlib Compress/Raw/Bzip2 threads threads/shared Sys/Syslog Sys/Hostname File/DosGlob Math/BigInt/FastCalc Hash/Util/FieldHash Filter/Util/Call IPC/SysV MIME/Base64" -Dusedevel -Accflags="-lm -ldl" -Aldflags="-lm -ldl" -Dlibs="-lpthread -ldl -lm -lutil -lc" && cd - && make -C perlsourcestatic && make -C perlsourcestatic install
 
           mkdir build && curl -L $URLPERL2 | tar -xzf - --strip-components=1 --directory=build
-	  cd build && sh ./Configure -sde -Dman1dir=none -Dman3dir=none -Dprefix=/mnt/perlpack -Dinstallprefix=../packfs -Aldflags=-lm -Accflags=-lm -Dusedevel -Dlibs="-lpthread -ldl -lm -lutil -lc" -Dstatic_ext="$MODULES_ext" && cd - && make -C build && make -C build install
+          cd build && sh ./Configure -sde -Dman1dir=none -Dman3dir=none -Dprefix=/mnt/perlpack -Dinstallprefix=../packfs -Aldflags=-lm -Accflags=-lm -Dusedevel -Dlibs="-lpthread -ldl -lm -lutil -lc" -Dstatic_ext="$MODULES_ext" && cd - && make -C build && make -C build install
 
-#          $RUNNER_WORKSPACE/localperlstatic/bin/perl5.32.0 -e "print('hello world');"
-#          ln -s $RUNNER_WORKSPACE/localperlstatic/bin/enc2xs5.32.0 $RUNNER_WORKSPACE/localperlstatic/bin/enc2xs
-#          find $RUNNER_WORKSPACE/localperlstatic
-#          #$RUNNER_WORKSPACE/localperlstatic/bin/cpan5.32.0 -T Alien::Base::Wrapper Alien::cmake3 inc::Module::Install
-#          echo "$RUNNER_WORKSPACE/localperlstatic/bin" >> $GITHUB_PATH
-#          echo "LD_LIBRARY_PATH=$RUNNER_WORKSPACE/localperlstatic/lib:$LD_LIBRARY_PATH" >> $GITHUB_ENV
-#      
-#      - name: Install build-time deps
-#        run: $RUNNER_WORKSPACE/localperlstatic/bin/cpan5.32.0 -T Alien::Base::Wrapper Alien::Build Alien::Build::MM Alien::cmake3 Alien::Libxml2 inc::Module::Install Module::Implementation Config::AutoConf ExtUtils::LibBuilder # DBI
-#      
-#      - name: Install Perl static extra packages
-#        run: |
-#          export PERLBIN=$RUNNER_WORKSPACE/localperlstatic/bin/perl5.32.0
-#          for MOD in Sort::Key Encode::EUCJPASCII Encode::JIS2K Encode::HanExtra XML::LibXML autovivification Devel::Caller Devel::LexAlias XML::LibXSLT XML::Parser::Expat Unicode::LineBreak Clone PadWalker  PerlIO::utf8_strict HTML::Parser List::MoreUtils::XS List::SomeUtils::XS DBI Net::SSLeay Sub::Identify DateTime Storable Variable::Magic Class::XSAccessor Package::Stash::XS Params::Util DBD::SQLite; do 
-#              URL=$(wget -q -O - https://fastapi.metacpan.org/v1/download_url/$MOD | grep download_url | cut -d'"' -f4)
-#              PKG=${MOD//::/-}
-#              mkdir -p myextsource myext/$PKG
-#              wget -nc $URL -P myextsource
-#              tar -xf myextsource/$(basename $URL) --strip-components=1 --directory myext/$PKG
-#              cd myext/$PKG
-#              $PERLBIN Makefile.PL LINKTYPE=static
-#              make
-#              make install
-#              cd ../..
-#           done
-#
-#      - name: Install Brotli
-#        run: |
-#          export PERLBIN=$RUNNER_WORKSPACE/localperlstatic/bin/perl5.32.0
-#          URL=$(wget -q -O - https://fastapi.metacpan.org/v1/download_url/IO::Compress::Brotli | grep download_url | cut -d'"' -f4)
-#          mkdir -p myextsource myext/IO-Compress-Brotli
-#          wget -nc $URL -P myextsource
-#          tar -xf myextsource/$(basename $URL) --strip-components=1 --directory myext/IO-Compress-Brotli
-#          cd myext/IO-Compress-Brotli
-#          $PERLBIN Makefile.PL LINKTYPE=static
-#          sed -i 's/$(CP) $(MYEXTLIB) "$@"/$(CP) $(MYEXTLIB) "$(dir $@)"/' Makefile
-#          export CFLAGS="-DBROTLI_EMSCRIPTEN=OFF"
-#          make
-#          make install
-#      
-#      - name: Install Params/Validate/XS
-#        run: |
-#          export PERLBIN=$RUNNER_WORKSPACE/localperlstatic/bin/perl5.32.0
-#          URL=$(wget -q -O - https://fastapi.metacpan.org/v1/download_url/Params::Validate::XS | grep download_url | cut -d'"' -f4)
-#          mkdir -p myextsource myext/Params-Validate-XS
-#          wget -nc $URL -P myextsource
-#          tar -xf myextsource/$(basename $URL) --strip-components=1 --directory myext/Params-Validate-XS
-#          cd myext/Params-Validate-XS
-#          $PERLBIN ./Build.PL
-#          $PERLBIN ./Build
-#          $PERLBIN ./Build install
-#          ar crs ../../../localperlstatic/lib/site_perl/5.32.0/x86_64-linux/auto/Params/Validate/XS/XS.a lib/Params/Validate/XS.o
-#      
-#      - name: Install Text/BibTeX
-#        run: |
-#          export PERLBIN=$RUNNER_WORKSPACE/localperlstatic/bin/perl5.32.0
-#          URL=$(wget -q -O - https://fastapi.metacpan.org/v1/download_url/Text::BibTeX | grep download_url | cut -d'"' -f4)
-#          mkdir -p myextsource myext/Text-BibTeX
-#          wget -nc $URL -P myextsource
-#          tar -xf myextsource/$(basename $URL) --strip-components=1 --directory myext/Text-BibTeX
-#          cd myext/Text-BibTeX
-#          $PERLBIN ./Build.PL
-#          $PERLBIN ./Build
-#          $PERLBIN ./Build install
-#          ar crs  ../../../localperlstatic/lib/site_perl/5.32.0/x86_64-linux/auto/Text/BibTeX/BibTeX.a    xscode/BibTeX.o xscode/btxs_support.o btparse/src/init.o btparse/src/input.o btparse/src/bibtex.o btparse/src/err.o btparse/src/scan.o btparse/src/error.o btparse/src/lex_auxiliary.o btparse/src/parse_auxiliary.o btparse/src/bibtex_ast.o btparse/src/sym.o btparse/src/util.o btparse/src/postprocess.o btparse/src/macros.o btparse/src/traversal.o btparse/src/modify.o btparse/src/names.o btparse/src/tex_tree.o btparse/src/string_util.o
-#
-#      - name: Build Perl embedded
-#        run: |
-#          mkdir -p packfs
-#          rm -rf packfs/man packfs/lib/*/pod/ || true
-#	  find packfs -name '*.pod' -o -name '*.ld' -o -name '*.a' -o -name '*.h' -delete || true
-#          
-#          cc -o perlpack perlpack.c -I$PWD/perlsourcestatic -I/usr/local/include -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -I$RUNNER_WORKSPACE/localperlstatic/lib/5.32.0/x86_64-linux/CORE      -Wl,-E -fstack-protector-strong -fwrapv -fno-strict-aliasing -L/usr/local/lib                         $RUNNER_WORKSPACE/localperlstatic/lib/5.32.0/x86_64-linux/auto/Fcntl/Fcntl.a $RUNNER_WORKSPACE/localperlstatic/lib/5.32.0/x86_64-linux/auto/IO/IO.a $RUNNER_WORKSPACE/localperlstatic/lib/5.32.0/x86_64-linux/CORE/libperl.a -lpthread -ldl -lm -lutil -lc -lm 
-#          ldd perlpack
-#          ./perlpack
-#	  
-#	  perl perlpack.pl -i packfs -o perlpack.h --prefix=/mnt/perlpack/ --ld="ld"
-#	  cp perlpack.pl myscript.pl && ld -r -b binary -o myscript.o myscript.pl
-#	  
-#	  cp $(cc -print-file-name=libc.a) libc_perlpack.a
-#	  ar x $@  open.lo close.lo read.lo stat.lo fstat.lo lseek.lo access.lo fopen.lo fileno.lo
-#	  objcopy --redefine-sym open=orig_open     open.lo
-#	  objcopy --redefine-sym close=orig_close   close.lo
-#	  objcopy --redefine-sym read=orig_read     read.lo
-#	  objcopy --redefine-sym stat=orig_stat     stat.lo
-#	  objcopy --redefine-sym fstat=orig_fstat   fstat.lo
-#	  objcopy --redefine-sym lseek=orig_lseek   lseek.lo
-#	  objcopy --redefine-sym access=orig_access access.lo
-#	  objcopy --redefine-sym fopen=orig_fopen   fopen.lo
-#	  objcopy --redefine-sym fileno=orig_fileno fileno.lo
-#	  ar rs libc_perlpack.a open.lo close.lo read.lo stat.lo fstat.lo lseek.lo access.lo fopen.lo fileno.lo
-#
-#          cc -o perlpack perlpack.c myscript.o -DPACKFS_STATIC -DPACKFS_BUILTIN_PREFIX=/mnt/perlpack/  -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -I$(PWD)/build -I/usr/local/include   -Wl,-E -fstack-protector-strong -fwrapv -fno-strict-aliasing -L/usr/local/lib build/libperl.a libc_perlpack.a -lpthread -ldl -lm -lutil   --static -static -static-libstdc++ -static-libgcc   $(MODULES_def) $(shell printf "build/lib/auto/%s " $(MODULES_a)) @perlpack.h.txt
+          $RUNNER_WORKSPACE/localperlstatic/bin/perl5.32.0 -e "print('hello world');"
+          ln -s $RUNNER_WORKSPACE/localperlstatic/bin/enc2xs5.32.0 $RUNNER_WORKSPACE/localperlstatic/bin/enc2xs
+          find $RUNNER_WORKSPACE/localperlstatic
+          #$RUNNER_WORKSPACE/localperlstatic/bin/cpan5.32.0 -T Alien::Base::Wrapper Alien::cmake3 inc::Module::Install
+          echo "$RUNNER_WORKSPACE/localperlstatic/bin" >> $GITHUB_PATH
+          echo "LD_LIBRARY_PATH=$RUNNER_WORKSPACE/localperlstatic/lib:$LD_LIBRARY_PATH" >> $GITHUB_ENV
+      
+      - name: Install build-time deps
+        run: $RUNNER_WORKSPACE/localperlstatic/bin/cpan5.32.0 -T Alien::Base::Wrapper Alien::Build Alien::Build::MM Alien::cmake3 Alien::Libxml2 inc::Module::Install Module::Implementation Config::AutoConf ExtUtils::LibBuilder # DBI
+      
+      - name: Install Perl static extra packages
+        run: |
+          export PERLBIN=$RUNNER_WORKSPACE/localperlstatic/bin/perl5.32.0
+          for MOD in Sort::Key Encode::EUCJPASCII Encode::JIS2K Encode::HanExtra XML::LibXML autovivification Devel::Caller Devel::LexAlias XML::LibXSLT XML::Parser::Expat Unicode::LineBreak Clone PadWalker  PerlIO::utf8_strict HTML::Parser List::MoreUtils::XS List::SomeUtils::XS DBI Net::SSLeay Sub::Identify DateTime Storable Variable::Magic Class::XSAccessor Package::Stash::XS Params::Util DBD::SQLite; do 
+              URL=$(wget -q -O - https://fastapi.metacpan.org/v1/download_url/$MOD | grep download_url | cut -d'"' -f4)
+              PKG=${MOD//::/-}
+              mkdir -p myextsource myext/$PKG
+              wget -nc $URL -P myextsource
+              tar -xf myextsource/$(basename $URL) --strip-components=1 --directory myext/$PKG
+              cd myext/$PKG
+              $PERLBIN Makefile.PL LINKTYPE=static
+              make
+              make install
+              cd ../..
+           done
+
+      - name: Install Brotli
+        run: |
+          export PERLBIN=$RUNNER_WORKSPACE/localperlstatic/bin/perl5.32.0
+          URL=$(wget -q -O - https://fastapi.metacpan.org/v1/download_url/IO::Compress::Brotli | grep download_url | cut -d'"' -f4)
+          mkdir -p myextsource myext/IO-Compress-Brotli
+          wget -nc $URL -P myextsource
+          tar -xf myextsource/$(basename $URL) --strip-components=1 --directory myext/IO-Compress-Brotli
+          cd myext/IO-Compress-Brotli
+          $PERLBIN Makefile.PL LINKTYPE=static
+          sed -i 's/$(CP) $(MYEXTLIB) "$@"/$(CP) $(MYEXTLIB) "$(dir $@)"/' Makefile
+          export CFLAGS="-DBROTLI_EMSCRIPTEN=OFF"
+          make
+          make install
+      
+      - name: Install Params/Validate/XS
+        run: |
+          export PERLBIN=$RUNNER_WORKSPACE/localperlstatic/bin/perl5.32.0
+          URL=$(wget -q -O - https://fastapi.metacpan.org/v1/download_url/Params::Validate::XS | grep download_url | cut -d'"' -f4)
+          mkdir -p myextsource myext/Params-Validate-XS
+          wget -nc $URL -P myextsource
+          tar -xf myextsource/$(basename $URL) --strip-components=1 --directory myext/Params-Validate-XS
+          cd myext/Params-Validate-XS
+          $PERLBIN ./Build.PL
+          $PERLBIN ./Build
+          $PERLBIN ./Build install
+          ar crs ../../../localperlstatic/lib/site_perl/5.32.0/x86_64-linux/auto/Params/Validate/XS/XS.a lib/Params/Validate/XS.o
+      
+      - name: Install Text/BibTeX
+        run: |
+          export PERLBIN=$RUNNER_WORKSPACE/localperlstatic/bin/perl5.32.0
+          URL=$(wget -q -O - https://fastapi.metacpan.org/v1/download_url/Text::BibTeX | grep download_url | cut -d'"' -f4)
+          mkdir -p myextsource myext/Text-BibTeX
+          wget -nc $URL -P myextsource
+          tar -xf myextsource/$(basename $URL) --strip-components=1 --directory myext/Text-BibTeX
+          cd myext/Text-BibTeX
+          $PERLBIN ./Build.PL
+          $PERLBIN ./Build
+          $PERLBIN ./Build install
+          ar crs  ../../../localperlstatic/lib/site_perl/5.32.0/x86_64-linux/auto/Text/BibTeX/BibTeX.a    xscode/BibTeX.o xscode/btxs_support.o btparse/src/init.o btparse/src/input.o btparse/src/bibtex.o btparse/src/err.o btparse/src/scan.o btparse/src/error.o btparse/src/lex_auxiliary.o btparse/src/parse_auxiliary.o btparse/src/bibtex_ast.o btparse/src/sym.o btparse/src/util.o btparse/src/postprocess.o btparse/src/macros.o btparse/src/traversal.o btparse/src/modify.o btparse/src/names.o btparse/src/tex_tree.o btparse/src/string_util.o
+
+      - name: Build Perl embedded
+        run: |
+          mkdir -p packfs
+          rm -rf packfs/man packfs/lib/*/pod/ || true
+      find packfs -name '*.pod' -o -name '*.ld' -o -name '*.a' -o -name '*.h' -delete || true
+          
+          cc -o perlpack perlpack.c -I$PWD/perlsourcestatic -I/usr/local/include -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -I$RUNNER_WORKSPACE/localperlstatic/lib/5.32.0/x86_64-linux/CORE      -Wl,-E -fstack-protector-strong -fwrapv -fno-strict-aliasing -L/usr/local/lib                         $RUNNER_WORKSPACE/localperlstatic/lib/5.32.0/x86_64-linux/auto/Fcntl/Fcntl.a $RUNNER_WORKSPACE/localperlstatic/lib/5.32.0/x86_64-linux/auto/IO/IO.a $RUNNER_WORKSPACE/localperlstatic/lib/5.32.0/x86_64-linux/CORE/libperl.a -lpthread -ldl -lm -lutil -lc -lm 
+          ldd perlpack
+          ./perlpack
+      
+          export PERLBIN=$RUNNER_WORKSPACE/localperlstatic/bin/perl5.32.0
+          $PERLBIN perlpack.pl -i packfs -o perlpack.h --prefix=/mnt/perlpack/ --ld="ld"
+          cp perlpack.pl myscript.pl && ld -r -b binary -o myscript.o myscript.pl
+          
+          cp $(cc -print-file-name=libc.a) libc_perlpack.a
+          ar x $@  open.lo close.lo read.lo stat.lo fstat.lo lseek.lo access.lo fopen.lo fileno.lo
+          objcopy --redefine-sym open=orig_open     open.lo
+          objcopy --redefine-sym close=orig_close   close.lo
+          objcopy --redefine-sym read=orig_read     read.lo
+          objcopy --redefine-sym stat=orig_stat     stat.lo
+          objcopy --redefine-sym fstat=orig_fstat   fstat.lo
+          objcopy --redefine-sym lseek=orig_lseek   lseek.lo
+          objcopy --redefine-sym access=orig_access access.lo
+          objcopy --redefine-sym fopen=orig_fopen   fopen.lo
+          objcopy --redefine-sym fileno=orig_fileno fileno.lo
+          ar rs libc_perlpack.a open.lo close.lo read.lo stat.lo fstat.lo lseek.lo access.lo fopen.lo fileno.lo
+
+          cc -o perlpack perlpack.c myscript.o -DPACKFS_STATIC -DPACKFS_BUILTIN_PREFIX=/mnt/perlpack/  -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -I$(PWD)/build -I/usr/local/include   -Wl,-E -fstack-protector-strong -fwrapv -fno-strict-aliasing -L/usr/local/lib build/libperl.a libc_perlpack.a -lpthread -ldl -lm -lutil   --static -static -static-libstdc++ -static-libgcc   $(MODULES_def) $(shell printf "build/lib/auto/%s " $(MODULES_a)) @perlpack.h.txt
