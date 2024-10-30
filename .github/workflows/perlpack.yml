@@ -161,7 +161,7 @@ jobs:
         run: |
           mkdir -p packfs
           rm -rf packfs/man packfs/lib/*/pod/ || true
-      find packfs -name '*.pod' -o -name '*.ld' -o -name '*.a' -o -name '*.h' -delete || true
+          find packfs -name '*.pod' -o -name '*.ld' -o -name '*.a' -o -name '*.h' -delete || true
           
           cc -o perlpack perlpack.c -I$PWD/perlsourcestatic -I/usr/local/include -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -I$RUNNER_WORKSPACE/localperlstatic/lib/5.32.0/x86_64-linux/CORE      -Wl,-E -fstack-protector-strong -fwrapv -fno-strict-aliasing -L/usr/local/lib                         $RUNNER_WORKSPACE/localperlstatic/lib/5.32.0/x86_64-linux/auto/Fcntl/Fcntl.a $RUNNER_WORKSPACE/localperlstatic/lib/5.32.0/x86_64-linux/auto/IO/IO.a $RUNNER_WORKSPACE/localperlstatic/lib/5.32.0/x86_64-linux/CORE/libperl.a -lpthread -ldl -lm -lutil -lc -lm 
           ldd perlpack
