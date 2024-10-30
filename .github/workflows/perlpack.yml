@@ -149,7 +149,7 @@ jobs:
           cd myext/IO-Compress-Brotli
           $PERLBIN Makefile.PL LINKTYPE=static
           sed -i 's/$(CP) $(MYEXTLIB) "$@"/$(CP) $(MYEXTLIB) "$(dir $@)"/' Makefile
-          make
+          MAKEFLAGS=-j1 make
           make install
       
       - name: Build Perl embedded
