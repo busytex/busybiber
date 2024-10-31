@@ -70,7 +70,7 @@ jobs:
 
           mkdir build && curl -L $URLPERL2 | tar -xzf - --strip-components=1 --directory=build
           cd build && sh ./Configure -sde -Dman1dir=none -Dman3dir=none -Dprefix=/mnt/perlpack -Dinstallprefix=../packfs -Aldflags=-lm -Accflags=-lm -Dusedevel -Dlibs="-lpthread -ldl -lm -lutil -lc" -Dstatic_ext="$MODULES_ext" && cd - && make -C build && make -C build install
-          ln -s $RUNNER_WORKSPACE/build/bin/enc2xs5.35.4 $RUNNER_WORKSPACE/build/bin/enc2xs
+          #ln -s $RUNNER_WORKSPACE/build/bin/enc2xs5.35.4 $RUNNER_WORKSPACE/build/bin/enc2xs
 
           #$RUNNER_WORKSPACE/localperlstatic/bin/cpan5.32.0 -T Alien::Base::Wrapper Alien::cmake3 inc::Module::Install
       
