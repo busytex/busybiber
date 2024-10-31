@@ -127,7 +127,7 @@ jobs:
           
           URL=$(curl https://fastapi.metacpan.org/v1/download_url/Text::BibTeX | grep download_url | cut -d'"' -f4)
           mkdir -p myext/Text-BibTeX
-          wget -L $URL | tar -xzf - --strip-components=1 --directory myext/Text-BibTeX
+          curl -L $URL | tar -xzf - --strip-components=1 --directory myext/Text-BibTeX
           cd myext/Text-BibTeX
           $PERLBIN ./Build.PL
           $PERLBIN ./Build
