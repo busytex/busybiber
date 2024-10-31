@@ -178,5 +178,4 @@ jobs:
           
           cp perlpack.pl myscript.pl && ld -r -b binary -o myscript.o myscript.pl
           cc -o perlpack perlpack.c myscript.o -DPACKFS_STATIC -DPACKFS_BUILTIN_PREFIX=/mnt/perlpack/  -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -I$PWD/build -I/usr/local/include   -Wl,-E -fstack-protector-strong -fwrapv -fno-strict-aliasing -L/usr/local/lib build/libperl.a libc_perlpack.a -lpthread -ldl -lm -lutil   --static -static -static-libstdc++ -static-libgcc   $MODULES_def $(printf "build/lib/auto/%s " $MODULES_a) @perlpack.h.txt
-          ldd perlpack
           ./perlpack
