@@ -84,7 +84,7 @@ jobs:
           export PERLBIN=$RUNNER_WORKSPACE/busybiber/packfs/bin/perl5.35.4
           export CPANBIN=$RUNNER_WORKSPACE/busybiber/packfs/bin/cpan5.35.4
           export PERLPREFIX=$RUNNER_WORKSPACE/busybiber/build
-          #export LD_LIBRARY_PATH=$RUNNER_WORKSPACE/build/lib:$LD_LIBRARY_PATH
+          export LD_LIBRARY_PATH=$RUNNER_WORKSPACE/busybuber/packfs/lib:$LD_LIBRARY_PATH
           #export PERLBIN=$RUNNER_WORKSPACE/localperlstatic/bin/perl5.32.0
           #export CPANBIN=$RUNNER_WORKSPACE/localperlstatic/bin/cpan5.32.0
           #export LD_LIBRARY_PATH=$RUNNER_WORKSPACE/localperlstatic/lib:$LD_LIBRARY_PATH
