@@ -70,7 +70,7 @@ jobs:
           #ln -s $RUNNER_WORKSPACE/localperlstatic/bin/enc2xs5.32.0 $RUNNER_WORKSPACE/localperlstatic/bin/enc2xs
 
           export PERLVER=5.35.4
-          export PERLPREFIX=$RUNNER_WORKSPACE/packfs
+          export PERLPREFIX=$RUNNER_WORKSPACE/busybiber/packfs
           #/build/../packfs
 
           mkdir build && curl -L $URLPERL2 | tar -xzf - --strip-components=1 --directory=build
