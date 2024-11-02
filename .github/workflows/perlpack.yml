@@ -20,7 +20,7 @@ jobs:
     container: alpine:3.14
     steps:
       - name: Install Prerequisites
-        run:  apk add --update --no-cache libnsl libnsl-dev build-base coreutils gdb cmake git xz wget curl gperf p7zip zip python3 strace autoconf automake libtool pkgconfig gnupg libxml2-dev libxslt-dev expat-dev openssl-dev openssl
+        run:  apk add --update --no-cache libnsl libnsl-dev build-base coreutils gdb cmake git xz wget curl gperf p7zip zip python3 strace autoconf automake libtool pkgconfig gnupg libxml2-dev libxslt-dev expat-dev openssl-dev openssl perl
 
       - uses: actions/checkout@v4
       
