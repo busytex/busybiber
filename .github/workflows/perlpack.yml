@@ -107,7 +107,7 @@ jobs:
           mkdir perlsourcestatic && curl -L $URLPERL | tar -xzf - --strip-components=1 --directory=perlsourcestatic
           cd perlsourcestatic && sh +x ./Configure -sde -Dprefix="$RUNNER_WORKSPACE/localperlstatic" -Dextras="DBI" -Dstatic_ext="$MODULES_0ext" -Dusedevel -Accflags="-lm -ldl" -Aldflags="-lm -ldl" -Dlibs="-lpthread -ldl -lm -lutil -lc" && cd - && make -C perlsourcestatic && make -C perlsourcestatic install
           ln -s $RUNNER_WORKSPACE/localperlstatic/bin/enc2xs5.32.0 $RUNNER_WORKSPACE/localperlstatic/bin/enc2xs
-          $CPANBIN -T Alien::Base::Wrapper Alien::Build Alien::Build::MM Alien::cmake3 Alien::Libxml2 inc::Module::Install Module::Implementation Config::AutoConf ExtUtils::LibBuilder # DBI
+          /usr/bin/perl $CPANBIN -T Alien::Base::Wrapper Alien::Build Alien::Build::MM Alien::cmake3 Alien::Libxml2 inc::Module::Install Module::Implementation Config::AutoConf ExtUtils::LibBuilder # DBI
 
           #export PERLVER=5.35.4
           #export PERLPREFIX=$RUNNER_WORKSPACE/busybiber/packfs
@@ -118,6 +118,7 @@ jobs:
       - name: Install Perl static extra packages
         shell: bash
         run: |
+          #export PERLVER=5.35.4
           #export PERLBIN=$RUNNER_WORKSPACE/busybiber/packfs/bin/perl5.35.4
           #export PERLPREFIX=$RUNNER_WORKSPACE/busybiber/build
           #export LD_LIBRARY_PATH=$RUNNER_WORKSPACE/busybuber/packfs/lib:$LD_LIBRARY_PATH
