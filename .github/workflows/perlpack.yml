@@ -84,61 +84,58 @@ jobs:
           #cd build && sh ./Configure -sde -Dman1dir=none -Dman3dir=none -Dprefix=/mnt/perlpack -Dinstallprefix=../packfs -Aldflags=-lm -Accflags=-lm -Dusedevel -Dlibs="-lpthread -ldl -lm -lutil -lc" -Dstatic_ext="$MODULES_ext" -Dextras="DBI" && cd - && make -C build && make -C build install 
           #ln -s $PERLPREFIX/bin/enc2xs$PERLVER $PERLPREFIX/bin/enc2xs
       
-#      - name: Install Perl static extra packages
-#        run: |
+      - name: Install Perl static extra packages
+        run: |
           #export PERLVER=5.35.4
           #export PERLBIN=$RUNNER_WORKSPACE/busybiber/packfs/bin/perl5.35.4
-          #export CPANBIN=$RUNNER_WORKSPACE/busybiber/packfs/bin/cpan5.35.4
           #export PERLPREFIX=$RUNNER_WORKSPACE/busybiber/build
           #export LD_LIBRARY_PATH=$RUNNER_WORKSPACE/busybuber/packfs/lib:$LD_LIBRARY_PATH
-          #export PERLVER=5.32.0
-          #export PERLBIN=$RUNNER_WORKSPACE/localperlstatic/bin/perl5.32.0
-          #export CPANBIN=$RUNNER_WORKSPACE/localperlstatic/bin/cpan5.32.0
-          #export LD_LIBRARY_PATH=$RUNNER_WORKSPACE/localperlstatic/lib:$LD_LIBRARY_PATH
-          #export PERLPREFIX=$RUNNER_WORKSPACE/localperlstatic
-          #$CPANBIN -T Alien::Base::Wrapper Alien::Build Alien::Build::MM Alien::cmake3 Alien::Libxml2 inc::Module::Install Module::Implementation Config::AutoConf ExtUtils::LibBuilder # DBI
+          export PERLVER=5.32.0
+          export PERLBIN=$RUNNER_WORKSPACE/localperlstatic/bin/perl5.32.0
+          export LD_LIBRARY_PATH=$RUNNER_WORKSPACE/localperlstatic/lib:$LD_LIBRARY_PATH
+          export PERLPREFIX=$RUNNER_WORKSPACE/localperlstatic
 
-#          for MOD in Sort::Key Encode::EUCJPASCII Encode::JIS2K Encode::HanExtra XML::LibXML autovivification Devel::Caller Devel::LexAlias XML::LibXSLT XML::Parser::Expat Unicode::LineBreak Clone PadWalker  PerlIO::utf8_strict HTML::Parser List::MoreUtils::XS List::SomeUtils::XS DBI Net::SSLeay Sub::Identify DateTime Storable Variable::Magic Class::XSAccessor Package::Stash::XS Params::Util DBD::SQLite; do 
-#              URL=$(curl https://fastapi.metacpan.org/v1/download_url/$MOD | grep download_url | cut -d'"' -f4)
-#              PKG=${MOD//::/-}
-#              mkdir -p myext/$PKG
-#              curl -L $URL | tar -xzf - --strip-components=1 --directory myext/$PKG
-#              cd myext/$PKG
-#              $PERLBIN Makefile.PL LINKTYPE=static
-#              make
-#              make install
-#              cd -
-#          done
-#          
-#          URL=$(curl https://fastapi.metacpan.org/v1/download_url/Params::Validate::XS | grep download_url | cut -d'"' -f4)
-#          mkdir -p myext/Params-Validate-XS
-#          curl -L $URL | tar -xzf - --strip-components=1 --directory myext/Params-Validate-XS
-#          cd myext/Params-Validate-XS
-#          $PERLBIN ./Build.PL
-#          $PERLBIN ./Build
-#          $PERLBIN ./Build install
-#          ar crs $PERLPREFIX/lib/site_perl/$PERLVER/x86_64-linux/auto/Params/Validate/XS/XS.a lib/Params/Validate/XS.o
-#          cd -
-#          
-#          URL=$(curl https://fastapi.metacpan.org/v1/download_url/Text::BibTeX | grep download_url | cut -d'"' -f4)
-#          mkdir -p myext/Text-BibTeX
-#          curl -L $URL | tar -xzf - --strip-components=1 --directory myext/Text-BibTeX
-#          cd myext/Text-BibTeX
-#          $PERLBIN ./Build.PL
-#          $PERLBIN ./Build
-#          $PERLBIN ./Build install
-#          ar crs $PERLPREFIX/lib/site_perl/$PERLVER/x86_64-linux/auto/Text/BibTeX/BibTeX.a    xscode/BibTeX.o xscode/btxs_support.o btparse/src/init.o btparse/src/input.o btparse/src/bibtex.o btparse/src/err.o btparse/src/scan.o btparse/src/error.o btparse/src/lex_auxiliary.o btparse/src/parse_auxiliary.o btparse/src/bibtex_ast.o btparse/src/sym.o btparse/src/util.o btparse/src/postprocess.o btparse/src/macros.o btparse/src/traversal.o btparse/src/modify.o btparse/src/names.o btparse/src/tex_tree.o btparse/src/string_util.o
-#          cd -
-#
-#          URL=$(curl https://fastapi.metacpan.org/v1/download_url/IO::Compress::Brotli | grep download_url | cut -d'"' -f4)
-#          mkdir -p myext/IO-Compress-Brotli
-#          curl -L $URL | tar -xzf - --strip-components=1 --directory myext/IO-Compress-Brotli
-#          cd myext/IO-Compress-Brotli
-#          $PERLBIN Makefile.PL LINKTYPE=static
-#          sed -i 's/$(CP) $(MYEXTLIB) "$@"/$(CP) $(MYEXTLIB) "$(dir $@)"/' Makefile
-#          MAKEFLAGS=-j1 make
-#          make install
-#          cd -
+          for MOD in Sort::Key Encode::EUCJPASCII Encode::JIS2K Encode::HanExtra XML::LibXML autovivification Devel::Caller Devel::LexAlias XML::LibXSLT XML::Parser::Expat Unicode::LineBreak Clone PadWalker  PerlIO::utf8_strict HTML::Parser List::MoreUtils::XS List::SomeUtils::XS DBI Net::SSLeay Sub::Identify DateTime Storable Variable::Magic Class::XSAccessor Package::Stash::XS Params::Util DBD::SQLite; do 
+              URL=$(curl https://fastapi.metacpan.org/v1/download_url/$MOD | grep download_url | cut -d'"' -f4)
+              PKG=${MOD//::/-}
+              mkdir -p myext/$PKG
+              curl -L $URL | tar -xzf - --strip-components=1 --directory myext/$PKG
+              cd myext/$PKG
+              $PERLBIN Makefile.PL LINKTYPE=static
+              make
+              make install
+              cd -
+          done
+          
+          URL=$(curl https://fastapi.metacpan.org/v1/download_url/Params::Validate::XS | grep download_url | cut -d'"' -f4)
+          mkdir -p myext/Params-Validate-XS
+          curl -L $URL | tar -xzf - --strip-components=1 --directory myext/Params-Validate-XS
+          cd myext/Params-Validate-XS
+          $PERLBIN ./Build.PL
+          $PERLBIN ./Build
+          $PERLBIN ./Build install
+          ar crs $PERLPREFIX/lib/site_perl/$PERLVER/x86_64-linux/auto/Params/Validate/XS/XS.a lib/Params/Validate/XS.o
+          cd -
+          
+          URL=$(curl https://fastapi.metacpan.org/v1/download_url/Text::BibTeX | grep download_url | cut -d'"' -f4)
+          mkdir -p myext/Text-BibTeX
+          curl -L $URL | tar -xzf - --strip-components=1 --directory myext/Text-BibTeX
+          cd myext/Text-BibTeX
+          $PERLBIN ./Build.PL
+          $PERLBIN ./Build
+          $PERLBIN ./Build install
+          ar crs $PERLPREFIX/lib/site_perl/$PERLVER/x86_64-linux/auto/Text/BibTeX/BibTeX.a    xscode/BibTeX.o xscode/btxs_support.o btparse/src/init.o btparse/src/input.o btparse/src/bibtex.o btparse/src/err.o btparse/src/scan.o btparse/src/error.o btparse/src/lex_auxiliary.o btparse/src/parse_auxiliary.o btparse/src/bibtex_ast.o btparse/src/sym.o btparse/src/util.o btparse/src/postprocess.o btparse/src/macros.o btparse/src/traversal.o btparse/src/modify.o btparse/src/names.o btparse/src/tex_tree.o btparse/src/string_util.o
+          cd -
+
+          URL=$(curl https://fastapi.metacpan.org/v1/download_url/IO::Compress::Brotli | grep download_url | cut -d'"' -f4)
+          mkdir -p myext/IO-Compress-Brotli
+          curl -L $URL | tar -xzf - --strip-components=1 --directory myext/IO-Compress-Brotli
+          cd myext/IO-Compress-Brotli
+          $PERLBIN Makefile.PL LINKTYPE=static
+          sed -i 's/$(CP) $(MYEXTLIB) "$@"/$(CP) $(MYEXTLIB) "$(dir $@)"/' Makefile
+          MAKEFLAGS=-j1 make
+          make install
+          cd -
       
 #      - name: Build Perl embedded
 #        run: |
