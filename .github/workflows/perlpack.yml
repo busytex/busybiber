@@ -127,7 +127,8 @@ jobs:
 
           for MOD in Sort::Key Encode::EUCJPASCII Encode::JIS2K Encode::HanExtra XML::LibXML autovivification Devel::Caller Devel::LexAlias XML::LibXSLT XML::Parser::Expat Unicode::LineBreak Clone PadWalker  PerlIO::utf8_strict HTML::Parser List::MoreUtils::XS List::SomeUtils::XS DBI Net::SSLeay Sub::Identify DateTime Storable Variable::Magic Class::XSAccessor Package::Stash::XS Params::Util DBD::SQLite; do 
               PKG=URL_${MOD//::/-}
-              URL=${!PKG}
+              declare -n PKGREF=URL_$PKG; URL=${PKGREF};
+              #URL=${!PKG}
               mkdir -p myext/$PKG
               curl -L $URL | tar -xzf - --strip-components=1 --directory myext/$PKG
               cd myext/$PKG
