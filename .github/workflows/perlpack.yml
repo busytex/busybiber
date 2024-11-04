@@ -116,7 +116,6 @@ jobs:
           #ln -s $PERLPREFIX/bin/enc2xs$PERLVER $PERLPREFIX/bin/enc2xs
       
       - name: Install Perl static extra packages
-        shell: bash
         run: |
           #export PERLBIN=$RUNNER_WORKSPACE/busybiber/packfs/bin/perl5.35.4
           #export PERLPREFIX=$RUNNER_WORKSPACE/busybiber/build
@@ -126,8 +125,8 @@ jobs:
           export PERLPREFIX=$RUNNER_WORKSPACE/localperlstatic
 
           for MOD in Sort::Key Encode::EUCJPASCII Encode::JIS2K Encode::HanExtra XML::LibXML autovivification Devel::Caller Devel::LexAlias XML::LibXSLT XML::Parser::Expat Unicode::LineBreak Clone PadWalker  PerlIO::utf8_strict HTML::Parser List::MoreUtils::XS List::SomeUtils::XS DBI Net::SSLeay Sub::Identify DateTime Storable Variable::Magic Class::XSAccessor Package::Stash::XS Params::Util DBD::SQLite; do 
-              PKG=${MOD//::/-}
-              declare -n PKGREF=URL_$PKG; URL=${PKGREF};
+              PKG=URL_${MOD//::/_}
+              declare -n PKGREF=$PKG; URL=${PKGREF};
               mkdir -p myext/$PKG
               curl -L $URL | tar -xzf - --strip-components=1 --directory myext/$PKG
               cd myext/$PKG
@@ -138,9 +137,9 @@ jobs:
           done
           
           URL=$URL_Params_Validate_XS
-          mkdir -p myext/Params-Validate-XS
-          curl -L $URL | tar -xzf - --strip-components=1 --directory myext/Params-Validate-XS
-          cd myext/Params-Validate-XS
+          mkdir -p myext/URL_Params_Validate_XS
+          curl -L $URL | tar -xzf - --strip-components=1 --directory myext/URL_Params_Validate_XS
+          cd myext/URL_Params_Validate_XS
           $PERLBIN ./Build.PL
           $PERLBIN ./Build
           $PERLBIN ./Build install
@@ -148,9 +147,9 @@ jobs:
           cd -
           
           URL=$URL_Text_BibTeX
-          mkdir -p myext/Text-BibTeX
-          curl -L $URL | tar -xzf - --strip-components=1 --directory myext/Text-BibTeX
-          cd myext/Text-BibTeX
+          mkdir -p myext/URL_Text_BibTeX
+          curl -L $URL | tar -xzf - --strip-components=1 --directory myext/URL_Text_BibTeX
+          cd myext/URL_Text_BibTeX
           $PERLBIN ./Build.PL
           $PERLBIN ./Build
           $PERLBIN ./Build install
@@ -158,9 +157,9 @@ jobs:
           cd -
 
           URL=$URL_IO_Compress_Brotli
-          mkdir -p myext/IO-Compress-Brotli
-          curl -L $URL | tar -xzf - --strip-components=1 --directory myext/IO-Compress-Brotli
-          cd myext/IO-Compress-Brotli
+          mkdir -p myext/URL_IO_Compress_Brotli
+          curl -L $URL | tar -xzf - --strip-components=1 --directory myext/URL_IO_Compress_Brotli
+          cd myext/URL_IO_Compress_Brotli
           $PERLBIN Makefile.PL LINKTYPE=static
           sed -i 's/$(CP) $(MYEXTLIB) "$@"/$(CP) $(MYEXTLIB) "$(dir $@)"/' Makefile
           MAKEFLAGS=-j1 make
