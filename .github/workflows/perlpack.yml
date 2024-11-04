@@ -65,30 +65,31 @@ jobs:
        
       - name: Install Perl static
         run: |
-          #mkdir perlsourcestatic && curl -L $URLPERL | tar -xzf - --strip-components=1 --directory=perlsourcestatic
-          #cd perlsourcestatic && sh +x ./Configure -sde -Dprefix="$RUNNER_WORKSPACE/localperlstatic" -Dextras="DBI" -Dstatic_ext="attributes B Cwd Data/Dumper Devel/Peek Digest/MD5 Digest/SHA Encode Encode/Unicode Encode/CN Encode/KR Encode/TW Encode/JP  Encode/Symbol Encode/EBCDIC Encode/Byte Fcntl File/Glob Hash/Util I18N/Langinfo IO List/Util mro Opcode PerlIO/encoding PerlIO/scalar PerlIO/via POSIX PerlIO/mmap Time/HiRes re Socket  Unicode/Normalize Unicode/Collate Compress/Raw/Zlib Compress/Raw/Bzip2 threads threads/shared Sys/Syslog Sys/Hostname File/DosGlob Math/BigInt/FastCalc Hash/Util/FieldHash Filter/Util/Call IPC/SysV MIME/Base64" -Dusedevel -Accflags="-lm -ldl" -Aldflags="-lm -ldl" -Dlibs="-lpthread -ldl -lm -lutil -lc" && cd - && make -C perlsourcestatic && make -C perlsourcestatic install
-          #ln -s $RUNNER_WORKSPACE/localperlstatic/bin/enc2xs5.32.0 $RUNNER_WORKSPACE/localperlstatic/bin/enc2xs
+          mkdir perlsourcestatic && curl -L $URLPERL | tar -xzf - --strip-components=1 --directory=perlsourcestatic
+          cd perlsourcestatic && sh +x ./Configure -sde -Dprefix="$RUNNER_WORKSPACE/localperlstatic" -Dextras="DBI" -Dstatic_ext="attributes B Cwd Data/Dumper Devel/Peek Digest/MD5 Digest/SHA Encode Encode/Unicode Encode/CN Encode/KR Encode/TW Encode/JP  Encode/Symbol Encode/EBCDIC Encode/Byte Fcntl File/Glob Hash/Util I18N/Langinfo IO List/Util mro Opcode PerlIO/encoding PerlIO/scalar PerlIO/via POSIX PerlIO/mmap Time/HiRes re Socket  Unicode/Normalize Unicode/Collate Compress/Raw/Zlib Compress/Raw/Bzip2 threads threads/shared Sys/Syslog Sys/Hostname File/DosGlob Math/BigInt/FastCalc Hash/Util/FieldHash Filter/Util/Call IPC/SysV MIME/Base64" -Dusedevel -Accflags="-lm -ldl" -Aldflags="-lm -ldl" -Dlibs="-lpthread -ldl -lm -lutil -lc" && cd - && make -C perlsourcestatic && make -C perlsourcestatic install
+          ln -s $RUNNER_WORKSPACE/localperlstatic/bin/enc2xs5.32.0 $RUNNER_WORKSPACE/localperlstatic/bin/enc2xs
 
-          export PERLVER=5.35.4
-          export PERLPREFIX=$RUNNER_WORKSPACE/busybiber/packfs
-
-          mkdir build && curl -L $URLPERL2 | tar -xzf - --strip-components=1 --directory=build
-          cd build && sh ./Configure -sde -Dman1dir=none -Dman3dir=none -Dprefix=/mnt/perlpack -Dinstallprefix=../packfs -Aldflags=-lm -Accflags=-lm -Dusedevel -Dlibs="-lpthread -ldl -lm -lutil -lc" -Dstatic_ext="$MODULES_ext" -Dextras="DBI" && cd - && make -C build && make -C build install 
-          ln -s $PERLPREFIX/bin/enc2xs$PERLVER $PERLPREFIX/bin/enc2xs
+          #export PERLVER=5.35.4
+          #export PERLPREFIX=$RUNNER_WORKSPACE/busybiber/packfs
+          #mkdir build && curl -L $URLPERL2 | tar -xzf - --strip-components=1 --directory=build
+          #cd build && sh ./Configure -sde -Dman1dir=none -Dman3dir=none -Dprefix=/mnt/perlpack -Dinstallprefix=../packfs -Aldflags=-lm -Accflags=-lm -Dusedevel -Dlibs="-lpthread -ldl -lm -lutil -lc" -Dstatic_ext="$MODULES_ext" -Dextras="DBI" && cd - && make -C build && make -C build install 
+          #ln -s $PERLPREFIX/bin/enc2xs$PERLVER $PERLPREFIX/bin/enc2xs
 
           #$RUNNER_WORKSPACE/localperlstatic/bin/cpan5.32.0 -T Alien::Base::Wrapper Alien::cmake3 inc::Module::Install
       
       - name: Install Perl static extra packages
         run: |
-          export PERLVER=5.35.4
-          export PERLBIN=$RUNNER_WORKSPACE/busybiber/packfs/bin/perl5.35.4
-          export CPANBIN=$RUNNER_WORKSPACE/busybiber/packfs/bin/cpan5.35.4
-          export PERLPREFIX=$RUNNER_WORKSPACE/busybiber/build
-          export LD_LIBRARY_PATH=$RUNNER_WORKSPACE/busybuber/packfs/lib:$LD_LIBRARY_PATH
-          #export PERLBIN=$RUNNER_WORKSPACE/localperlstatic/bin/perl5.32.0
-          #export CPANBIN=$RUNNER_WORKSPACE/localperlstatic/bin/cpan5.32.0
-          #export LD_LIBRARY_PATH=$RUNNER_WORKSPACE/localperlstatic/lib:$LD_LIBRARY_PATH
-          #export PERLPREFIX=$RUNNER_WORKSPACE/localperlstatic
+          #export PERLVER=5.35.4
+          #export PERLBIN=$RUNNER_WORKSPACE/busybiber/packfs/bin/perl5.35.4
+          #export CPANBIN=$RUNNER_WORKSPACE/busybiber/packfs/bin/cpan5.35.4
+          #export PERLPREFIX=$RUNNER_WORKSPACE/busybiber/build
+          #export LD_LIBRARY_PATH=$RUNNER_WORKSPACE/busybuber/packfs/lib:$LD_LIBRARY_PATH
+          
+          export PERLVER=5.32.0
+          export PERLBIN=$RUNNER_WORKSPACE/localperlstatic/bin/perl5.32.0
+          export CPANBIN=$RUNNER_WORKSPACE/localperlstatic/bin/cpan5.32.0
+          export LD_LIBRARY_PATH=$RUNNER_WORKSPACE/localperlstatic/lib:$LD_LIBRARY_PATH
+          export PERLPREFIX=$RUNNER_WORKSPACE/localperlstatic
 
           /usr/bin/perl $CPANBIN -T Alien::Base::Wrapper Alien::Build Alien::Build::MM Alien::cmake3 Alien::Libxml2 inc::Module::Install Module::Implementation Config::AutoConf ExtUtils::LibBuilder # DBI
 
