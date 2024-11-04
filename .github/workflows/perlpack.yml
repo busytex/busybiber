@@ -116,6 +116,7 @@ jobs:
           #ln -s $PERLPREFIX/bin/enc2xs$PERLVER $PERLPREFIX/bin/enc2xs
       
       - name: Install Perl static extra packages
+        shell: bash
         run: |
           #export PERLBIN=$RUNNER_WORKSPACE/busybiber/packfs/bin/perl5.35.4
           #export PERLPREFIX=$RUNNER_WORKSPACE/busybiber/build
