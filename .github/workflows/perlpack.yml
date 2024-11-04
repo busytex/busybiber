@@ -106,8 +106,8 @@ jobs:
           export CPANBIN=$RUNNER_WORKSPACE/localperlstatic/bin/cpan5.32.0
           export LD_LIBRARY_PATH=$RUNNER_WORKSPACE/localperlstatic/lib:$LD_LIBRARY_PATH
           mkdir perlsourcestatic && curl -L $URLPERL | tar -xzf - --strip-components=1 --directory=perlsourcestatic
-          cd perlsourcestatic && sh +x ./Configure -sde -Dman1dir=none -Dman3dir=none -Dprefix="$RUNNER_WORKSPACE/localperlstatic" -Aldflags="-lm -ldl" -Accflags="-lm -ldl" -Dusedevel -Dlibs="-lpthread -ldl -lm -lutil -lc" -Dstatic_ext="$MODULES_0ext" -Dextras="DBI Alien::Base::Wrapper Alien::Build Alien::Build::MM Alien::cmake3 Alien::Libxml2" && cd - && make -C perlsourcestatic && make -C perlsourcestatic install
-          $PERLBIN $CPANBIN -T inc::Module::Install Module::Implementation Config::AutoConf ExtUtils::LibBuilder # DBI
+          cd perlsourcestatic && sh +x ./Configure -sde -Dman1dir=none -Dman3dir=none -Dprefix="$RUNNER_WORKSPACE/localperlstatic" -Aldflags="-lm -ldl" -Accflags="-lm -ldl" -Dusedevel -Dlibs="-lpthread -ldl -lm -lutil -lc" -Dstatic_ext="$MODULES_0ext" -Dextras="DBI Alien::Base::Wrapper Alien::Build Alien::Build::MM Alien::cmake3 Alien::Libxml2 inc::Module::Install Module::Implementation Config::AutoConf ExtUtils::LibBuilder" && cd - && make -C perlsourcestatic && make -C perlsourcestatic install
+          #$PERLBIN $CPANBIN -T inc::Module::Install Module::Implementation Config::AutoConf ExtUtils::LibBuilder # DBI
           #$PERLBIN $CPANBIN -T Alien::Base::Wrapper Alien::Build Alien::Build::MM Alien::cmake3 Alien::Libxml2 inc::Module::Install Module::Implementation Config::AutoConf ExtUtils::LibBuilder # DBI
           ln -s $RUNNER_WORKSPACE/localperlstatic/bin/enc2xs$PERLVER $RUNNER_WORKSPACE/localperlstatic/bin/enc2xs
 
