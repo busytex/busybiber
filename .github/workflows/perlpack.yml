@@ -118,73 +118,22 @@ jobs:
               mkdir -p myext/$PKG
               curl -L $URL | tar -xzf - --strip-components=1 --directory myext/$PKG
               cd myext/$PKG
-              if [ -f Makefile.PL ]; then
+              if [ "$MOD" == "IO::Compress::Brotli" ]; then
                   $PERLBIN Makefile.PL LINKTYPE=static
-                  if [ "$MOD" == "IO::Compress::Brotli" ]; then sed -i 's/$(CP) $(MYEXTLIB) "$@"/$(CP) $(MYEXTLIB) "$(dir $@)"/' Makefile && export MAKEFLAGS=-j1; fi
+                  sed -i 's/$(CP) $(MYEXTLIB) "$@"/$(CP) $(MYEXTLIB) "$(dir $@)"/' Makefile && export MAKEFLAGS=-j1
                   make && make install
               elif [ -f Build.PL ]; then
                   $PERLBIN ./Build.PL
                   $PERLBIN ./Build && $PERLBIN ./Build install
+              else
+                  $PERLBIN Makefile.PL LINKTYPE=static
+                  make && make install
               fi
               cd -
           done
           ar crs $PERLPREFIX/lib/site_perl/$PERLVER/x86_64-linux/auto/Params/Validate/XS/XS.a myext/URL_Params_Validate_XS/lib/Params/Validate/XS.o
           ar crs $PERLPREFIX/lib/site_perl/$PERLVER/x86_64-linux/auto/Text/BibTeX/BibTeX.a    myext/URL_Text_BibTeX/xscode/BibTeX.o myext/URL_Text_BibTeX/xscode/btxs_support.o myext/URL_Text_BibTeX/btparse/src/init.o myext/URL_Text_BibTeX/btparse/src/input.o myext/URL_Text_BibTeX/btparse/src/bibtex.o myext/URL_Text_BibTeX/btparse/src/err.o myext/URL_Text_BibTeX/btparse/src/scan.o myext/URL_Text_BibTeX/btparse/src/error.o myext/URL_Text_BibTeX/btparse/src/lex_auxiliary.o myext/URL_Text_BibTeX/btparse/src/parse_auxiliary.o myext/URL_Text_BibTeX/btparse/src/bibtex_ast.o myext/URL_Text_BibTeX/btparse/src/sym.o myext/URL_Text_BibTeX/btparse/src/util.o myext/URL_Text_BibTeX/btparse/src/postprocess.o myext/URL_Text_BibTeX/btparse/src/macros.o myext/URL_Text_BibTeX/btparse/src/traversal.o myext/URL_Text_BibTeX/btparse/src/modify.o myext/URL_Text_BibTeX/btparse/src/names.o myext/URL_Text_BibTeX/btparse/src/tex_tree.o myext/URL_Text_BibTeX/btparse/src/string_util.o
       
-#      - name: Install Perl static extra packages
-#        shell: bash
-#        run: |
-#          #export PERLBIN=$RUNNER_WORKSPACE/busybiber/packfs/bin/perl5.32.0
-#          #export PERLPREFIX=$RUNNER_WORKSPACE/busybiber/build
-#          #export LD_LIBRARY_PATH=$RUNNER_WORKSPACE/busybuber/packfs/lib:$LD_LIBRARY_PATH
-#          #export PERLVER=5.32.0
-#          #export PERLBIN=$RUNNER_WORKSPACE/localperlstatic/bin/perl5.32.0
-#          #export LD_LIBRARY_PATH=$RUNNER_WORKSPACE/localperlstatic/lib:$LD_LIBRARY_PATH
-#          #export PERLPREFIX=$RUNNER_WORKSPACE/localperlstatic
-#          
-#          export PERLVER=5.32.0
-#          export PERLBIN=$RUNNER_WORKSPACE/busybiber/packfs/bin/perl5.32.0
-#          export LD_LIBRARY_PATH=$RUNNER_WORKSPACE/busybiber/packfs/lib:$LD_LIBRARY_PATH
-#          export PERLPREFIX=$RUNNER_WORKSPACE/busybiber/packfs
-#
-#          for MOD in Sort::Key Encode::EUCJPASCII Encode::JIS2K Encode::HanExtra XML::LibXML autovivification Devel::Caller Devel::LexAlias XML::LibXSLT XML::Parser::Expat Unicode::LineBreak Clone PadWalker  PerlIO::utf8_strict HTML::Parser List::MoreUtils::XS List::SomeUtils::XS DBI Net::SSLeay Sub::Identify DateTime Storable Variable::Magic Class::XSAccessor Package::Stash::XS Params::Util DBD::SQLite; do 
-#              PKG=URL_${MOD//::/_}
-#              declare -n PKGREF=$PKG; URL=${PKGREF};
-#              mkdir -p myext/$PKG
-#              curl -L $URL | tar -xzf - --strip-components=1 --directory myext/$PKG
-#              cd myext/$PKG
-#              $PERLBIN Makefile.PL LINKTYPE=static
-#              make
-#              make install
-#              cd -
-#          done
-#          
-#          URL=$URL_Params_Validate_XS
-#          mkdir -p myext/URL_Params_Validate_XS
-#          curl -L $URL | tar -xzf - --strip-components=1 --directory myext/URL_Params_Validate_XS
-#          cd myext/URL_Params_Validate_XS
-#          $PERLBIN ./Build.PL && $PERLBIN ./Build && $PERLBIN ./Build install
-#          ar crs $PERLPREFIX/lib/site_perl/$PERLVER/x86_64-linux/auto/Params/Validate/XS/XS.a lib/Params/Validate/XS.o
-#          cd -
-#          
-#          URL=$URL_Text_BibTeX
-#          mkdir -p myext/URL_Text_BibTeX
-#          curl -L $URL | tar -xzf - --strip-components=1 --directory myext/URL_Text_BibTeX
-#          cd myext/URL_Text_BibTeX
-#          $PERLBIN ./Build.PL && $PERLBIN ./Build && $PERLBIN ./Build install
-#          ar crs $PERLPREFIX/lib/site_perl/$PERLVER/x86_64-linux/auto/Text/BibTeX/BibTeX.a    xscode/BibTeX.o xscode/btxs_support.o btparse/src/init.o btparse/src/input.o btparse/src/bibtex.o btparse/src/err.o btparse/src/scan.o btparse/src/error.o btparse/src/lex_auxiliary.o btparse/src/parse_auxiliary.o btparse/src/bibtex_ast.o btparse/src/sym.o btparse/src/util.o btparse/src/postprocess.o btparse/src/macros.o btparse/src/traversal.o btparse/src/modify.o btparse/src/names.o btparse/src/tex_tree.o btparse/src/string_util.o
-#          cd -
-#
-#          URL=$URL_IO_Compress_Brotli
-#          mkdir -p myext/URL_IO_Compress_Brotli
-#          curl -L $URL | tar -xzf - --strip-components=1 --directory myext/URL_IO_Compress_Brotli
-#          cd myext/URL_IO_Compress_Brotli
-#          $PERLBIN Makefile.PL LINKTYPE=static
-#          sed -i 's/$(CP) $(MYEXTLIB) "$@"/$(CP) $(MYEXTLIB) "$(dir $@)"/' Makefile
-#          MAKEFLAGS=-j1 make
-#          make install
-#          cd -
-#      
 #      - name: Build Perl embedded
 #        run: |
 #          export PERLPREFIX=$RUNNER_WORKSPACE/build
