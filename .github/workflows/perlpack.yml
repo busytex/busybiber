@@ -96,6 +96,7 @@ jobs:
 #          #./biber-linux_x86_64 --validate-control --convert-control test
        
       - name: Install Perl static
+        shell: bash
         run: |
           #mkdir perlsourcestatic && curl -L $URLPERL | tar -xzf - --strip-components=1 --directory=perlsourcestatic
           #cd perlsourcestatic && sh +x ./Configure -sde -Dprefix="$RUNNER_WORKSPACE/localperlstatic" -Dextras="DBI" -Dstatic_ext="attributes B Cwd Data/Dumper Devel/Peek Digest/MD5 Digest/SHA Encode Encode/Unicode Encode/CN Encode/KR Encode/TW Encode/JP  Encode/Symbol Encode/EBCDIC Encode/Byte Fcntl File/Glob Hash/Util I18N/Langinfo IO List/Util mro Opcode PerlIO/encoding PerlIO/scalar PerlIO/via POSIX PerlIO/mmap Time/HiRes re Socket  Unicode/Normalize Unicode/Collate Compress/Raw/Zlib Compress/Raw/Bzip2 threads threads/shared Sys/Syslog Sys/Hostname File/DosGlob Math/BigInt/FastCalc Hash/Util/FieldHash Filter/Util/Call IPC/SysV MIME/Base64" -Dusedevel -Accflags="-lm -ldl" -Aldflags="-lm -ldl" -Dlibs="-lpthread -ldl -lm -lutil -lc" && cd - && make -C perlsourcestatic && make -C perlsourcestatic install
@@ -116,6 +117,44 @@ jobs:
           #$PERLBIN $CPANBIN -T inc::Module::Install Module::Implementation Config::AutoConf ExtUtils::LibBuilder # DBI
           $PERLBIN $CPANBIN -T Alien::Base::Wrapper Alien::Build Alien::Build::MM Alien::cmake3 Alien::Libxml2 inc::Module::Install Module::Implementation Config::AutoConf ExtUtils::LibBuilder # DBI
           ln -s $PERLPREFIX/bin/enc2xs$PERLVER $PERLPREFIX/bin/enc2xs
+          
+          for MOD in Sort::Key Encode::EUCJPASCII Encode::JIS2K Encode::HanExtra XML::LibXML autovivification Devel::Caller Devel::LexAlias XML::LibXSLT XML::Parser::Expat Unicode::LineBreak Clone PadWalker  PerlIO::utf8_strict HTML::Parser List::MoreUtils::XS List::SomeUtils::XS DBI Net::SSLeay Sub::Identify DateTime Storable Variable::Magic Class::XSAccessor Package::Stash::XS Params::Util DBD::SQLite; do 
+              PKG=URL_${MOD//::/_}
+              declare -n PKGREF=$PKG; URL=${PKGREF};
+              mkdir -p myext/$PKG
+              curl -L $URL | tar -xzf - --strip-components=1 --directory myext/$PKG
+              cd myext/$PKG
+              $PERLBIN Makefile.PL LINKTYPE=static
+              make
+              make install
+              cd -
+          done
+          
+          URL=$URL_Params_Validate_XS
+          mkdir -p myext/URL_Params_Validate_XS
+          curl -L $URL | tar -xzf - --strip-components=1 --directory myext/URL_Params_Validate_XS
+          cd myext/URL_Params_Validate_XS
+          $PERLBIN ./Build.PL && $PERLBIN ./Build && $PERLBIN ./Build install
+          ar crs $PERLPREFIX/lib/site_perl/$PERLVER/x86_64-linux/auto/Params/Validate/XS/XS.a lib/Params/Validate/XS.o
+          cd -
+          
+          URL=$URL_Text_BibTeX
+          mkdir -p myext/URL_Text_BibTeX
+          curl -L $URL | tar -xzf - --strip-components=1 --directory myext/URL_Text_BibTeX
+          cd myext/URL_Text_BibTeX
+          $PERLBIN ./Build.PL && $PERLBIN ./Build && $PERLBIN ./Build install
+          ar crs $PERLPREFIX/lib/site_perl/$PERLVER/x86_64-linux/auto/Text/BibTeX/BibTeX.a    xscode/BibTeX.o xscode/btxs_support.o btparse/src/init.o btparse/src/input.o btparse/src/bibtex.o btparse/src/err.o btparse/src/scan.o btparse/src/error.o btparse/src/lex_auxiliary.o btparse/src/parse_auxiliary.o btparse/src/bibtex_ast.o btparse/src/sym.o btparse/src/util.o btparse/src/postprocess.o btparse/src/macros.o btparse/src/traversal.o btparse/src/modify.o btparse/src/names.o btparse/src/tex_tree.o btparse/src/string_util.o
+          cd -
+
+          URL=$URL_IO_Compress_Brotli
+          mkdir -p myext/URL_IO_Compress_Brotli
+          curl -L $URL | tar -xzf - --strip-components=1 --directory myext/URL_IO_Compress_Brotli
+          cd myext/URL_IO_Compress_Brotli
+          $PERLBIN Makefile.PL LINKTYPE=static
+          sed -i 's/$(CP) $(MYEXTLIB) "$@"/$(CP) $(MYEXTLIB) "$(dir $@)"/' Makefile
+          MAKEFLAGS=-j1 make
+          make install
+          cd -
           #ln -s $RUNNER_WORKSPACE/localperlstatic/bin/enc2xs$PERLVER $RUNNER_WORKSPACE/localperlstatic/bin/enc2xs
 
           #export PERLVER=5.35.4
