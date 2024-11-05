@@ -124,7 +124,7 @@ jobs:
               curl -L $URL | tar -xzf - --strip-components=1 --directory myext/$PKG
               cd myext/$PKG
               
-              fi [ -f Makefile.PL ]; then
+              if [ -f Makefile.PL ]; then
                   $PERLBIN Makefile.PL LINKTYPE=static
                   if [ "$MOD" == "IO::Compress::Brotli" ]; then sed -i 's/$(CP) $(MYEXTLIB) "$@"/$(CP) $(MYEXTLIB) "$(dir $@)"/' Makefile && export MAKEFLAGS=-j1; fi
                   make && make install
