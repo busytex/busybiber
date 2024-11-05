@@ -117,13 +117,13 @@ jobs:
               mkdir -p myext/$PKG
               curl -L $URL | tar -xzf - --strip-components=1 --directory myext/$PKG
               cd myext/$PKG
-              if [ "$MOD" == "IO::Compress::Brotli" ]; then
+              if [ "$MOD" == "Params::Validate::XS" ] || [ "$MOD" == "Text::BibTeX" ]; then
+                  $PERLBIN ./Build.PL
+                  $PERLBIN ./Build && $PERLBIN ./Build install
+              elif [ "$MOD" == "IO::Compress::Brotli" ]; then
                   $PERLBIN Makefile.PL LINKTYPE=static
                   sed -i 's/$(CP) $(MYEXTLIB) "$@"/$(CP) $(MYEXTLIB) "$(dir $@)"/' Makefile && export MAKEFLAGS=-j1
                   make && make install
-              elif [ -f Build.PL ]; then
-                  $PERLBIN ./Build.PL # Params::Validate::XS Text::BibTeX
-                  $PERLBIN ./Build && $PERLBIN ./Build install
               else
                   $PERLBIN Makefile.PL LINKTYPE=static
                   make && make install
