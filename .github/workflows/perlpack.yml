@@ -12,7 +12,7 @@ env:
   MODULES_def: "-DPERLPACK_mro -DPERLPACK_Devel__Peek -DPERLPACK_File__DosGlob -DPERLPACK_File__Glob -DPERLPACK_Sys__Syslog -DPERLPACK_Sys__Hostname -DPERLPACK_PerlIO__via -DPERLPACK_PerlIO__mmap -DPERLPACK_PerlIO__encoding -DPERLPACK_PerlIO__scalar -DPERLPACK_B -DPERLPACK_attributes -DPERLPACK_Unicode__Normalize -DPERLPACK_Unicode__Collate -DPERLPACK_threads -DPERLPACK_threads__shared -DPERLPACK_IPC__SysV -DPERLPACK_re -DPERLPACK_Digest__MD5 -DPERLPACK_Digest__SHA -DPERLPACK_SDBM_File -DPERLPACK_Math__BigInt__FastCalc -DPERLPACK_Data__Dumper -DPERLPACK_I18N__Langinfo -DPERLPACK_Time__HiRes -DPERLPACK_Time__Piece -DPERLPACK_IO -DPERLPACK_Socket -DPERLPACK_Hash__Util__FieldHash -DPERLPACK_Hash__Util -DPERLPACK_Filter__Util__Call -DPERLPACK_POSIX -DPERLPACK_Encode__Unicode -DPERLPACK_Encode -DPERLPACK_Encode__JP -DPERLPACK_Encode__KR -DPERLPACK_Encode__CN -DPERLPACK_Encode__Symbol -DPERLPACK_Encode__Byte -DPERLPACK_Encode__TW -DPERLPACK_Compress__Raw__Zlib -DPERLPACK_Compress__Raw__Bzip2 -DPERLPACK_MIME__Base64 -DPERLPACK_Cwd -DPERLPACK_Storable -DPERLPACK_List__Util -DPERLPACK_Fcntl -DPERLPACK_Opcode"
   MODULES_a: "mro/mro.a Devel/Peek/Peek.a File/DosGlob/DosGlob.a File/Glob/Glob.a Sys/Syslog/Syslog.a Sys/Hostname/Hostname.a PerlIO/via/via.a PerlIO/mmap/mmap.a PerlIO/encoding/encoding.a PerlIO/scalar/scalar.a B/B.a attributes/attributes.a Unicode/Normalize/Normalize.a Unicode/Collate/Collate.a threads/threads.a threads/shared/shared.a IPC/SysV/SysV.a re/re.a Digest/MD5/MD5.a Digest/SHA/SHA.a SDBM_File/SDBM_File.a Math/BigInt/FastCalc/FastCalc.a Data/Dumper/Dumper.a I18N/Langinfo/Langinfo.a Time/HiRes/HiRes.a Time/Piece/Piece.a IO/IO.a Socket/Socket.a Hash/Util/FieldHash/FieldHash.a Hash/Util/Util.a Filter/Util/Call/Call.a POSIX/POSIX.a Encode/Unicode/Unicode.a Encode/Encode.a Encode/JP/JP.a Encode/KR/KR.a Encode/EBCDIC/EBCDIC.a Encode/CN/CN.a Encode/Symbol/Symbol.a Encode/Byte/Byte.a Encode/TW/TW.a Compress/Raw/Zlib/Zlib.a Compress/Raw/Bzip2/Bzip2.a MIME/Base64/Base64.a Cwd/Cwd.a Storable/Storable.a List/Util/Util.a Fcntl/Fcntl.a Opcode/Opcode.a"
   MODULES_ext: "mro Devel/Peek File/DosGlob File/Glob Sys/Syslog Sys/Hostname PerlIO/via PerlIO/mmap PerlIO/encoding PerlIO/scalar B attributes Unicode/Normalize Unicode/Collate threads threads/shared IPC/SysV re Digest/MD5 Digest/SHA SDBM_File Math/BigInt/FastCalc Data/Dumper I18N/Langinfo Time/HiRes Time/Piece IO Socket Hash/Util/FieldHash Hash/Util Filter/Util/Call POSIX Encode/Unicode Encode Encode/JP Encode/KR Encode/EBCDIC Encode/CN Encode/Symbol Encode/Byte Encode/TW Compress/Raw/Zlib Compress/Raw/Bzip2 MIME/Base64 Cwd Storable List/Util Fcntl Opcode"
-  MODULES_0ext: "attributes B Cwd Data/Dumper Devel/Peek Digest/MD5 Digest/SHA Encode Encode/Unicode Encode/CN Encode/KR Encode/TW Encode/JP  Encode/Symbol Encode/EBCDIC Encode/Byte Fcntl File/Glob Hash/Util I18N/Langinfo IO List/Util mro Opcode PerlIO/encoding PerlIO/scalar PerlIO/via POSIX PerlIO/mmap Time/HiRes re Socket  Unicode/Normalize Unicode/Collate Compress/Raw/Zlib Compress/Raw/Bzip2 threads threads/shared Sys/Syslog Sys/Hostname File/DosGlob Math/BigInt/FastCalc Hash/Util/FieldHash Filter/Util/Call IPC/SysV MIME/Base64"
+  MODULEZ_ext: "mro Devel/Peek File/DosGlob File/Glob Sys/Syslog Sys/Hostname PerlIO/via PerlIO/mmap PerlIO/encoding PerlIO/scalar B attributes Unicode/Normalize Unicode/Collate threads threads/shared IPC/SysV re Digest/MD5 Digest/SHA           Math/BigInt/FastCalc Data/Dumper I18N/Langinfo Time/HiRes            IO Socket Hash/Util/FieldHash Hash/Util Filter/Util/Call POSIX Encode/Unicode Encode Encode/JP Encode/KR Encode/EBCDIC Encode/CN Encode/Symbol Encode/Byte Encode/TW Compress/Raw/Zlib Compress/Raw/Bzip2 MIME/Base64 Cwd          List/Util Fcntl Opcode "
   # unneded: SDBM_File Time/Piece Storable
   URL_Params_Validate_XS : https://cpan.metacpan.org/authors/id/D/DR/DROLSKY/Params-Validate-1.31.tar.gz
   URL_Text_BibTeX: https://cpan.metacpan.org/authors/id/A/AM/AMBS/Text-BibTeX-0.89.tar.gz
@@ -112,7 +112,7 @@ jobs:
           #export CPANBIN=$RUNNER_WORKSPACE/busybiber/packfs/bin/cpan5.32.0
           #export PERLPREFIX=$RUNNER_WORKSPACE/busybiber/packfs
           mkdir perlsourcestatic && curl -L $URLPERL | tar -xzf - --strip-components=1 --directory=perlsourcestatic
-          cd perlsourcestatic && sh +x ./Configure -sde -Dman1dir=none -Dman3dir=none -Dprefix="$RUNNER_WORKSPACE/localperlstatic" -Aldflags="-lm -ldl" -Accflags="-lm -ldl" -Dusedevel -Dlibs="-lpthread -ldl -lm -lutil -lc" -Dstatic_ext="$MODULES_0ext" -Dextras="DBI" && cd - && make -C perlsourcestatic && make -C perlsourcestatic install
+          cd perlsourcestatic && sh +x ./Configure -sde -Dman1dir=none -Dman3dir=none -Dprefix="$RUNNER_WORKSPACE/localperlstatic" -Aldflags="-lm -ldl" -Accflags="-lm -ldl" -Dusedevel -Dlibs="-lpthread -ldl -lm -lutil -lc" -Dstatic_ext="$MODULEZ_ext" -Dextras="DBI" && cd - && make -C perlsourcestatic && make -C perlsourcestatic install
           #cd perlsourcestatic && sh +x ./Configure -sde -Dman1dir=none -Dman3dir=none -Dprefix="/mnt/perlpack" -Dinstallprefix=../packfs -Aldflags="-lm -ldl" -Accflags="-lm -ldl" -Dusedevel -Dlibs="-lpthread -ldl -lm -lutil -lc" -Dstatic_ext="$MODULES_0ext" -Dextras="DBI" && cd - && make -C perlsourcestatic && make -C perlsourcestatic install
           #$PERLBIN $CPANBIN -T inc::Module::Install Module::Implementation Config::AutoConf ExtUtils::LibBuilder # DBI
           $PERLBIN $CPANBIN -T Alien::Base::Wrapper Alien::Build Alien::Build::MM Alien::cmake3 Alien::Libxml2 inc::Module::Install Module::Implementation Config::AutoConf ExtUtils::LibBuilder # DBI
@@ -161,61 +161,61 @@ jobs:
           #mkdir build && curl -L $URLPERL2 | tar -xzf - --strip-components=1 --directory=build
           #cd build && sh ./Configure -sde -Dman1dir=none -Dman3dir=none -Dprefix=/mnt/perlpack -Dinstallprefix=../packfs -Aldflags=-"lm" -Accflags="-lm" -Dusedevel -Dlibs="-lpthread -ldl -lm -lutil -lc" -Dstatic_ext="$MODULES_ext" -Dextras="DBI" && cd - && make -C build && make -C build install 
       
-      - name: Install Perl static extra packages
-        shell: bash
-        run: |
-          #export PERLVER=5.35.4
-          #export PERLBIN=$RUNNER_WORKSPACE/busybiber/packfs/bin/perl5.35.4
-          #export PERLPREFIX=$RUNNER_WORKSPACE/busybiber/build
-          #export LD_LIBRARY_PATH=$RUNNER_WORKSPACE/busybuber/packfs/lib:$LD_LIBRARY_PATH
-          #export PERLVER=5.32.0
-          #export PERLBIN=$RUNNER_WORKSPACE/localperlstatic/bin/perl5.32.0
-          #export LD_LIBRARY_PATH=$RUNNER_WORKSPACE/localperlstatic/lib:$LD_LIBRARY_PATH
-          #export PERLPREFIX=$RUNNER_WORKSPACE/localperlstatic
-          
-          export PERLVER=5.32.0
-          export PERLBIN=$RUNNER_WORKSPACE/busybiber/packfs/bin/perl5.32.0
-          export LD_LIBRARY_PATH=$RUNNER_WORKSPACE/busybiber/packfs/lib:$LD_LIBRARY_PATH
-          export PERLPREFIX=$RUNNER_WORKSPACE/busybiber/packfs
-
-          for MOD in Sort::Key Encode::EUCJPASCII Encode::JIS2K Encode::HanExtra XML::LibXML autovivification Devel::Caller Devel::LexAlias XML::LibXSLT XML::Parser::Expat Unicode::LineBreak Clone PadWalker  PerlIO::utf8_strict HTML::Parser List::MoreUtils::XS List::SomeUtils::XS DBI Net::SSLeay Sub::Identify DateTime Storable Variable::Magic Class::XSAccessor Package::Stash::XS Params::Util DBD::SQLite; do 
-              PKG=URL_${MOD//::/_}
-              declare -n PKGREF=$PKG; URL=${PKGREF};
-              mkdir -p myext/$PKG
-              curl -L $URL | tar -xzf - --strip-components=1 --directory myext/$PKG
-              cd myext/$PKG
-              $PERLBIN Makefile.PL LINKTYPE=static
-              make
-              make install
-              cd -
-          done
-          
-          URL=$URL_Params_Validate_XS
-          mkdir -p myext/URL_Params_Validate_XS
-          curl -L $URL | tar -xzf - --strip-components=1 --directory myext/URL_Params_Validate_XS
-          cd myext/URL_Params_Validate_XS
-          $PERLBIN ./Build.PL && $PERLBIN ./Build && $PERLBIN ./Build install
-          ar crs $PERLPREFIX/lib/site_perl/$PERLVER/x86_64-linux/auto/Params/Validate/XS/XS.a lib/Params/Validate/XS.o
-          cd -
-          
-          URL=$URL_Text_BibTeX
-          mkdir -p myext/URL_Text_BibTeX
-          curl -L $URL | tar -xzf - --strip-components=1 --directory myext/URL_Text_BibTeX
-          cd myext/URL_Text_BibTeX
-          $PERLBIN ./Build.PL && $PERLBIN ./Build && $PERLBIN ./Build install
-          ar crs $PERLPREFIX/lib/site_perl/$PERLVER/x86_64-linux/auto/Text/BibTeX/BibTeX.a    xscode/BibTeX.o xscode/btxs_support.o btparse/src/init.o btparse/src/input.o btparse/src/bibtex.o btparse/src/err.o btparse/src/scan.o btparse/src/error.o btparse/src/lex_auxiliary.o btparse/src/parse_auxiliary.o btparse/src/bibtex_ast.o btparse/src/sym.o btparse/src/util.o btparse/src/postprocess.o btparse/src/macros.o btparse/src/traversal.o btparse/src/modify.o btparse/src/names.o btparse/src/tex_tree.o btparse/src/string_util.o
-          cd -
-
-          URL=$URL_IO_Compress_Brotli
-          mkdir -p myext/URL_IO_Compress_Brotli
-          curl -L $URL | tar -xzf - --strip-components=1 --directory myext/URL_IO_Compress_Brotli
-          cd myext/URL_IO_Compress_Brotli
-          $PERLBIN Makefile.PL LINKTYPE=static
-          sed -i 's/$(CP) $(MYEXTLIB) "$@"/$(CP) $(MYEXTLIB) "$(dir $@)"/' Makefile
-          MAKEFLAGS=-j1 make
-          make install
-          cd -
-      
+#      - name: Install Perl static extra packages
+#        shell: bash
+#        run: |
+#          #export PERLVER=5.35.4
+#          #export PERLBIN=$RUNNER_WORKSPACE/busybiber/packfs/bin/perl5.35.4
+#          #export PERLPREFIX=$RUNNER_WORKSPACE/busybiber/build
+#          #export LD_LIBRARY_PATH=$RUNNER_WORKSPACE/busybuber/packfs/lib:$LD_LIBRARY_PATH
+#          #export PERLVER=5.32.0
+#          #export PERLBIN=$RUNNER_WORKSPACE/localperlstatic/bin/perl5.32.0
+#          #export LD_LIBRARY_PATH=$RUNNER_WORKSPACE/localperlstatic/lib:$LD_LIBRARY_PATH
+#          #export PERLPREFIX=$RUNNER_WORKSPACE/localperlstatic
+#          
+#          export PERLVER=5.32.0
+#          export PERLBIN=$RUNNER_WORKSPACE/busybiber/packfs/bin/perl5.32.0
+#          export LD_LIBRARY_PATH=$RUNNER_WORKSPACE/busybiber/packfs/lib:$LD_LIBRARY_PATH
+#          export PERLPREFIX=$RUNNER_WORKSPACE/busybiber/packfs
+#
+#          for MOD in Sort::Key Encode::EUCJPASCII Encode::JIS2K Encode::HanExtra XML::LibXML autovivification Devel::Caller Devel::LexAlias XML::LibXSLT XML::Parser::Expat Unicode::LineBreak Clone PadWalker  PerlIO::utf8_strict HTML::Parser List::MoreUtils::XS List::SomeUtils::XS DBI Net::SSLeay Sub::Identify DateTime Storable Variable::Magic Class::XSAccessor Package::Stash::XS Params::Util DBD::SQLite; do 
+#              PKG=URL_${MOD//::/_}
+#              declare -n PKGREF=$PKG; URL=${PKGREF};
+#              mkdir -p myext/$PKG
+#              curl -L $URL | tar -xzf - --strip-components=1 --directory myext/$PKG
+#              cd myext/$PKG
+#              $PERLBIN Makefile.PL LINKTYPE=static
+#              make
+#              make install
+#              cd -
+#          done
+#          
+#          URL=$URL_Params_Validate_XS
+#          mkdir -p myext/URL_Params_Validate_XS
+#          curl -L $URL | tar -xzf - --strip-components=1 --directory myext/URL_Params_Validate_XS
+#          cd myext/URL_Params_Validate_XS
+#          $PERLBIN ./Build.PL && $PERLBIN ./Build && $PERLBIN ./Build install
+#          ar crs $PERLPREFIX/lib/site_perl/$PERLVER/x86_64-linux/auto/Params/Validate/XS/XS.a lib/Params/Validate/XS.o
+#          cd -
+#          
+#          URL=$URL_Text_BibTeX
+#          mkdir -p myext/URL_Text_BibTeX
+#          curl -L $URL | tar -xzf - --strip-components=1 --directory myext/URL_Text_BibTeX
+#          cd myext/URL_Text_BibTeX
+#          $PERLBIN ./Build.PL && $PERLBIN ./Build && $PERLBIN ./Build install
+#          ar crs $PERLPREFIX/lib/site_perl/$PERLVER/x86_64-linux/auto/Text/BibTeX/BibTeX.a    xscode/BibTeX.o xscode/btxs_support.o btparse/src/init.o btparse/src/input.o btparse/src/bibtex.o btparse/src/err.o btparse/src/scan.o btparse/src/error.o btparse/src/lex_auxiliary.o btparse/src/parse_auxiliary.o btparse/src/bibtex_ast.o btparse/src/sym.o btparse/src/util.o btparse/src/postprocess.o btparse/src/macros.o btparse/src/traversal.o btparse/src/modify.o btparse/src/names.o btparse/src/tex_tree.o btparse/src/string_util.o
+#          cd -
+#
+#          URL=$URL_IO_Compress_Brotli
+#          mkdir -p myext/URL_IO_Compress_Brotli
+#          curl -L $URL | tar -xzf - --strip-components=1 --directory myext/URL_IO_Compress_Brotli
+#          cd myext/URL_IO_Compress_Brotli
+#          $PERLBIN Makefile.PL LINKTYPE=static
+#          sed -i 's/$(CP) $(MYEXTLIB) "$@"/$(CP) $(MYEXTLIB) "$(dir $@)"/' Makefile
+#          MAKEFLAGS=-j1 make
+#          make install
+#          cd -
+#      
 #      - name: Build Perl embedded
 #        run: |
 #          export PERLPREFIX=$RUNNER_WORKSPACE/build
