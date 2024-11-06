@@ -97,7 +97,8 @@ jobs:
         shell: bash
         run: |
           export PERLVER=5.32.0
-          export PERLPREFIX=$RUNNER_WORKSPACE/localperlstatic
+          #export PERLPREFIX=$RUNNER_WORKSPACE/localperlstatic
+          export PERLPREFIX=$RUNNER_WORKSPACE/busybiber/packfs
           export PERLBIN=$PERLPREFIX/bin/perl$PERLVER
           export CPANBIN=$PERLPREFIX/bin/cpan$PERLVER
           export LD_LIBRARY_PATH=$PERLPREFIX/lib:$LD_LIBRARY_PATH
