@@ -98,15 +98,15 @@ jobs:
         run: |
           export PERLVER=5.32.0
           export PERLPREFIX=$RUNNER_WORKSPACE/localperlstatic
-          export PERLBIN=$RUNNER_WORKSPACE/localperlstatic/bin/perl5.32.0
-          export CPANBIN=$RUNNER_WORKSPACE/localperlstatic/bin/cpan5.32.0
-          export LD_LIBRARY_PATH=$RUNNER_WORKSPACE/localperlstatic/lib:$LD_LIBRARY_PATH
+          export PERLBIN=$PERLPREFIX/bin/perl$PERLVER
+          export CPANBIN=$PERLPREFIX/bin/cpan$PERLVER
+          export LD_LIBRARY_PATH=$PERLPREFIX/lib:$LD_LIBRARY_PATH
           #export LD_LIBRARY_PATH=$RUNNER_WORKSPACE/busybiber/packfs/lib:$LD_LIBRARY_PATH
           #export PERLBIN=$RUNNER_WORKSPACE/busybiber/packfs/bin/perl5.32.0
           #export CPANBIN=$RUNNER_WORKSPACE/busybiber/packfs/bin/cpan5.32.0
           #export PERLPREFIX=$RUNNER_WORKSPACE/busybiber/packfs
           mkdir perlsourcestatic && curl -L $URLPERL | tar -xzf - --strip-components=1 --directory=perlsourcestatic
-          cd perlsourcestatic && sh +x ./Configure -sde -Dman1dir=none -Dman3dir=none -Dprefix="$RUNNER_WORKSPACE/localperlstatic" -Dinstallprefix="$RUNNER_WORKSPACE/localperlstatic" -Aldflags="-lm -ldl" -Accflags="-lm -ldl" -Dusedevel -Dlibs="-lpthread -ldl -lm -lutil -lc" -Dstatic_ext="$MODULES_ext" -Dextras="DBI" && cd - && make -C perlsourcestatic && make -C perlsourcestatic install
+          cd perlsourcestatic && sh +x ./Configure -sde -Dman1dir=none -Dman3dir=none -Dprefix="$RUNNER_WORKSPACE/localperlstatic" -Dinstallprefix="$PERLPREFIX" -Aldflags="-lm -ldl" -Accflags="-lm -ldl" -Dusedevel -Dlibs="-lpthread -ldl -lm -lutil -lc" -Dstatic_ext="$MODULES_ext" -Dextras="DBI" && cd - && make -C perlsourcestatic && make -C perlsourcestatic install
           #cd perlsourcestatic && sh +x ./Configure -sde -Dman1dir=none -Dman3dir=none -Dprefix="/mnt/perlpack" -Dinstallprefix=$RUNNER_WORKSPACE/busybiber/packfs -Aldflags="-lm -ldl" -Accflags="-lm -ldl" -Dusedevel -Dlibs="-lpthread -ldl -lm -lutil -lc" -Dstatic_ext="$MODULES_0ext" -Dextras="DBI" && cd - && make -C perlsourcestatic && make -C perlsourcestatic install
           $PERLBIN $CPANBIN -T Alien::Base::Wrapper Alien::Build Alien::Build::MM Alien::cmake3 Alien::Libxml2 inc::Module::Install Module::Implementation Config::AutoConf ExtUtils::LibBuilder # DBI
           ln -s $PERLPREFIX/bin/enc2xs$PERLVER $PERLPREFIX/bin/enc2xs
