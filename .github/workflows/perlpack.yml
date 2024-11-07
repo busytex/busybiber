@@ -6,7 +6,7 @@ env:
   URLBIBER: https://github.com/plk/biber/archive/v2.19.tar.gz
   MAKEFLAGS: -j2
   BIBER_DEV_TESTS: 0
-  perlv: "5.32.0"
+  PERLVER: "5.32.0"
   URLPERL: https://www.cpan.org/src/5.0/perl-5.32.0.tar.gz
   MODULES_def: "-DPERLPACK_mro -DPERLPACK_Devel__Peek -DPERLPACK_File__DosGlob -DPERLPACK_File__Glob -DPERLPACK_Sys__Syslog -DPERLPACK_Sys__Hostname -DPERLPACK_PerlIO__via -DPERLPACK_PerlIO__mmap -DPERLPACK_PerlIO__encoding -DPERLPACK_PerlIO__scalar -DPERLPACK_B -DPERLPACK_attributes -DPERLPACK_Unicode__Normalize -DPERLPACK_Unicode__Collate -DPERLPACK_threads -DPERLPACK_threads__shared -DPERLPACK_IPC__SysV -DPERLPACK_re -DPERLPACK_Digest__MD5 -DPERLPACK_Digest__SHA -DPERLPACK_SDBM_File -DPERLPACK_Math__BigInt__FastCalc -DPERLPACK_Data__Dumper -DPERLPACK_I18N__Langinfo -DPERLPACK_Time__HiRes -DPERLPACK_Time__Piece -DPERLPACK_IO -DPERLPACK_Socket -DPERLPACK_Hash__Util__FieldHash -DPERLPACK_Hash__Util -DPERLPACK_Filter__Util__Call -DPERLPACK_POSIX -DPERLPACK_Encode__Unicode -DPERLPACK_Encode -DPERLPACK_Encode__JP -DPERLPACK_Encode__KR -DPERLPACK_Encode__CN -DPERLPACK_Encode__Symbol -DPERLPACK_Encode__Byte -DPERLPACK_Encode__TW -DPERLPACK_Compress__Raw__Zlib -DPERLPACK_Compress__Raw__Bzip2 -DPERLPACK_MIME__Base64 -DPERLPACK_Cwd -DPERLPACK_Storable -DPERLPACK_List__Util -DPERLPACK_Fcntl -DPERLPACK_Opcode"
   MODULES_a: "mro/mro.a Devel/Peek/Peek.a File/DosGlob/DosGlob.a File/Glob/Glob.a Sys/Syslog/Syslog.a Sys/Hostname/Hostname.a PerlIO/via/via.a PerlIO/mmap/mmap.a PerlIO/encoding/encoding.a PerlIO/scalar/scalar.a B/B.a attributes/attributes.a Unicode/Normalize/Normalize.a Unicode/Collate/Collate.a threads/threads.a threads/shared/shared.a IPC/SysV/SysV.a re/re.a Digest/MD5/MD5.a Digest/SHA/SHA.a SDBM_File/SDBM_File.a Math/BigInt/FastCalc/FastCalc.a Data/Dumper/Dumper.a I18N/Langinfo/Langinfo.a Time/HiRes/HiRes.a Time/Piece/Piece.a IO/IO.a Socket/Socket.a Hash/Util/FieldHash/FieldHash.a Hash/Util/Util.a Filter/Util/Call/Call.a POSIX/POSIX.a Encode/Unicode/Unicode.a Encode/Encode.a Encode/JP/JP.a Encode/KR/KR.a Encode/EBCDIC/EBCDIC.a Encode/CN/CN.a Encode/Symbol/Symbol.a Encode/Byte/Byte.a Encode/TW/TW.a Compress/Raw/Zlib/Zlib.a Compress/Raw/Bzip2/Bzip2.a MIME/Base64/Base64.a Cwd/Cwd.a Storable/Storable.a List/Util/Util.a Fcntl/Fcntl.a Opcode/Opcode.a"
@@ -80,11 +80,11 @@ jobs:
 #          $RUNNER_WORKSPACE/localperldynamic/bin/perl ./Build.PL
 #          $RUNNER_WORKSPACE/localperldynamic/bin/perl ./Build test
 #          $RUNNER_WORKSPACE/localperldynamic/bin/perl ./Build install
-#          ucpath="/usr/local/perl/lib/${perlv}/Unicode/Collate"
-#          if [ -d "/usr/local/perl/lib/site_perl/${perlv}/x86_64-linux-thread-multi/Unicode/Collate" ]; then ucpath="/usr/local/perl/lib/site_perl/${perlv}/x86_64-linux-thread-multi/Unicode/Collate"; fi
+#          ucpath="/usr/local/perl/lib/${PERLVER}/Unicode/Collate"
+#          if [ -d "/usr/local/perl/lib/site_perl/${PERLVER}/x86_64-linux-thread-multi/Unicode/Collate" ]; then ucpath="/usr/local/perl/lib/site_perl/${PERLVER}/x86_64-linux-thread-multi/Unicode/Collate"; fi
 #          echo "USING Unicode::Collate at: ${ucpath}, Unicode::Collate has a site_perl version so has been updated since this perl was released"
 #          PARMODULE="deprecate Biber::Input::file::bibtex Biber::Input::file::biblatexml Biber::Output::dot Biber::Output::bbl Biber::Output::bblxml Biber::Output::bibtex Biber::Output::biblatexml Pod::Simple::TranscodeSmart Pod::Simple::TranscodeDumb List::MoreUtils::XS List::SomeUtils::XS List::MoreUtils::PP HTTP::Status HTTP::Date Encode:: File::Find::Rule IO::Socket::SSL IO::String PerlIO::utf8_strict Text::CSV_XS DateTime"
-#          PARADDFILE="../../data/biber-tool.conf;lib/Biber/biber-tool.conf ../../data/schemata/config.rnc;lib/Biber/config.rnc ../../data/schemata/config.rng;lib/Biber/config.rng ../../data/schemata/bcf.rnc;lib/Biber/bcf.rnc ../../data/schemata/bcf.rng;lib/Biber/bcf.rng ../../lib/Biber/LaTeX/recode_data.xml;lib/Biber/LaTeX/recode_data.xml ../../data/bcf.xsl;lib/Biber/bcf.xsl ${ucpath}/Locale;lib/Unicode/Collate/Locale ${ucpath}/CJK;lib/Unicode/Collate/CJK ${ucpath}/allkeys.txt;lib/Unicode/Collate/allkeys.txt ${ucpath}/keys.txt;lib/Unicode/Collate/keys.txt /usr/local/perl/lib/site_perl/${perlv}/Mozilla/CA/cacert.pem;lib/Mozilla/CA/cacert.pem /usr/local/perl/lib/${perlv}/x86_64-linux-thread-multi/PerlIO;lib/PerlIO /usr/local/perl/lib/${perlv}/x86_64-linux-thread-multi/auto/PerlIO;lib/auto/PerlIO /usr/local/perl/lib/site_perl/${perlv}/Business/ISBN/RangeMessage.xml;lib/Business/ISBN/RangeMessage.xml"
+#          PARADDFILE="../../data/biber-tool.conf;lib/Biber/biber-tool.conf ../../data/schemata/config.rnc;lib/Biber/config.rnc ../../data/schemata/config.rng;lib/Biber/config.rng ../../data/schemata/bcf.rnc;lib/Biber/bcf.rnc ../../data/schemata/bcf.rng;lib/Biber/bcf.rng ../../lib/Biber/LaTeX/recode_data.xml;lib/Biber/LaTeX/recode_data.xml ../../data/bcf.xsl;lib/Biber/bcf.xsl ${ucpath}/Locale;lib/Unicode/Collate/Locale ${ucpath}/CJK;lib/Unicode/Collate/CJK ${ucpath}/allkeys.txt;lib/Unicode/Collate/allkeys.txt ${ucpath}/keys.txt;lib/Unicode/Collate/keys.txt /usr/local/perl/lib/site_perl/${PERLVER}/Mozilla/CA/cacert.pem;lib/Mozilla/CA/cacert.pem /usr/local/perl/lib/${PERLVER}/x86_64-linux-thread-multi/PerlIO;lib/PerlIO /usr/local/perl/lib/${PERLVER}/x86_64-linux-thread-multi/auto/PerlIO;lib/auto/PerlIO /usr/local/perl/lib/site_perl/${PERLVER}/Business/ISBN/RangeMessage.xml;lib/Business/ISBN/RangeMessage.xml"
 #          PARLINK="$RUNNER_WORKSPACE/localperldynamic/lib/libbtparse.so /usr/lib/libxml2.so /lib/libz.so.1 /usr/lib/libxslt.so.1 /usr/lib/libexslt.so.0 /usr/lib/libssl.so.1.1 /usr/lib/libcrypto.so.1.1"
 #          cd ./dist/linux_x86_64
 #          PAR_VERBATIM=1 "$RUNNER_WORKSPACE/localperldynamic/bin/pp" -vvv $(printf -- "--module=%s " $PARMODULE) $(printf -- "--link=%s " $PARLINK) $(printf -- "--addfile=%s " $PARADDFILE) --output=biber-linux_x86_64 ../../bin/biber
@@ -96,7 +96,6 @@ jobs:
       - name: Install Perl static
         shell: bash
         run: |
-          export PERLVER=5.32.0
           #export PERLPREFIX=$RUNNER_WORKSPACE/localperlstatic
           export PERLPREFIX=$RUNNER_WORKSPACE/busybiber/packfs
           export TRUEPREFIX=/__w/busybiber/busybiber/packfs
@@ -165,14 +164,16 @@ jobs:
           objcopy --redefine-sym fileno=orig_fileno fileno.lo
           ar rs libc_perlpack.a open.lo close.lo read.lo stat.lo fstat.lo lseek.lo access.lo fopen.lo fileno.lo
           
+          find $PERLPREFIX -name '*.pod' -o -name '*.ld' -delete
+          find $PERLPREFIX -name '*.a' -exec mv -t . {} +
+
           $PERLBIN perlpack.pl -i $PERLPREFIX -o perlpack.h --prefix=$TRUEPREFIX --ld=ld
           cp perlpack.pl myscript.pl && ld -r -b binary -o myscript.o myscript.pl
           
-          cc -o perlpack perlpack.c myscript.o -DPACKFS_STATIC -DPACKFS_BUILTIN_PREFIX=$TRUEPREFIX  -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -I$PWD/perlsourcestatic -I/usr/local/include   -Wl,-E -fstack-protector-strong -fwrapv -fno-strict-aliasing -L/usr/local/lib perlsourcestatic/libperl.a libc_perlpack.a -lpthread -ldl -lm -lutil   --static -static -static-libstdc++ -static-libgcc   $MODULES_def $(printf "perlsourcestatic/lib/auto/%s " $MODULES_a) @perlpack.h.txt
-          ./perlpack
+          cc -o busybiber busybiber.c myscript.o -DPACKFS_STATIC -DPACKFS_BUILTIN_PREFIX=$TRUEPREFIX  -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -I$PWD/perlsourcestatic -I/usr/local/include   -Wl,-E -fstack-protector-strong -fwrapv -fno-strict-aliasing -L/usr/local/lib perlsourcestatic/libperl.a libc_perlpack.a -lpthread -ldl -lm -lutil   --static -static -static-libstdc++ -static-libgcc   $MODULES_def $(printf "perlsourcestatic/lib/auto/%s " $MODULES_a) @perlpack.h.txt
+          ./busybiber
 
-#          find packfs -name '*.pod' -o -name '*.ld' -o -name '*.a' -o -name '*.h' -delete || true
-#          I$PERLPREFIX/lib/$PERLVER/x86_64-linux/CORE      
+#          I$PERLPREFIX/lib/$PERLVER/x86_64-linux/CORE
 #          -lpthread -ldl -lm -lutil -lc -lm 
        
       - name: Artifacts
