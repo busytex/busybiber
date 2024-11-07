@@ -16,7 +16,7 @@ Getopt::Long::GetOptions(
     'output-path|o=s' => \$output_path,
     'prefix=s'        => \$prefix,
     'ld=s'            => \$ld,
-    'skip=s'    => \$skip
+    'skip=s'          => \$skip
 );
 die "Input path does not exist or is not a directory" unless -e $input_path && -d $input_path ;
 die "Output path not specified" if $output_path eq '';
