@@ -113,6 +113,7 @@ jobs:
           
           export PERLLIB=$PERLPREFIX/lib/$PERLVER:$PERLPREFIX/lib/$PERLVER/x86_64-linux:$PERLPREFIX/lib/site_perl/$PERLVER
           export CPATH=$PERLPREFIX/lib/$PERLVER/x86_64-linux/CORE
+          export MAKEFLAGS=-j1
           echo BEFORE1
           $PERLBIN $CPANBIN -T Config::AutoConf ExtUtils::LibBuilder 
           echo AFTER1
@@ -136,7 +137,7 @@ jobs:
                   $PERLBIN ./Build && $PERLBIN ./Build install
               elif [ "$MOD" == "IO::Compress::Brotli" ]; then
                   $PERLBIN Makefile.PL LINKTYPE=static
-                  sed -i 's/$(CP) $(MYEXTLIB) "$@"/$(CP) $(MYEXTLIB) "$(dir $@)"/' Makefile && export MAKEFLAGS=-j1
+                  sed -i 's/$(CP) $(MYEXTLIB) "$@"/$(CP) $(MYEXTLIB) "$(dir $@)"/' Makefile # && export MAKEFLAGS=-j1
                   make && make install
               else
                   $PERLBIN Makefile.PL LINKTYPE=static
