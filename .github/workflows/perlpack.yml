@@ -113,7 +113,6 @@ jobs:
           
           #export PERLLIB=$PERLPREFIX/lib/$PERLVER:$PERLPREFIX/lib/$PERLVER/x86_64-linux:$PERLPREFIX/lib/site_perl/$PERLVER
           #export CPATH=$PERLPREFIX/lib/$PERLVER/x86_64-linux/CORE
-          #export MAKEFLAGS=-j1
           
           #echo BEFORE1
           #$PERLBIN $CPANBIN -T Config::AutoConf ExtUtils::LibBuilder 
@@ -125,6 +124,7 @@ jobs:
           #$PERLBIN $CPANBIN -T inc::Module::Install Module::Implementation
           #echo AFTER3
           
+          export MAKEFLAGS=-j1
           $PERLBIN $CPANBIN -T Alien::Base::Wrapper Alien::Build Alien::Build::MM Alien::cmake3 Alien::Libxml2 inc::Module::Install Module::Implementation Config::AutoConf ExtUtils::LibBuilder # DBI
           ln -s $PERLPREFIX/bin/enc2xs$PERLVER $PERLPREFIX/bin/enc2xs
 
@@ -149,8 +149,8 @@ jobs:
               cd -
               echo AFTER $MOD
           done
-          ar crs $PERLPREFIX/lib/site_perl/$PERLVER/x86_64-linux/auto/Params/Validate/XS/XS.a myext/URL_Params_Validate_XS/lib/Params/Validate/XS.o
-          ar crs $PERLPREFIX/lib/site_perl/$PERLVER/x86_64-linux/auto/Text/BibTeX/BibTeX.a    myext/URL_Text_BibTeX/xscode/BibTeX.o myext/URL_Text_BibTeX/xscode/btxs_support.o myext/URL_Text_BibTeX/btparse/src/init.o myext/URL_Text_BibTeX/btparse/src/input.o myext/URL_Text_BibTeX/btparse/src/bibtex.o myext/URL_Text_BibTeX/btparse/src/err.o myext/URL_Text_BibTeX/btparse/src/scan.o myext/URL_Text_BibTeX/btparse/src/error.o myext/URL_Text_BibTeX/btparse/src/lex_auxiliary.o myext/URL_Text_BibTeX/btparse/src/parse_auxiliary.o myext/URL_Text_BibTeX/btparse/src/bibtex_ast.o myext/URL_Text_BibTeX/btparse/src/sym.o myext/URL_Text_BibTeX/btparse/src/util.o myext/URL_Text_BibTeX/btparse/src/postprocess.o myext/URL_Text_BibTeX/btparse/src/macros.o myext/URL_Text_BibTeX/btparse/src/traversal.o myext/URL_Text_BibTeX/btparse/src/modify.o myext/URL_Text_BibTeX/btparse/src/names.o myext/URL_Text_BibTeX/btparse/src/tex_tree.o myext/URL_Text_BibTeX/btparse/src/string_util.o
+          ar crs $PERLPREFIX/lib/perl5/site_perl/$PERLVER/x86_64-linux/auto/Params/Validate/XS/XS.a myext/URL_Params_Validate_XS/lib/Params/Validate/XS.o
+          ar crs $PERLPREFIX/lib/perl5/site_perl/$PERLVER/x86_64-linux/auto/Text/BibTeX/BibTeX.a    myext/URL_Text_BibTeX/xscode/BibTeX.o myext/URL_Text_BibTeX/xscode/btxs_support.o myext/URL_Text_BibTeX/btparse/src/init.o myext/URL_Text_BibTeX/btparse/src/input.o myext/URL_Text_BibTeX/btparse/src/bibtex.o myext/URL_Text_BibTeX/btparse/src/err.o myext/URL_Text_BibTeX/btparse/src/scan.o myext/URL_Text_BibTeX/btparse/src/error.o myext/URL_Text_BibTeX/btparse/src/lex_auxiliary.o myext/URL_Text_BibTeX/btparse/src/parse_auxiliary.o myext/URL_Text_BibTeX/btparse/src/bibtex_ast.o myext/URL_Text_BibTeX/btparse/src/sym.o myext/URL_Text_BibTeX/btparse/src/util.o myext/URL_Text_BibTeX/btparse/src/postprocess.o myext/URL_Text_BibTeX/btparse/src/macros.o myext/URL_Text_BibTeX/btparse/src/traversal.o myext/URL_Text_BibTeX/btparse/src/modify.o myext/URL_Text_BibTeX/btparse/src/names.o myext/URL_Text_BibTeX/btparse/src/tex_tree.o myext/URL_Text_BibTeX/btparse/src/string_util.o
       
 #      - name: Build Perl embedded
 #        run: |
