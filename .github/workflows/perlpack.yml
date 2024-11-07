@@ -135,12 +135,14 @@ jobs:
           echo BEFORE Module::Implementation
           $PERLBIN $CPANBIN -T Module::Implementation 
           echo AFTER Module::Implementation
-          echo BEFORE Config::AutoConf
-          $PERLBIN $CPANBIN -T Config::AutoConf 
-          echo AFTER Config::AutoConf
-          echo BEFORE ExtUtils::LibBuilder
-          $PERLBIN $CPANBIN -T ExtUtils::LibBuilder # DBI
-          echo AFTER ExtUtils::LibBuilder
+          #echo BEFORE Config::AutoConf
+          #$PERLBIN $CPANBIN -T Config::AutoConf 
+          #echo AFTER Config::AutoConf
+          
+          #echo BEFORE ExtUtils::LibBuilder
+          #$PERLBIN $CPANBIN -T ExtUtils::LibBuilder # DBI
+          #echo AFTER ExtUtils::LibBuilder
+
           #$PERLBIN $CPANBIN -T Alien::Base::Wrapper Alien::Build Alien::Build::MM Alien::cmake3 Alien::Libxml2 inc::Module::Install Module::Implementation Config::AutoConf ExtUtils::LibBuilder # DBI
 #          ln -s $PERLPREFIX/bin/enc2xs$PERLVER $PERLPREFIX/bin/enc2xs
 #          
