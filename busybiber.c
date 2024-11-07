@@ -696,20 +696,12 @@ void xs_init(pTHX) //EXTERN_C
 int main(int argc, char *argv[], char* envp[])
 {
     static char script[1 << 20] = "print('Hello world! Need more arguments!\n');";
-    extern char _binary_myscript_pl_start[];
-    extern char _binary_myscript_pl_end[];
 
     if(argc < 1)
         return -1;
-    else if(argc > 1 && 0 == strcmp("myscript.pl", argv[1]))
+    else if(argc > 1)
     {
-        size_t iSize = _binary_myscript_pl_end - _binary_myscript_pl_start;
-        strncpy(script, _binary_myscript_pl_start, iSize);
-        script[iSize] = '\0';
-    }
-    else if(argc > 2 && 0 == strcmp("-e", argv[1]))
-    {
-        strcpy(script, argv[2]);
+        //strcpy(script, argv[2]);
     }
     
     packfs_ensure_context();
