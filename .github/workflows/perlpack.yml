@@ -3,7 +3,6 @@ name: perlpack
 on: workflow_dispatch
 # https://github.com/plk/biber/blob/dev/dist/linux_x86_64/build.sh
 env:
-  URLBIBER: https://github.com/plk/biber/archive/v2.19.tar.gz
   MAKEFLAGS: -j2
   BIBER_DEV_TESTS: 0
   PERLVER: "5.32.0"
@@ -12,6 +11,7 @@ env:
   MODULES_a: "mro/mro.a Devel/Peek/Peek.a File/DosGlob/DosGlob.a File/Glob/Glob.a Sys/Syslog/Syslog.a Sys/Hostname/Hostname.a PerlIO/via/via.a PerlIO/mmap/mmap.a PerlIO/encoding/encoding.a PerlIO/scalar/scalar.a B/B.a attributes/attributes.a Unicode/Normalize/Normalize.a Unicode/Collate/Collate.a threads/threads.a threads/shared/shared.a IPC/SysV/SysV.a re/re.a Digest/MD5/MD5.a Digest/SHA/SHA.a SDBM_File/SDBM_File.a Math/BigInt/FastCalc/FastCalc.a Data/Dumper/Dumper.a I18N/Langinfo/Langinfo.a Time/HiRes/HiRes.a Time/Piece/Piece.a IO/IO.a Socket/Socket.a Hash/Util/FieldHash/FieldHash.a Hash/Util/Util.a Filter/Util/Call/Call.a POSIX/POSIX.a Encode/Unicode/Unicode.a Encode/Encode.a Encode/JP/JP.a Encode/KR/KR.a Encode/EBCDIC/EBCDIC.a Encode/CN/CN.a Encode/Symbol/Symbol.a Encode/Byte/Byte.a Encode/TW/TW.a Compress/Raw/Zlib/Zlib.a Compress/Raw/Bzip2/Bzip2.a MIME/Base64/Base64.a Cwd/Cwd.a Storable/Storable.a List/Util/Util.a Fcntl/Fcntl.a Opcode/Opcode.a"
   MODULES_ext: "mro Devel/Peek File/DosGlob File/Glob Sys/Syslog Sys/Hostname PerlIO/via PerlIO/mmap PerlIO/encoding PerlIO/scalar B attributes Unicode/Normalize Unicode/Collate threads threads/shared IPC/SysV re Digest/MD5 Digest/SHA SDBM_File Math/BigInt/FastCalc Data/Dumper I18N/Langinfo Time/HiRes Time/Piece IO Socket Hash/Util/FieldHash Hash/Util Filter/Util/Call POSIX Encode/Unicode Encode Encode/JP Encode/KR Encode/EBCDIC Encode/CN Encode/Symbol Encode/Byte Encode/TW Compress/Raw/Zlib Compress/Raw/Bzip2 MIME/Base64 Cwd Storable List/Util Fcntl Opcode"
   # unneded: SDBM_File Time/Piece Storable
+  URL_Biber: https://github.com/plk/biber/archive/v2.20.tar.gz
   URL_Params_Validate_XS : https://cpan.metacpan.org/authors/id/D/DR/DROLSKY/Params-Validate-1.31.tar.gz
   URL_Text_BibTeX: https://cpan.metacpan.org/authors/id/A/AM/AMBS/Text-BibTeX-0.89.tar.gz
   URL_IO_Compress_Brotli : https://cpan.metacpan.org/authors/id/T/TI/TIMLEGGE/IO-Compress-Brotli-0.017.tar.gz
@@ -57,7 +57,6 @@ jobs:
 #      - name: Install Perl dynamic
 #        run: |
 #          #echo "LD_LIBRARY_PATH=$RUNNER_WORKSPACE/localperldynamic/lib:$LD_LIBRARY_PATH" >> $GITHUB_ENV
-#          # https://github.com/plk/biber/blob/master/dist/linux_x86_64/build.sh
 #          #PARLINK="/usr/local/perl/lib/libbtparse.so /usr/lib/x86_64-linux-gnu/libxml2.so.2 /usr/lib/x86_64-linux-gnu/libz.so.1 /usr/lib/x86_64-linux-gnu/libxslt.so.1 /usr/lib/x86_64-linux-gnu/libexslt.so.0 /usr/lib/x86_64-linux-gnu/libssl.so /usr/lib/x86_64-linux-gnu/libcrypto.so"
 #          #sudo ln -s /usr/local/perl/lib/5.32.0/x86_64-linux /usr/local/perl/lib/5.32.0/x86_64-linux-thread-multi
 #          mkdir perlsourcedynamic
@@ -69,7 +68,7 @@ jobs:
 #          make install
 #          #sudo rm -rf /usr/local/perl && sudo ln -s $RUNNER_WORKSPACE/localperldynamic /usr/local/perl
 #          export LD_LIBRARY_PATH="$RUNNER_WORKSPACE/localperldynamic/lib:$LD_LIBRARY_PATH"
-#          mkdir biber && wget $URLBIBER && tar -xf $(basename $URLBIBER) --strip-components=1 --directory biber
+#          mkdir biber && wget $URL_Biber && tar -xf $(basename $URL_Biber) --strip-components=1 --directory biber
 #          cd biber
 #          $RUNNER_WORKSPACE/localperldynamic/bin/cpan -T Module::Build
 #          $RUNNER_WORKSPACE/localperldynamic/bin/cpan -T Config::AutoConf ExtUtils::LibBuilder Business::ISBN Business::ISMN Business::ISSN    Class::Accessor Data::Compare Data::Dump Data::Uniqid DateTime::Calendar::Julian DateTime::Format::Builder    Encode::EUCJPASCII Encode::HanExtra Encode::JIS2K Encode::Locale File::Slurper IO::String IPC::Run3 LWP::Protocol::https LWP::UserAgent    Lingua::Translit List::AllUtils List::MoreUtils List::MoreUtils::XS Log::Log4perl Mozilla::CA    Parse::RecDescent PerlIO::utf8_strict Regexp::Common Sort::Key Text::BibTeX Text::CSV Text::CSV_XS Text::Roman URI Unicode::Collate Unicode::GCString Unicode::LineBreak    XML::LibXML XML::LibXML::Simple XML::LibXSLT XML::Writer     autovivification File::Which Test::Differences
@@ -127,19 +126,19 @@ jobs:
           $PERLBIN $CPANBIN -T Alien::Base::Wrapper Alien::Build Alien::Build::MM Alien::cmake3 Alien::Libxml2 inc::Module::Install Module::Implementation Config::AutoConf ExtUtils::LibBuilder # DBI
           ln -s $PERLPREFIX/bin/enc2xs$PERLVER $PERLPREFIX/bin/enc2xs
 
-          for MOD in Sort::Key Encode::EUCJPASCII Encode::JIS2K Encode::HanExtra XML::LibXML autovivification Devel::Caller Devel::LexAlias XML::LibXSLT XML::Parser::Expat Unicode::LineBreak Clone PadWalker  PerlIO::utf8_strict HTML::Parser List::MoreUtils::XS List::SomeUtils::XS DBI Net::SSLeay Sub::Identify DateTime Storable Variable::Magic Class::XSAccessor Package::Stash::XS Params::Util DBD::SQLite    Params::Validate::XS Text::BibTeX IO::Compress::Brotli; do 
+          for MOD in Sort::Key Encode::EUCJPASCII Encode::JIS2K Encode::HanExtra XML::LibXML autovivification Devel::Caller Devel::LexAlias XML::LibXSLT XML::Parser::Expat Unicode::LineBreak Clone PadWalker  PerlIO::utf8_strict HTML::Parser List::MoreUtils::XS List::SomeUtils::XS DBI Net::SSLeay Sub::Identify DateTime Storable Variable::Magic Class::XSAccessor Package::Stash::XS Params::Util DBD::SQLite    Params::Validate::XS Text::BibTeX IO::Compress::Brotli Biber; do 
               echo BEFORE $MOD
               PKG=URL_${MOD//::/_}
               declare -n PKGREF=$PKG; URL=${PKGREF};
               mkdir -p myext/$PKG
               curl -L $URL | tar -xzf - --strip-components=1 --directory myext/$PKG
               cd myext/$PKG
-              if [ "$MOD" == "Params::Validate::XS" ] || [ "$MOD" == "Text::BibTeX" ]; then
+              if [ "$MOD" == "Params::Validate::XS" ] || [ "$MOD" == "Text::BibTeX" ] || [ "$MOD" == "Biber" ]; then
                   $PERLBIN ./Build.PL
                   $PERLBIN ./Build && $PERLBIN ./Build install
               elif [ "$MOD" == "IO::Compress::Brotli" ]; then
                   $PERLBIN Makefile.PL LINKTYPE=static
-                  sed -i 's/$(CP) $(MYEXTLIB) "$@"/$(CP) $(MYEXTLIB) "$(dir $@)"/' Makefile # && export MAKEFLAGS=-j1
+                  sed -i 's/$(CP) $(MYEXTLIB) "$@"/$(CP) $(MYEXTLIB) "$(dir $@)"/' Makefile
                   make && make install
               else
                   $PERLBIN Makefile.PL LINKTYPE=static
@@ -150,7 +149,6 @@ jobs:
           done
           ar crs $PERLPREFIX/lib/perl5/site_perl/$PERLVER/x86_64-linux/auto/Params/Validate/XS/XS.a myext/URL_Params_Validate_XS/lib/Params/Validate/XS.o
           ar crs $PERLPREFIX/lib/perl5/site_perl/$PERLVER/x86_64-linux/auto/Text/BibTeX/BibTeX.a    myext/URL_Text_BibTeX/xscode/BibTeX.o myext/URL_Text_BibTeX/xscode/btxs_support.o myext/URL_Text_BibTeX/btparse/src/init.o myext/URL_Text_BibTeX/btparse/src/input.o myext/URL_Text_BibTeX/btparse/src/bibtex.o myext/URL_Text_BibTeX/btparse/src/err.o myext/URL_Text_BibTeX/btparse/src/scan.o myext/URL_Text_BibTeX/btparse/src/error.o myext/URL_Text_BibTeX/btparse/src/lex_auxiliary.o myext/URL_Text_BibTeX/btparse/src/parse_auxiliary.o myext/URL_Text_BibTeX/btparse/src/bibtex_ast.o myext/URL_Text_BibTeX/btparse/src/sym.o myext/URL_Text_BibTeX/btparse/src/util.o myext/URL_Text_BibTeX/btparse/src/postprocess.o myext/URL_Text_BibTeX/btparse/src/macros.o myext/URL_Text_BibTeX/btparse/src/traversal.o myext/URL_Text_BibTeX/btparse/src/modify.o myext/URL_Text_BibTeX/btparse/src/names.o myext/URL_Text_BibTeX/btparse/src/tex_tree.o myext/URL_Text_BibTeX/btparse/src/string_util.o
-          $PERLBIN $CPANBIN -T biber
 
           cp $(cc -print-file-name=libc.a) libc_perlpack.a
           ar x libc_perlpack.a  open.lo close.lo read.lo stat.lo fstat.lo lseek.lo access.lo fopen.lo fileno.lo
