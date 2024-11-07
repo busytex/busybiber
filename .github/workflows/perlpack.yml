@@ -169,8 +169,17 @@ jobs:
           cp perlpack.pl myscript.pl && ld -r -b binary -o myscript.o myscript.pl
           
           cc -o perlpack perlpack.c myscript.o -DPACKFS_STATIC -DPACKFS_BUILTIN_PREFIX=$TRUEPREFIX  -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -I$PWD/perlsourcestatic -I/usr/local/include   -Wl,-E -fstack-protector-strong -fwrapv -fno-strict-aliasing -L/usr/local/lib perlsourcestatic/libperl.a libc_perlpack.a -lpthread -ldl -lm -lutil   --static -static -static-libstdc++ -static-libgcc   $MODULES_def $(printf "perlsourcestatic/lib/auto/%s " $MODULES_a) @perlpack.h.txt
+          ./perlpack
 
-#          ./perlpack
 #          find packfs -name '*.pod' -o -name '*.ld' -o -name '*.a' -o -name '*.h' -delete || true
 #          I$PERLPREFIX/lib/$PERLVER/x86_64-linux/CORE      
 #          -lpthread -ldl -lm -lutil -lc -lm 
+       
+      - name: Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          path: |
+            busybiber
+            perlpack.h
+            libc_perlpack.a
+            packfs/
