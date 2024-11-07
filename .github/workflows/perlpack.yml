@@ -110,38 +110,20 @@ jobs:
           mkdir perlsourcestatic && curl -L $URLPERL | tar -xzf - --strip-components=1 --directory=perlsourcestatic
           cd perlsourcestatic && sh +x ./Configure -sde -Dman1dir=none -Dman3dir=none -Dprefix="$TRUEPREFIX" -Dinstallprefix="$PERLPREFIX" -Aldflags="-lm -ldl" -Accflags="-lm -ldl" -Dusedevel -Dlibs="-lpthread -ldl -lm -lutil -lc" -Dstatic_ext="$MODULES_ext" && cd - && make -C perlsourcestatic && make -C perlsourcestatic install # -Dprefix="$RUNNER_WORKSPACE/localperlstatic"
           #cd perlsourcestatic && sh +x ./Configure -sde -Dman1dir=none -Dman3dir=none -Dprefix="/mnt/perlpack" -Dinstallprefix=$RUNNER_WORKSPACE/busybiber/packfs -Aldflags="-lm -ldl" -Accflags="-lm -ldl" -Dusedevel -Dlibs="-lpthread -ldl -lm -lutil -lc" -Dstatic_ext="$MODULES_0ext" -Dextras="DBI" && cd - && make -C perlsourcestatic && make -C perlsourcestatic install
-          find $RUNNER_WORKSPACE -name EXTERN.h
+          
           export PERLLIB=$PERLPREFIX/lib/$PERLVER:$PERLPREFIX/lib/$PERLVER/x86_64-linux:$PERLPREFIX/lib/site_perl/$PERLVER
           export CPATH=$PERLPREFIX/lib/$PERLVER/x86_64-linux/CORE
           
-          echo BEFORE Alien::Base::Wrapper
-          $PERLBIN $CPANBIN -T Alien::Base::Wrapper
-          echo AFTER Alien::Base::Wrapper
-          echo BEFORE Alien::Build 
-          $PERLBIN $CPANBIN -T Alien::Build 
-          echo AFTER Alien::Build 
-          echo BEFORE Alien::Build::MM 
-          $PERLBIN $CPANBIN -T Alien::Build::MM 
-          echo AFTER Alien::Build::MM 
-          echo BEFORE Alien::cmake3 
-          $PERLBIN $CPANBIN -T Alien::cmake3 
-          echo AFTER Alien::cmake3 
-          echo BEFORE Alien::Libxml2
-          $PERLBIN $CPANBIN -T Alien::Libxml2 
-          echo AFTER Alien::Libxml2
-          echo BEFORE inc::Module::Install
-          $PERLBIN $CPANBIN -T inc::Module::Install 
-          echo AFTER inc::Module::Install
-          echo BEFORE Module::Implementation
-          $PERLBIN $CPANBIN -T Module::Implementation 
-          echo AFTER Module::Implementation
-          #echo BEFORE Config::AutoConf
-          #$PERLBIN $CPANBIN -T Config::AutoConf 
-          #echo AFTER Config::AutoConf
+          #$PERLBIN $CPANBIN -T Alien::Base::Wrapper Alien::Build Alien::Build::MM  Alien::cmake3  Alien::Libxml2
+          #$PERLBIN $CPANBIN -T inc::Module::Install Module::Implementation 
           
-          #echo BEFORE ExtUtils::LibBuilder
-          #$PERLBIN $CPANBIN -T ExtUtils::LibBuilder # DBI
-          #echo AFTER ExtUtils::LibBuilder
+          echo BEFORE Config::AutoConf
+          $PERLBIN $CPANBIN -T Config::AutoConf
+          echo AFTER Config::AutoConf
+          
+          echo BEFORE ExtUtils::LibBuilder
+          $PERLBIN $CPANBIN -T ExtUtils::LibBuilder 
+          echo AFTER ExtUtils::LibBuilder
 
           #$PERLBIN $CPANBIN -T Alien::Base::Wrapper Alien::Build Alien::Build::MM Alien::cmake3 Alien::Libxml2 inc::Module::Install Module::Implementation Config::AutoConf ExtUtils::LibBuilder # DBI
 #          ln -s $PERLPREFIX/bin/enc2xs$PERLVER $PERLPREFIX/bin/enc2xs
