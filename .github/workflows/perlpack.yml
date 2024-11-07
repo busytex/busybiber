@@ -113,9 +113,8 @@ jobs:
           
           export PERLLIB=$PERLPREFIX/lib/$PERLVER:$PERLPREFIX/lib/$PERLVER/x86_64-linux:$PERLPREFIX/lib/site_perl/$PERLVER
           export CPATH=$PERLPREFIX/lib/$PERLVER/x86_64-linux/CORE
-          
-          #$PERLBIN $CPANBIN -T Alien::Base::Wrapper Alien::Build Alien::Build::MM  Alien::cmake3  Alien::Libxml2
-          #$PERLBIN $CPANBIN -T inc::Module::Install Module::Implementation 
+          $PERLBIN $CPANBIN -T Alien::Base::Wrapper Alien::Build Alien::Build::MM  Alien::cmake3  Alien::Libxml2
+          $PERLBIN $CPANBIN -T inc::Module::Install Module::Implementation 
           $PERLBIN $CPANBIN -T Config::AutoConf ExtUtils::LibBuilder 
 
           #$PERLBIN $CPANBIN -T Alien::Base::Wrapper Alien::Build Alien::Build::MM Alien::cmake3 Alien::Libxml2 inc::Module::Install Module::Implementation Config::AutoConf ExtUtils::LibBuilder # DBI
