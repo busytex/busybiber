@@ -10,11 +10,13 @@ my $input_path = '';
 my $output_path = '';
 my $prefix = '';
 my $ld = 'ld';
+my $skip = '';
 Getopt::Long::GetOptions(
     'input-path|i=s'  => \$input_path,
     'output-path|o=s' => \$output_path,
     'prefix=s'        => \$prefix,
-    'ld=s'            => \$ld
+    'ld=s'            => \$ld,
+    'skip=s'    => \$skip
 );
 die "Input path does not exist or is not a directory" unless -e $input_path && -d $input_path ;
 die "Output path not specified" if $output_path eq '';
@@ -31,7 +33,7 @@ File::Find::find(sub {
 
     if (-d $p) {
         push @dirs_relpaths, $p;
-    } else {
+    } elsif ($skip eq '' or $p !~ /$skip\z/) {
         push @files, $p;
         push @safepaths, $safepath;
         push @relpaths, $relpath;
