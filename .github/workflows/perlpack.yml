@@ -50,7 +50,7 @@ jobs:
     container: alpine:3.14
     steps:
       - name: Install Prerequisites
-        run:  apk add --update --no-cache libnsl libnsl-dev build-base coreutils gdb cmake git xz curl gperf p7zip zip autoconf automake libtool pkgconfig gnupg libxml2-dev libxslt-dev expat-dev openssl-dev openssl zlib-static # wget perl
+        run:  apk add --update --no-cache libnsl libnsl-dev build-base coreutils gdb cmake git xz curl gperf p7zip zip autoconf automake libtool pkgconfig gnupg libxml2-dev libxslt-dev expat-dev openssl-dev openssl  zlib-static libxml2-static libxslt-static expat-static   # wget perl
 
       - uses: actions/checkout@v4
       
@@ -108,11 +108,6 @@ jobs:
           $PERLBIN ./Build installdeps --cpan_client "$CPANBIN -T"
           $PERLBIN ./Build test
           $PERLBIN ./Build install
-          find $PWD/../perlprefixdynamic
-          echo BEFORELS
-          ls   $PWD/../perlprefixdynamic/bin/biber
-          echo AFTERLS
-          cat  $PWD/../perlprefixdynamic/bin/biber
           ucpath="$PWD/../perlprefixdynamic/lib/$PERLVER/Unicode/Collate"
           PAR_VERBATIM=1 $PWD/../perlprefixdynamic/bin/pp \
             --module=deprecate \
@@ -455,7 +450,7 @@ jobs:
 # 5.32.0/x86_64-linux/auto/Socket/Socket.a
 # 5.32.0/x86_64-linux/auto/Sys/Hostname/Hostname.a
 # 5.32.0/x86_64-linux/auto/Sys/Syslog/Syslog.a
-# /lib/libz.so.1
+# /lib/libz.a
 # /usr/lib/libxslt.so.1
 # lib/libbtparse.so
 # /usr/lib/libssl.so.1.1
