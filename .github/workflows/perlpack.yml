@@ -108,32 +108,34 @@ jobs:
           $PERLBIN Build.PL
           $PERLBIN ./Build installdeps --cpan_client "$CPANBIN -T"
           $PERLBIN ./Build test
-          ucpath="$PWD/../perlprefixdynamic/lib/$PERLVER/Unicode/Collate"
-          PAR_VERBATIM=1 $PWD/../perlprefixdynamic/bin/pp \
-            --module=deprecate \
-            --module=Biber::Input::file::bibtex \
-            --module=Biber::Input::file::biblatexml \
-            --module=Biber::Output::dot \
-            --module=Biber::Output::bbl \
-            --module=Biber::Output::bblxml \
-            --module=Biber::Output::bibtex \
-            --module=Biber::Output::biblatexml \
-            --module=Pod::Simple::TranscodeSmart \
-            --module=Pod::Simple::TranscodeDumb \
-            --module=List::MoreUtils::XS \
-            --module=List::SomeUtils::XS \
-            --module=List::MoreUtils::PP \
-            --module=HTTP::Status \
-            --module=HTTP::Date \
-            --module=Encode:: \
-            --module=File::Find::Rule \
-            --module=IO::Socket::SSL \
-            --module=IO::String \
-            --module=PerlIO::utf8_strict \
-            --module=Text::CSV_XS \
-            --module=DateTime \
-            --output=biber-linux_x86_64 \
-            $PWD/../perlprefixdynamic/bin/biber
+          $PERLBIN ./Build install
+          find $PWD/../perlprefixdynamic
+#          ucpath="$PWD/../perlprefixdynamic/lib/$PERLVER/Unicode/Collate"
+#          PAR_VERBATIM=1 $PWD/../perlprefixdynamic/bin/pp \
+#            --module=deprecate \
+#            --module=Biber::Input::file::bibtex \
+#            --module=Biber::Input::file::biblatexml \
+#            --module=Biber::Output::dot \
+#            --module=Biber::Output::bbl \
+#            --module=Biber::Output::bblxml \
+#            --module=Biber::Output::bibtex \
+#            --module=Biber::Output::biblatexml \
+#            --module=Pod::Simple::TranscodeSmart \
+#            --module=Pod::Simple::TranscodeDumb \
+#            --module=List::MoreUtils::XS \
+#            --module=List::SomeUtils::XS \
+#            --module=List::MoreUtils::PP \
+#            --module=HTTP::Status \
+#            --module=HTTP::Date \
+#            --module=Encode:: \
+#            --module=File::Find::Rule \
+#            --module=IO::Socket::SSL \
+#            --module=IO::String \
+#            --module=PerlIO::utf8_strict \
+#            --module=Text::CSV_XS \
+#            --module=DateTime \
+#            --output=biber-linux_x86_64 \
+#            $PWD/../perlprefixdynamic/bin/biber
 # bash ./dist/linux_x86_64/build.sh
 # declare -r perlv='5.38.2'
 # declare ucpath="/usr/local/perl/lib/${perlv}/Unicode/Collate"
@@ -294,6 +296,7 @@ jobs:
 #  --cachedeps=scancache \
 #  --output=biber-linux_x86_64 \
 #  /usr/local/perl/bin/biber
+
 # biberunzip/lib/auto/Class/XSAccessor/XSAccessor.so
 # biberunzip/lib/auto/Unicode/Normalize/Normalize.so
 # biberunzip/lib/auto/Unicode/LineBreak/LineBreak.so
@@ -372,6 +375,90 @@ jobs:
 # biberunzip/shlib/x86_64-linux/libexslt.so.0
 # biberunzip/shlib/x86_64-linux/libcrypto.so.1.1
 # biberunzip/shlib/x86_64-linux/libxml2.so.2
+
+# site_perl/5.32.0/x86_64-linux/auto/Class/XSAccessor/XSAccessor.a
+# 5.32.0/x86_64-linux/auto/Unicode/Normalize/Normalize.a
+# site_perl/5.32.0/x86_64-linux/auto/Unicode/LineBreak/LineBreak.a
+# 5.32.0/x86_64-linux/auto/Unicode/Collate/Collate.a
+
+# site_perl/5.32.0/x86_64-linux/auto/Params/Util/Util.a
+# site_perl/5.32.0/x86_64-linux/auto/Params/Validate/XS/XS.a
+# site_perl/5.32.0/x86_64-linux/auto/XML/LibXML/LibXML.a
+# site_perl/5.32.0/x86_64-linux/auto/XML/Parser/Expat/Expat.a
+# site_perl/5.32.0/x86_64-linux/auto/XML/LibXSLT/LibXSLT.a
+# site_perl/5.32.0/x86_64-linux/auto/DateTime/DateTime.a
+# site_perl/5.32.0/x86_64-linux/auto/Text/BibTeX/BibTeX.a
+# site_perl/5.32.0/x86_64-linux/auto/Variable/Magic/Magic.a
+# site_perl/5.32.0/x86_64-linux/auto/IO/Compress/Brotli/Brotli.a
+# site_perl/5.32.0/x86_64-linux/auto/IO/Compress/Brotli/libbrotlidec.a
+# site_perl/5.32.0/x86_64-linux/auto/IO/Compress/Brotli/libbrotlienc.a
+# site_perl/5.32.0/x86_64-linux/auto/IO/Compress/Brotli/libbrotlicommon.a
+# site_perl/5.32.0/x86_64-linux/auto/HTML/Parser/Parser.a
+# site_perl/5.32.0/x86_64-linux/auto/Package/Stash/XS/XS.a
+# site_perl/5.32.0/x86_64-linux/auto/PadWalker/PadWalker.a
+# site_perl/5.32.0/x86_64-linux/auto/Net/SSLeay/SSLeay.a
+# site_perl/5.32.0/x86_64-linux/auto/List/SomeUtils/XS/XS.a
+# site_perl/5.32.0/x86_64-linux/auto/List/MoreUtils/XS/XS.a
+# site_perl/5.32.0/x86_64-linux/auto/Devel/LexAlias/LexAlias.a
+# site_perl/5.32.0/x86_64-linux/auto/Devel/Caller/Caller.a
+# site_perl/5.32.0/x86_64-linux/auto/Storable/Storable.a
+# site_perl/5.32.0/x86_64-linux/auto/autovivification/autovivification.a
+# site_perl/5.32.0/x86_64-linux/auto/DBI/DBI.a
+# site_perl/5.32.0/x86_64-linux/auto/Sub/Identify/Identify.a
+# site_perl/5.32.0/x86_64-linux/auto/Sort/Key/Key.a
+# site_perl/5.32.0/x86_64-linux/auto/PerlIO/utf8_strict/utf8_strict.a
+# site_perl/5.32.0/x86_64-linux/auto/Clone/Clone.a
+# site_perl/5.32.0/x86_64-linux/auto/Encode/JIS2K/JIS2K.a
+# site_perl/5.32.0/x86_64-linux/auto/Encode/HanExtra/HanExtra.a
+# site_perl/5.32.0/x86_64-linux/auto/Encode/EUCJPASCII/EUCJPASCII.a
+# 5.32.0/x86_64-linux/auto/mro/mro.a
+# 5.32.0/x86_64-linux/auto/File/Glob/Glob.a
+# 5.32.0/x86_64-linux/auto/File/DosGlob/DosGlob.a
+# 5.32.0/x86_64-linux/auto/I18N/Langinfo/Langinfo.a
+# 5.32.0/x86_64-linux/auto/SDBM_File/SDBM_File.a
+# 5.32.0/x86_64-linux/auto/Compress/Raw/Zlib/Zlib.a
+# 5.32.0/x86_64-linux/auto/Compress/Raw/Bzip2/Bzip2.a
+# 5.32.0/x86_64-linux/auto/POSIX/POSIX.a
+# 5.32.0/x86_64-linux/auto/Fcntl/Fcntl.a
+# 5.32.0/x86_64-linux/auto/Data/Dumper/Dumper.a
+# 5.32.0/x86_64-linux/auto/Math/BigInt/FastCalc/FastCalc.a
+# 5.32.0/x86_64-linux/auto/IO/IO.a
+# 5.32.0/x86_64-linux/auto/Opcode/Opcode.a
+# 5.32.0/x86_64-linux/auto/Socket/Socket.a
+# 5.32.0/x86_64-linux/auto/threads/shared/shared.a
+# 5.32.0/x86_64-linux/auto/threads/threads.a
+# 5.32.0/x86_64-linux/auto/MIME/Base64/Base64.a
+# 5.32.0/x86_64-linux/auto/Time/HiRes/HiRes.a
+# 5.32.0/x86_64-linux/auto/Time/Piece/Piece.a
+# 5.32.0/x86_64-linux/auto/Filter/Util/Call/Call.a
+# 5.32.0/x86_64-linux/auto/List/Util/Util.a
+# 5.32.0/x86_64-linux/auto/B/B.a
+# 5.32.0/x86_64-linux/auto/Devel/Peek/Peek.a
+# 5.32.0/x86_64-linux/auto/Storable/Storable.a
+# 5.32.0/x86_64-linux/auto/attributes/attributes.a
+# 5.32.0/x86_64-linux/auto/re/re.a
+# 5.32.0/x86_64-linux/auto/Hash/Util/Util.a
+# 5.32.0/x86_64-linux/auto/Hash/Util/FieldHash/FieldHash.a
+# 5.32.0/x86_64-linux/auto/IPC/SysV/SysV.a
+# 5.32.0/x86_64-linux/auto/PerlIO/encoding/encoding.a
+# 5.32.0/x86_64-linux/auto/PerlIO/scalar/scalar.a
+# 5.32.0/x86_64-linux/auto/PerlIO/mmap/mmap.a
+# 5.32.0/x86_64-linux/auto/PerlIO/via/via.a
+# 5.32.0/x86_64-linux/auto/Sys/Hostname/Hostname.a
+# 5.32.0/x86_64-linux/auto/Sys/Syslog/Syslog.a
+# 5.32.0/x86_64-linux/auto/Encode/KR/KR.a
+# 5.32.0/x86_64-linux/auto/Encode/JP/JP.a
+# 5.32.0/x86_64-linux/auto/Encode/Byte/Byte.a
+# 5.32.0/x86_64-linux/auto/Encode/CN/CN.a
+# 5.32.0/x86_64-linux/auto/Encode/Encode.a
+# 5.32.0/x86_64-linux/auto/Encode/Unicode/Unicode.a
+# 5.32.0/x86_64-linux/auto/Encode/Symbol/Symbol.a
+# 5.32.0/x86_64-linux/auto/Encode/EBCDIC/EBCDIC.a
+# 5.32.0/x86_64-linux/auto/Encode/TW/TW.a
+# 5.32.0/x86_64-linux/auto/Cwd/Cwd.a
+# 5.32.0/x86_64-linux/auto/Digest/MD5/MD5.a
+# 5.32.0/x86_64-linux/auto/Digest/SHA/SHA.a
+# 5.32.0/x86_64-linux/CORE/libperl.a
 
 
       - name: Artifacts
