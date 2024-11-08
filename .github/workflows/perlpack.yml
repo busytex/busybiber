@@ -110,6 +110,12 @@ jobs:
           $PERLBIN ./Build installdeps --cpan_client "$CPANBIN -T"
           $PERLBIN ./Build test
           $PERLBIN ./Build install
+          # declare -r perlv='5.38.2'
+          # bash ./dist/linux_x86_64/build.sh
+          # declare ucpath="/usr/local/perl/lib/${perlv}/Unicode/Collate"
+          # # Unicode::Collate has a site_perl version so has been updated since this
+          # # perl was released
+          # if [ -d "/usr/local/perl/lib/site_perl/${perlv}/x86_64-linux-thread-multi/Unicode/Collate" ]; then ucpath="/usr/local/perl/lib/site_perl/${perlv}/x86_64-linux-thread-multi/Unicode/Collate"; fi
           ucpath="$PWD/../perlprefixdynamic/lib/$PERLVER/Unicode/Collate"
           echo "USING Unicode::Collate at: ${ucpath}"
           PAR_VERBATIM=1 $PWD/../perlprefixdynamic/bin/pp \
@@ -153,20 +159,14 @@ jobs:
             --addfile="${ucpath}/CJK;lib/Unicode/Collate/CJK" \
             --addfile="${ucpath}/allkeys.txt;lib/Unicode/Collate/allkeys.txt" \
             --addfile="${ucpath}/keys.txt;lib/Unicode/Collate/keys.txt" \
+            --addfile="$PWD/../perlprefixdynamic/lib/site_perl/$PERLVER/Mozilla/CA/cacert.pem;lib/Mozilla/CA/cacert.pem" \
+            --addfile="$PWD/../perlprefixdynamic/lib/$PERLVER/x86_64-linux-thread-multi/PerlIO;lib/PerlIO" \
+            --addfile="$PWD/../perlprefixdynamic/lib/$PERLVER/x86_64-linux-thread-multi/auto/PerlIO;lib/auto/PerlIO" \
+            --addfile="$PWD/../perlprefixdynamic/lib/site_perl/$PERLVER/Business/ISBN/RangeMessage.xml;lib/Business/ISBN/RangeMessage.xml" \
             --cachedeps=scancache \
             --output=biber-linux_x86_64 \
             $PWD/../perlprefixdynamic/bin/biber
-
-# bash ./dist/linux_x86_64/build.sh
-# declare -r perlv='5.38.2'
-# declare ucpath="/usr/local/perl/lib/${perlv}/Unicode/Collate"
-# # Unicode::Collate has a site_perl version so has been updated since this
-# # perl was released
-# if [ -d "/usr/local/perl/lib/site_perl/${perlv}/x86_64-linux-thread-multi/Unicode/Collate" ]; then ucpath="/usr/local/perl/lib/site_perl/${perlv}/x86_64-linux-thread-multi/Unicode/Collate"; fi
-# --addfile="/usr/local/perl/lib/site_perl/${perlv}/Mozilla/CA/cacert.pem;lib/Mozilla/CA/cacert.pem" \
-# --addfile="/usr/local/perl/lib/${perlv}/x86_64-linux-thread-multi/PerlIO;lib/PerlIO" \
-# --addfile="/usr/local/perl/lib/${perlv}/x86_64-linux-thread-multi/auto/PerlIO;lib/auto/PerlIO" \
-# --addfile="/usr/local/perl/lib/site_perl/${perlv}/Business/ISBN/RangeMessage.xml;lib/Business/ISBN/RangeMessage.xml" \
+          unzip -l biber-linux_x86_64
 
       - name: Install Perl static
         shell: bash
