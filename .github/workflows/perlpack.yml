@@ -95,15 +95,16 @@ jobs:
       - name: Install Perl dynamic
         run: |
           mkdir perlsourcedynamic && curl -L $URLPERL | tar -xzf - --strip-components=1 --directory=perlsourcedynamic
-          cd perlsourcedynamic && sh +x ./Configure -sde -Dprefix="$PWD/../perlprefixdynamic" # && make && make install && cd -
-          #export PATH="$PWD/perlprefixdynamic/bin:$PATH"
-          #export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$PWD/perlprefixdynamic/lib"
-          #mkdir biber && curl -L $URL_Biber && tar -xzf - --strip-components=1 --directory=biber
-          #cd biber
-          #$PWD/../perlprefixdynamic/bin/cpan$PERLVER -T Module::Build
-          #$PWD/../perlprefixdynamic/bin/perl$PERLVER Build.PL
-          #$PWD/../perlprefixdynamic/bin/perl$PERLVER ./Build installdeps --cpan_client "$PWD/../perlprefixdynamic/bin/cpan$PERLVER -T"
-          #$PWD/../perlprefixdynamic/bin/perl$PERLVER ./Build test
+          cd perlsourcedynamic && sh +x ./Configure -sde -Dprefix="$PWD/../perlprefixdynamic" && make && make install && cd -
+          find $PWD/perlprefixdynamic
+          export PATH="$PWD/perlprefixdynamic/bin:$PATH"
+          export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$PWD/perlprefixdynamic/lib"
+          mkdir biber && curl -L $URL_Biber | tar -xzf - --strip-components=1 --directory=biber
+          cd biber
+          $PWD/../perlprefixdynamic/bin/cpan$PERLVER -T Module::Build
+          $PWD/../perlprefixdynamic/bin/perl$PERLVER Build.PL
+          $PWD/../perlprefixdynamic/bin/perl$PERLVER ./Build installdeps --cpan_client "$PWD/../perlprefixdynamic/bin/cpan$PERLVER -T"
+          $PWD/../perlprefixdynamic/bin/perl$PERLVER ./Build test
 
       - name: Install Perl static
         shell: bash
