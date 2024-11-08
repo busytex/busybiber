@@ -50,7 +50,7 @@ jobs:
     container: alpine:3.14
     steps:
       - name: Install Prerequisites
-        run:  apk add --update --no-cache libnsl libnsl-dev build-base coreutils gdb cmake git xz curl gperf p7zip zip autoconf automake libtool pkgconfig gnupg libxml2-dev libxslt-dev expat-dev openssl-dev openssl # wget perl
+        run:  apk add --update --no-cache libnsl libnsl-dev build-base coreutils gdb cmake git xz curl gperf p7zip zip autoconf automake libtool pkgconfig gnupg libxml2-dev libxslt-dev expat-dev openssl-dev openssl zlib-static # wget perl
 
       - uses: actions/checkout@v4
       
@@ -113,32 +113,32 @@ jobs:
           ls   $PWD/../perlprefixdynamic/bin/biber
           echo AFTERLS
           cat  $PWD/../perlprefixdynamic/bin/biber
-#          ucpath="$PWD/../perlprefixdynamic/lib/$PERLVER/Unicode/Collate"
-#          PAR_VERBATIM=1 $PWD/../perlprefixdynamic/bin/pp \
-#            --module=deprecate \
-#            --module=Biber::Input::file::bibtex \
-#            --module=Biber::Input::file::biblatexml \
-#            --module=Biber::Output::dot \
-#            --module=Biber::Output::bbl \
-#            --module=Biber::Output::bblxml \
-#            --module=Biber::Output::bibtex \
-#            --module=Biber::Output::biblatexml \
-#            --module=Pod::Simple::TranscodeSmart \
-#            --module=Pod::Simple::TranscodeDumb \
-#            --module=List::MoreUtils::XS \
-#            --module=List::SomeUtils::XS \
-#            --module=List::MoreUtils::PP \
-#            --module=HTTP::Status \
-#            --module=HTTP::Date \
-#            --module=Encode:: \
-#            --module=File::Find::Rule \
-#            --module=IO::Socket::SSL \
-#            --module=IO::String \
-#            --module=PerlIO::utf8_strict \
-#            --module=Text::CSV_XS \
-#            --module=DateTime \
-#            --output=biber-linux_x86_64 \
-#            $PWD/../perlprefixdynamic/bin/biber
+          ucpath="$PWD/../perlprefixdynamic/lib/$PERLVER/Unicode/Collate"
+          PAR_VERBATIM=1 $PWD/../perlprefixdynamic/bin/pp \
+            --module=deprecate \
+            --module=Biber::Input::file::bibtex \
+            --module=Biber::Input::file::biblatexml \
+            --module=Biber::Output::dot \
+            --module=Biber::Output::bbl \
+            --module=Biber::Output::bblxml \
+            --module=Biber::Output::bibtex \
+            --module=Biber::Output::biblatexml \
+            --module=Pod::Simple::TranscodeSmart \
+            --module=Pod::Simple::TranscodeDumb \
+            --module=List::MoreUtils::XS \
+            --module=List::SomeUtils::XS \
+            --module=List::MoreUtils::PP \
+            --module=HTTP::Status \
+            --module=HTTP::Date \
+            --module=Encode:: \
+            --module=File::Find::Rule \
+            --module=IO::Socket::SSL \
+            --module=IO::String \
+            --module=PerlIO::utf8_strict \
+            --module=Text::CSV_XS \
+            --module=DateTime \
+            --output=biber-linux_x86_64 \
+            $PWD/../perlprefixdynamic/bin/biber
 
 # bash ./dist/linux_x86_64/build.sh
 # declare -r perlv='5.38.2'
@@ -457,7 +457,7 @@ jobs:
 # 5.32.0/x86_64-linux/auto/Sys/Syslog/Syslog.a
 # /lib/libz.so.1
 # /usr/lib/libxslt.so.1
-# localperldynamic/lib/libbtpaprse.so
+# lib/libbtparse.so
 # /usr/lib/libssl.so.1.1
 # /usr/lib/libexslt.so.0
 # /usr/lib/libcrypto.so.1.1
