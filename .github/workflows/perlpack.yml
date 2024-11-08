@@ -103,10 +103,11 @@ jobs:
           export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$PWD/perlprefixdynamic/lib"
           mkdir biber && curl -L $URL_Biber | tar -xzf - --strip-components=1 --directory=biber
           cd biber
-          $CPANBIN -T Module::Build
+          $CPANBIN -T Module::Build PAR::Packer
           $PERLBIN Build.PL
           $PERLBIN ./Build installdeps --cpan_client "$CPANBIN -T"
           $PERLBIN ./Build test
+          bash ./dist/linux_x86_64/build.sh
 
       - name: Install Perl static
         shell: bash
