@@ -96,7 +96,7 @@ jobs:
         run: |
           mkdir perlsourcedynamic && curl -L $URLPERL | tar -xzf - --strip-components=1 --directory=perlsourcedynamic
           cd perlsourcedynamic && sh +x ./Configure -sde -Dprefix="$PWD/../perlprefixdynamic" && make && make install && cd -
-          export PATH=$PWD/perlprefixdynamic/bin:$PATH"
+          export PATH="$PWD/perlprefixdynamic/bin:$PATH"
           export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$PWD/perlprefixdynamic/lib"
           mkdir biber && curl -L $URL_Biber && tar -xzf - --strip-components=1 --directory=biber
           cd biber
