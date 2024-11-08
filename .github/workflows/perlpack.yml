@@ -92,6 +92,19 @@ jobs:
 #          #wget $(printf "https://raw.githubusercontent.com/plk/biber/refs/heads/dev/testfiles/%s " Unicode-bib-files.zip Unicode-tests-preserved-NF.zip test.bcf test.bib test.tex testCP.pl)
 #          #./biber-linux_x86_64 --validate-control --convert-control test
        
+      - name: Install Perl dynamic
+        run: |
+          mkdir perlsourcedynamic && curl -L $URLPERL | tar -xzf - --strip-components=1 --directory=perlsourcedynamic
+          cd perlsourcedynamic && sh +x ./Configure -sde -Dprefix="$PWD/../perlprefixdynamic" && make && make install && cd -
+          export PATH=$PWD/perlprefixdynamic/bin:$PATH"
+          export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$PWD/perlprefixdynamic/lib"
+          mkdir biber && curl -L $URL_Biber && tar -xzf - --strip-components=1 --directory=biber
+          cd biber
+          $PWD/../perlprefixdynamic/bin/cpan$PERLVER -T Module::Build
+          $PWD/../perlprefixdynamic/bin/perl$PERLVER Build.PL
+          $PWD/../perlprefixdynamic/bin/perl$PERLVER ./Build installdeps --cpan_client "$PWD/../perlprefixdynamic/bin/cpan$PERLVER -T"
+          $PWD/../perlprefixdynamic/bin/perl$PERLVER ./Build test
+
       - name: Install Perl static
         shell: bash
         run: |
@@ -221,6 +234,84 @@ jobs:
 #  --cachedeps=scancache \
 #  --output=biber-linux_x86_64 \
 #  /usr/local/perl/bin/biber
+# biberunzip/lib/auto/Class/XSAccessor/XSAccessor.so
+# biberunzip/lib/auto/Unicode/Normalize/Normalize.so
+# biberunzip/lib/auto/Unicode/LineBreak/LineBreak.so
+# biberunzip/lib/auto/Unicode/Collate/Collate.so
+# biberunzip/lib/auto/POSIX/POSIX.so
+# biberunzip/lib/auto/XML/LibXML/LibXML.so
+# biberunzip/lib/auto/XML/Parser/Expat/Expat.so
+# biberunzip/lib/auto/XML/LibXSLT/LibXSLT.so
+# biberunzip/lib/auto/I18N/Langinfo/Langinfo.so
+# biberunzip/lib/auto/HTML/Parser/Parser.so
+# biberunzip/lib/auto/MIME/Base64/Base64.so
+# biberunzip/lib/auto/Compress/Raw/Zlib/Zlib.so
+# biberunzip/lib/auto/Compress/Raw/Bzip2/Bzip2.so
+# biberunzip/lib/auto/re/re.so
+# biberunzip/lib/auto/Storable/Storable.so
+# biberunzip/lib/auto/Math/BigInt/FastCalc/FastCalc.so
+# biberunzip/lib/auto/Encode/Unicode/Unicode.so
+# biberunzip/lib/auto/Encode/EUCJPASCII/EUCJPASCII.so
+# biberunzip/lib/auto/Encode/JP/JP.so
+# biberunzip/lib/auto/Encode/Encode.so
+# biberunzip/lib/auto/Encode/Byte/Byte.so
+# biberunzip/lib/auto/Encode/KR/KR.so
+# biberunzip/lib/auto/Encode/TW/TW.so
+# biberunzip/lib/auto/Encode/CN/CN.so
+# biberunzip/lib/auto/Encode/Symbol/Symbol.so
+# biberunzip/lib/auto/Encode/JIS2K/JIS2K.so
+# biberunzip/lib/auto/Encode/EBCDIC/EBCDIC.so
+# biberunzip/lib/auto/Encode/HanExtra/HanExtra.so
+# biberunzip/lib/auto/Hash/Util/FieldHash/FieldHash.so
+# biberunzip/lib/auto/List/MoreUtils/XS/XS.so
+# biberunzip/lib/auto/List/Util/Util.so
+# biberunzip/lib/auto/List/SomeUtils/XS/XS.so
+# biberunzip/lib/auto/File/DosGlob/DosGlob.so
+# biberunzip/lib/auto/File/Glob/Glob.so
+# biberunzip/lib/auto/attributes/attributes.so
+# biberunzip/lib/auto/DBD/SQLite/SQLite.so
+# biberunzip/lib/auto/DBI/DBI.so
+# biberunzip/lib/auto/Sort/Key/Key.so
+# biberunzip/lib/auto/PadWalker/PadWalker.so
+# biberunzip/lib/auto/Digest/MD5/MD5.so
+# biberunzip/lib/auto/Filter/Util/Call/Call.so
+# biberunzip/lib/auto/Net/SSLeay/SSLeay.so
+# biberunzip/lib/auto/PerlIO/utf8_strict/utf8_strict.so
+# biberunzip/lib/auto/PerlIO/scalar/scalar.so
+# biberunzip/lib/auto/PerlIO/encoding/encoding.so
+# biberunzip/lib/auto/threads/threads.so
+# biberunzip/lib/auto/threads/shared/shared.so
+# biberunzip/lib/auto/IO/IO.so
+# biberunzip/lib/auto/IO/Compress/Brotli/Brotli.so
+# biberunzip/lib/auto/Text/BibTeX/BibTeX.so
+# biberunzip/lib/auto/Text/CSV_XS/CSV_XS.so
+# biberunzip/lib/auto/Fcntl/Fcntl.so
+# biberunzip/lib/auto/mro/mro.so
+# biberunzip/lib/auto/autovivification/autovivification.so
+# biberunzip/lib/auto/Opcode/Opcode.so
+# biberunzip/lib/auto/Data/Dumper/Dumper.so
+# biberunzip/lib/auto/Package/Stash/XS/XS.so
+# biberunzip/lib/auto/Cwd/Cwd.so
+# biberunzip/lib/auto/Time/HiRes/HiRes.so
+# biberunzip/lib/auto/Clone/Clone.so
+# biberunzip/lib/auto/IPC/SysV/SysV.so
+# biberunzip/lib/auto/DateTime/DateTime.so
+# biberunzip/lib/auto/Devel/Caller/Caller.so
+# biberunzip/lib/auto/Devel/LexAlias/LexAlias.so
+# biberunzip/lib/auto/B/B.so
+# biberunzip/lib/auto/Variable/Magic/Magic.so
+# biberunzip/lib/auto/Params/Util/Util.so
+# biberunzip/lib/auto/Params/Validate/XS/XS.so
+# biberunzip/lib/auto/Socket/Socket.so
+# biberunzip/lib/auto/Sys/Hostname/Hostname.so
+# biberunzip/lib/auto/Sys/Syslog/Syslog.so
+# biberunzip/shlib/x86_64-linux/libz.so.1
+# biberunzip/shlib/x86_64-linux/libxslt.so.1
+# biberunzip/shlib/x86_64-linux/libbtparse.so
+# biberunzip/shlib/x86_64-linux/libssl.so.1.1
+# biberunzip/shlib/x86_64-linux/libexslt.so.0
+# biberunzip/shlib/x86_64-linux/libcrypto.so.1.1
+# biberunzip/shlib/x86_64-linux/libxml2.so.2
 
 
       - name: Artifacts
