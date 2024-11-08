@@ -52,7 +52,7 @@ jobs:
       - name: Install Prerequisites
         run:  |
           apk add --update --no-cache libnsl libnsl-dev build-base coreutils gdb cmake git xz curl gperf p7zip zip autoconf automake libtool pkgconfig gnupg libxml2-dev libxslt-dev expat-dev openssl-dev openssl  zlib-static expat-static   # wget perl
-          apk add --update --no-cache --repository=https://dl-cdn.alpinelinux.org/alpine/edge/main libxml2-static libxslt-static
+          apk add --update --no-cache --repository=https://dl-cdn.alpinelinux.org/alpine/edge/main libxml2-static libxslt-static openssl-libs-static
 
       - uses: actions/checkout@v4
       
@@ -134,13 +134,20 @@ jobs:
             --module=PerlIO::utf8_strict \
             --module=Text::CSV_XS \
             --module=DateTime \
+            --link=$PWD/../perlprefixdynamic/lib/libbtparse.so \
             --link=/usr/lib/libxml2.so \
             --link=/lib/libz.so \
             --link=/usr/lib/libxslt.so \
             --link=/usr/lib/libexslt.so \
             --link=/usr/lib//libssl.so \
             --link=/usr/lib/libcrypto.so \
-            --link=$PWD/../perlprefixdynamic/lib/libbtparse.so \
+            --addfile="data/biber-tool.conf;lib/Biber/biber-tool.conf" \
+            --addfile="data/schemata/config.rnc;lib/Biber/config.rnc" \
+            --addfile="data/schemata/config.rng;lib/Biber/config.rng"\
+            --addfile="data/schemata/bcf.rnc;lib/Biber/bcf.rnc" \
+            --addfile="data/schemata/bcf.rng;lib/Biber/bcf.rng" \
+            --addfile="lib/Biber/LaTeX/recode_data.xml;lib/Biber/LaTeX/recode_data.xml" \
+            --addfile="data/bcf.xsl;lib/Biber/bcf.xsl" \
             --cachedeps=scancache \
             --output=biber-linux_x86_64 \
             $PWD/../perlprefixdynamic/bin/biber
@@ -152,13 +159,6 @@ jobs:
 # # perl was released
 # if [ -d "/usr/local/perl/lib/site_perl/${perlv}/x86_64-linux-thread-multi/Unicode/Collate" ]; then ucpath="/usr/local/perl/lib/site_perl/${perlv}/x86_64-linux-thread-multi/Unicode/Collate"; fi
 # echo "USING Unicode::Collate at: ${ucpath}"
-# --addfile="data/biber-tool.conf;lib/Biber/biber-tool.conf" \
-# --addfile="data/schemata/config.rnc;lib/Biber/config.rnc" \
-# --addfile="data/schemata/config.rng;lib/Biber/config.rng"\
-# --addfile="data/schemata/bcf.rnc;lib/Biber/bcf.rnc" \
-# --addfile="data/schemata/bcf.rng;lib/Biber/bcf.rng" \
-# --addfile="lib/Biber/LaTeX/recode_data.xml;lib/Biber/LaTeX/recode_data.xml" \
-# --addfile="data/bcf.xsl;lib/Biber/bcf.xsl" \
 # --addfile="${ucpath}/Locale;lib/Unicode/Collate/Locale" \
 # --addfile="${ucpath}/CJK;lib/Unicode/Collate/CJK" \
 # --addfile="${ucpath}/allkeys.txt;lib/Unicode/Collate/allkeys.txt" \
@@ -452,13 +452,13 @@ jobs:
 # 5.32.0/x86_64-linux/auto/Socket/Socket.a
 # 5.32.0/x86_64-linux/auto/Sys/Hostname/Hostname.a
 # 5.32.0/x86_64-linux/auto/Sys/Syslog/Syslog.a
-# /lib/libz.a
-# /usr/lib/libxslt.so.1
 # lib/libbtparse.so
+# /lib/libz.a
+# /usr/lib/libxslt.a
+# /usr/lib/libxml2.a
+# /usr/lib/libexslt.a
 # /usr/lib/libssl.so.1.1
-# /usr/lib/libexslt.so.0
 # /usr/lib/libcrypto.so.1.1
-# /usr/lib/libxml2.so
 
 # site_perl/5.32.0/x86_64-linux/auto/IO/Compress/Brotli/libbrotlidec.a  site_perl/5.32.0/x86_64-linux/auto/IO/Compress/Brotli/libbrotlienc.a  site_perl/5.32.0/x86_64-linux/auto/IO/Compress/Brotli/libbrotlicommon.a site_perl/5.32.0/x86_64-linux/auto/Sub/Identify/Identify.a 5.32.0/x86_64-linux/auto/SDBM_File/SDBM_File.a 5.32.0/x86_64-linux/auto/Time/Piece/Piece.a 5.32.0/x86_64-linux/auto/Devel/Peek/Peek.a 5.32.0/x86_64-linux/auto/Hash/Util/Util.a 5.32.0/x86_64-linux/auto/PerlIO/mmap/mmap.a 5.32.0/x86_64-linux/auto/PerlIO/via/via.a 5.32.0/x86_64-linux/auto/Digest/SHA/SHA.a 5.32.0/x86_64-linux/CORE/libperl.a
 
