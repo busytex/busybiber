@@ -109,13 +109,6 @@ jobs:
           $PERLBIN ./Build installdeps --cpan_client "$CPANBIN -T"
           $PERLBIN ./Build test
           ucpath="$PWD/../perlprefixdynamic/lib/$PERLVER/Unicode/Collate"
-# bash ./dist/linux_x86_64/build.sh
-# declare -r perlv='5.38.2'
-# declare ucpath="/usr/local/perl/lib/${perlv}/Unicode/Collate"
-# # Unicode::Collate has a site_perl version so has been updated since this
-# # perl was released
-# if [ -d "/usr/local/perl/lib/site_perl/${perlv}/x86_64-linux-thread-multi/Unicode/Collate" ]; then ucpath="/usr/local/perl/lib/site_perl/${perlv}/x86_64-linux-thread-multi/Unicode/Collate"; fi
-# echo "USING Unicode::Collate at: ${ucpath}"
           PAR_VERBATIM=1 $PWD/../perlprefixdynamic/bin/pp \
             --module=deprecate \
             --module=Biber::Input::file::bibtex \
@@ -141,7 +134,13 @@ jobs:
             --module=DateTime \
             --output=biber-linux_x86_64 \
             $PWD/../perlprefixdynamic/bin/biber
-
+# bash ./dist/linux_x86_64/build.sh
+# declare -r perlv='5.38.2'
+# declare ucpath="/usr/local/perl/lib/${perlv}/Unicode/Collate"
+# # Unicode::Collate has a site_perl version so has been updated since this
+# # perl was released
+# if [ -d "/usr/local/perl/lib/site_perl/${perlv}/x86_64-linux-thread-multi/Unicode/Collate" ]; then ucpath="/usr/local/perl/lib/site_perl/${perlv}/x86_64-linux-thread-multi/Unicode/Collate"; fi
+# echo "USING Unicode::Collate at: ${ucpath}"
 #            --link=/usr/local/perl/lib/libbtparse.so \
 #            --link=/usr/local/lib/libxml2.so.2 \
 #            --link=/usr/local/lib/libz.so.1 \
