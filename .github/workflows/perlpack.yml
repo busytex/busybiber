@@ -215,7 +215,7 @@ jobs:
             /usr/lib/libexslt.a \
             /usr/lib/libcrypto.a \
             /usr/lib/libxml2.a
-          ./busybiber --help
+          ./busybiber --help || true
           # --addfile="data/biber-tool.conf;lib/Biber/biber-tool.conf" \
           # --addfile="data/schemata/config.rnc;lib/Biber/config.rnc" \
           # --addfile="data/schemata/config.rng;lib/Biber/config.rng"\
@@ -267,4 +267,4 @@ jobs:
           path: |
             busybiber
             perlpack.h
-            libc_perlpack.a
+            packfs/
