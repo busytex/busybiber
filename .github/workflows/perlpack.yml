@@ -41,6 +41,7 @@ env:
   URL_Class_XSAccessor: https://cpan.metacpan.org/authors/id/S/SM/SMUELLER/Class-XSAccessor-1.19.tar.gz
   URL_Package_Stash_XS: https://cpan.metacpan.org/authors/id/E/ET/ETHER/Package-Stash-XS-0.30.tar.gz
   URL_Params_Util: https://cpan.metacpan.org/authors/id/R/RE/REHSACK/Params-Util-1.102.tar.gz
+  URL_DBI: https://cpan.metacpan.org/authors/id/H/HM/HMBRAND/DBI-1.645.tgz
   URL_DBD_SQLite: https://cpan.metacpan.org/authors/id/I/IS/ISHIGAKI/DBD-SQLite-1.76.tar.gz
   URL_Text_CSV_XS: https://cpan.metacpan.org/authors/id/H/HM/HMBRAND/Text-CSV_XS-1.56.tgz
 # curl https://fastapi.metacpan.org/v1/download_url/IO::Compress::Brotli | grep download_url | cut -d'"' -f4
@@ -57,44 +58,6 @@ jobs:
 
       - uses: actions/checkout@v4
       
-#      - name: Install Perl dynamic
-#        run: |
-#          #echo "LD_LIBRARY_PATH=$RUNNER_WORKSPACE/localperldynamic/lib:$LD_LIBRARY_PATH" >> $GITHUB_ENV
-#          #PARLINK="/usr/local/perl/lib/libbtparse.so /usr/lib/x86_64-linux-gnu/libxml2.so.2 /usr/lib/x86_64-linux-gnu/libz.so.1 /usr/lib/x86_64-linux-gnu/libxslt.so.1 /usr/lib/x86_64-linux-gnu/libexslt.so.0 /usr/lib/x86_64-linux-gnu/libssl.so /usr/lib/x86_64-linux-gnu/libcrypto.so"
-#          #sudo ln -s /usr/local/perl/lib/5.32.0/x86_64-linux /usr/local/perl/lib/5.32.0/x86_64-linux-thread-multi
-#          mkdir perlsourcedynamic
-#          wget -nc $URLPERL
-#          tar -xf $(basename $URLPERL) --strip-components=1 --directory=perlsourcedynamic
-#          cd perlsourcedynamic
-#          bash +x ./Configure -sde -Dprefix="$RUNNER_WORKSPACE/localperldynamic"
-#          make
-#          make install
-#          #sudo rm -rf /usr/local/perl && sudo ln -s $RUNNER_WORKSPACE/localperldynamic /usr/local/perl
-#          export LD_LIBRARY_PATH="$RUNNER_WORKSPACE/localperldynamic/lib:$LD_LIBRARY_PATH"
-#          mkdir biber && wget $URL_Biber && tar -xf $(basename $URL_Biber) --strip-components=1 --directory biber
-#          cd biber
-#          $RUNNER_WORKSPACE/localperldynamic/bin/cpan -T Module::Build
-#          $RUNNER_WORKSPACE/localperldynamic/bin/cpan -T Config::AutoConf ExtUtils::LibBuilder Business::ISBN Business::ISMN Business::ISSN    Class::Accessor Data::Compare Data::Dump Data::Uniqid DateTime::Calendar::Julian DateTime::Format::Builder    Encode::EUCJPASCII Encode::HanExtra Encode::JIS2K Encode::Locale File::Slurper IO::String IPC::Run3 LWP::Protocol::https LWP::UserAgent    Lingua::Translit List::AllUtils List::MoreUtils List::MoreUtils::XS Log::Log4perl Mozilla::CA    Parse::RecDescent PerlIO::utf8_strict Regexp::Common Sort::Key Text::BibTeX Text::CSV Text::CSV_XS Text::Roman URI Unicode::Collate Unicode::GCString Unicode::LineBreak    XML::LibXML XML::LibXML::Simple XML::LibXSLT XML::Writer     autovivification File::Which Test::Differences
-#          $RUNNER_WORKSPACE/localperldynamic/bin/cpan -T Test::More IPC::Cmd Unicode::Normalize PerlIO::utf8_strict Storable
-#          #./mycpan.sh Pod::Simple::TranscodeSmart Pod::Simple::TranscodeDumb List::SomeUtils::XS List::MoreUtils::PP HTTP::Status HTTP::Date File::Find::Rule IO::Socket::SSL DateTime  Encode::
-#          #$RUNNER_WORKSPACE/localperldynamic/bin/perl ./Build installdeps --cpan_client ./mycpan.sh
-#          $RUNNER_WORKSPACE/localperldynamic/bin/cpan -T PAR PAR::Packer
-#          $RUNNER_WORKSPACE/localperldynamic/bin/perl ./Build.PL
-#          $RUNNER_WORKSPACE/localperldynamic/bin/perl ./Build test
-#          $RUNNER_WORKSPACE/localperldynamic/bin/perl ./Build install
-#          ucpath="/usr/local/perl/lib/${PERLVER}/Unicode/Collate"
-#          if [ -d "/usr/local/perl/lib/site_perl/${PERLVER}/x86_64-linux-thread-multi/Unicode/Collate" ]; then ucpath="/usr/local/perl/lib/site_perl/${PERLVER}/x86_64-linux-thread-multi/Unicode/Collate"; fi
-#          echo "USING Unicode::Collate at: ${ucpath}, Unicode::Collate has a site_perl version so has been updated since this perl was released"
-#          PARMODULE="deprecate Biber::Input::file::bibtex Biber::Input::file::biblatexml Biber::Output::dot Biber::Output::bbl Biber::Output::bblxml Biber::Output::bibtex Biber::Output::biblatexml Pod::Simple::TranscodeSmart Pod::Simple::TranscodeDumb List::MoreUtils::XS List::SomeUtils::XS List::MoreUtils::PP HTTP::Status HTTP::Date Encode:: File::Find::Rule IO::Socket::SSL IO::String PerlIO::utf8_strict Text::CSV_XS DateTime"
-#          PARADDFILE="../../data/biber-tool.conf;lib/Biber/biber-tool.conf ../../data/schemata/config.rnc;lib/Biber/config.rnc ../../data/schemata/config.rng;lib/Biber/config.rng ../../data/schemata/bcf.rnc;lib/Biber/bcf.rnc ../../data/schemata/bcf.rng;lib/Biber/bcf.rng ../../lib/Biber/LaTeX/recode_data.xml;lib/Biber/LaTeX/recode_data.xml ../../data/bcf.xsl;lib/Biber/bcf.xsl ${ucpath}/Locale;lib/Unicode/Collate/Locale ${ucpath}/CJK;lib/Unicode/Collate/CJK ${ucpath}/allkeys.txt;lib/Unicode/Collate/allkeys.txt ${ucpath}/keys.txt;lib/Unicode/Collate/keys.txt /usr/local/perl/lib/site_perl/${PERLVER}/Mozilla/CA/cacert.pem;lib/Mozilla/CA/cacert.pem /usr/local/perl/lib/${PERLVER}/x86_64-linux-thread-multi/PerlIO;lib/PerlIO /usr/local/perl/lib/${PERLVER}/x86_64-linux-thread-multi/auto/PerlIO;lib/auto/PerlIO /usr/local/perl/lib/site_perl/${PERLVER}/Business/ISBN/RangeMessage.xml;lib/Business/ISBN/RangeMessage.xml"
-#          PARLINK="$RUNNER_WORKSPACE/localperldynamic/lib/libbtparse.so /usr/lib/libxml2.so /lib/libz.so.1 /usr/lib/libxslt.so.1 /usr/lib/libexslt.so.0 /usr/lib/libssl.so.1.1 /usr/lib/libcrypto.so.1.1"
-#          cd ./dist/linux_x86_64
-#          PAR_VERBATIM=1 "$RUNNER_WORKSPACE/localperldynamic/bin/pp" -vvv $(printf -- "--module=%s " $PARMODULE) $(printf -- "--link=%s " $PARLINK) $(printf -- "--addfile=%s " $PARADDFILE) --output=biber-linux_x86_64 ../../bin/biber
-#          ./biber-linux_x86_64 --help
-#          mkdir -p biberunzip && unzip -qq -o ./biber-linux_x86_64 -d biberunzip && find biberunzip # -name '*.so*'
-#          #wget $(printf "https://raw.githubusercontent.com/plk/biber/refs/heads/dev/testfiles/%s " Unicode-bib-files.zip Unicode-tests-preserved-NF.zip test.bcf test.bib test.tex testCP.pl)
-#          #./biber-linux_x86_64 --validate-control --convert-control test
-       
       - name: Install Perl dynamic
         shell: bash
         run: |
@@ -203,7 +166,7 @@ jobs:
           $PERLBIN $CPANBIN -T Alien::Base::Wrapper Alien::Build Alien::Build::MM Alien::cmake3 Alien::Libxml2 inc::Module::Install Module::Implementation Config::AutoConf ExtUtils::LibBuilder # DBI
           ln -s $PERLPREFIX/bin/enc2xs$PERLVER $PERLPREFIX/bin/enc2xs
 
-          for MOD in Sort::Key Encode::EUCJPASCII Encode::JIS2K Encode::HanExtra XML::LibXML autovivification Devel::Caller Devel::LexAlias XML::LibXSLT XML::Parser::Expat Unicode::LineBreak Clone PadWalker  PerlIO::utf8_strict HTML::Parser List::MoreUtils::XS List::SomeUtils::XS DBI Net::SSLeay Sub::Identify DateTime Storable Variable::Magic Class::XSAccessor Package::Stash::XS Params::Util DBD::SQLite Text::CSV_XS    Params::Validate::XS Text::BibTeX IO::Compress::Brotli Biber; do 
+          for MOD in Sort::Key Encode::EUCJPASCII Encode::JIS2K Encode::HanExtra XML::LibXML autovivification Devel::Caller Devel::LexAlias XML::LibXSLT XML::Parser::Expat Unicode::LineBreak Clone PadWalker  PerlIO::utf8_strict HTML::Parser List::MoreUtils::XS List::SomeUtils::XS DBI Net::SSLeay Sub::Identify DateTime Storable Variable::Magic Class::XSAccessor Package::Stash::XS Params::Util DBI DBD::SQLite Text::CSV_XS    Params::Validate::XS Text::BibTeX IO::Compress::Brotli Biber; do 
               echo BEFORE $MOD
               PKG=URL_${MOD//::/_}
               declare -n PKGREF=$PKG; URL=${PKGREF};
@@ -245,7 +208,7 @@ jobs:
           $PERLBIN perlpack.pl -i packfs -o perlpack.h --prefix $TRUEPREFIX --ld ld --skip '\.a|\.pod|\.ld'
           find $PERLPREFIX
           
-          cc -o busybiber busybiber.c -DPACKFS_STATIC -DPACKFS_BUILTIN_PREFIX=$TRUEPREFIX  -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -I$PWD/perlsourcestatic -I/usr/local/include   -Wl,-E -fstack-protector-strong -fwrapv -fno-strict-aliasing -L/usr/local/lib perlsourcestatic/libperl.a libc_perlpack.a -lpthread -ldl -lm -lutil   --static -static -static-libstdc++ -static-libgcc   $MODULES_def $(printf "perlsourcestatic/lib/auto/%s " $MODULES_a) @perlpack.h.txt
+          cc -o busybiber busybiber.c -DPACKFS_STATIC -DPACKFS_BUILTIN_PREFIX=$TRUEPREFIX  -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -I$PWD/perlsourcestatic -I/usr/local/include   -Wl,-E -fstack-protector-strong -fwrapv -fno-strict-aliasing -L/usr/local/lib perlsourcestatic/libperl.a libc_perlpack.a -lpthread -ldl -lm -lutil   --static -static -static-libstdc++ -static-libgcc  @perlpack.h.txt  $MODULES_def $(printf "perlsourcestatic/lib/auto/%s " $MODULES_a)
           ./busybiber
 
           find /lib
@@ -255,6 +218,7 @@ jobs:
 
 # I$PERLPREFIX/lib/$PERLVER/x86_64-linux/CORE
 # -lpthread -ldl -lm -lutil -lc -lm 
+
 # site_perl/$PERLVER/x86_64-linux/auto/Class/XSAccessor/XSAccessor.a
 # $PERLVER/x86_64-linux/auto/Unicode/Normalize/Normalize.a
 # site_perl/$PERLVER/x86_64-linux/auto/Unicode/LineBreak/LineBreak.a
@@ -305,7 +269,7 @@ jobs:
 # $PERLVER/x86_64-linux/auto/IO/IO.a
 # site_perl/$PERLVER/x86_64-linux/auto/IO/Compress/Brotli/Brotli.a
 # site_perl/$PERLVER/x86_64-linux/auto/Text/BibTeX/BibTeX.a
-# biberunzip/lib/auto/Text/CSV_XS/CSV_XS.so
+# site_perl/5.32.0/x86_64-linux/auto/Text/CSV_XS/CSV_XS.a
 # $PERLVER/x86_64-linux/auto/Fcntl/Fcntl.a
 # $PERLVER/x86_64-linux/auto/mro/mro.a
 # site_perl/$PERLVER/x86_64-linux/auto/autovivification/autovivification.a
