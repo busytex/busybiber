@@ -702,7 +702,7 @@ int main(int argc, char *argv[], char* envp[])
     
     static char bin_biber[packfs_filepath_max_len];
     static char* myperl_argv[128];
-    strcpy(bin_biber, packfs_ctx.packfs_builtin_prefix);
+    strcpy(bin_biber, packfs_ctx->packfs_builtin_prefix);
     strcat(bin_biber, "/bin/biber");
     myperl_argv[0] = argv[0];
     myperl_argv[1] = bin_biber;
