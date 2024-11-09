@@ -145,80 +145,77 @@ jobs:
           #export CPANBIN=$RUNNER_WORKSPACE/busybiber/packfs/bin/cpan5.32.0
           #export PERLPREFIX=$RUNNER_WORKSPACE/busybiber/packfs
           mkdir perlsourcestatic && curl -L $URLPERL | tar -xzf - --strip-components=1 --directory=perlsourcestatic
-          cd perlsourcestatic && sh +x ./Configure -sde -Dman1dir=none -Dman3dir=none -Dprefix="$TRUEPREFIX" -Dinstallprefix="$PERLPREFIX" -Aldflags="-lm -ldl" -Accflags="-lm -ldl" -Dusedevel -Dlibs="-lpthread -ldl -lm -lutil -lc" -Dstatic_ext="$MODULES_ext" -Dextras="DBI" && cd - && make -C perlsourcestatic && make -C perlsourcestatic install # -Dprefix="$RUNNER_WORKSPACE/localperlstatic"
-          #cd perlsourcestatic && sh +x ./Configure -sde -Dman1dir=none -Dman3dir=none -Dprefix="/mnt/perlpack" -Dinstallprefix=$RUNNER_WORKSPACE/busybiber/packfs -Aldflags="-lm -ldl" -Accflags="-lm -ldl" -Dusedevel -Dlibs="-lpthread -ldl -lm -lutil -lc" -Dstatic_ext="$MODULES_0ext" -Dextras="DBI" && cd - && make -C perlsourcestatic && make -C perlsourcestatic install
+          cd perlsourcestatic && sh +x ./Configure -sde -Dman1dir=none -Dman3dir=none -Dprefix="$TRUEPREFIX" -Dinstallprefix="$PERLPREFIX" -Aldflags="-lm -ldl" -Accflags="-lm -ldl" -Dusedevel -Dlibs="-lpthread -ldl -lm -lutil -lc" -Dstatic_ext="$MODULES_ext" -Dextras="DBI" && cd -
+          make -C perlsourcestatic || true
+          find perlsourcestatic
+          #make -C perlsourcestatic install # -Dprefix="$RUNNER_WORKSPACE/localperlstatic"
           
+          #cd perlsourcestatic && sh +x ./Configure -sde -Dman1dir=none -Dman3dir=none -Dprefix="/mnt/perlpack" -Dinstallprefix=$RUNNER_WORKSPACE/busybiber/packfs -Aldflags="-lm -ldl" -Accflags="-lm -ldl" -Dusedevel -Dlibs="-lpthread -ldl -lm -lutil -lc" -Dstatic_ext="$MODULES_0ext" -Dextras="DBI" && cd - && make -C perlsourcestatic && make -C perlsourcestatic install
           #export PERLLIB=$PERLPREFIX/lib/$PERLVER:$PERLPREFIX/lib/$PERLVER/x86_64-linux:$PERLPREFIX/lib/site_perl/$PERLVER
           #export CPATH=$PERLPREFIX/lib/$PERLVER/x86_64-linux/CORE
-          
-          #echo BEFORE1
           #$PERLBIN $CPANBIN -T Config::AutoConf ExtUtils::LibBuilder 
-          #echo AFTER1
-          #echo BEFORE2
           #$PERLBIN $CPANBIN -T Alien::Base::Wrapper Alien::Build Alien::Build::MM  Alien::cmake3  Alien::Libxml2
-          #echo AFTER2
-          #echo BEFORE3
           #$PERLBIN $CPANBIN -T inc::Module::Install Module::Implementation
-          #echo AFTER3
-          echo BEFOREENCODE1; find $PERLPREFIX -name Encode.pm; echo AFTERENCODE1
-          export MAKEFLAGS=-j1
-          $PERLBIN $CPANBIN -T Alien::Base::Wrapper Alien::Build Alien::Build::MM Alien::cmake3 Alien::Libxml2 inc::Module::Install Module::Implementation Config::AutoConf ExtUtils::LibBuilder DBI  Log::Log4perl Class::Accessor Business::ISBN Business::ISMN Business::ISSN Data::Compare Data::Dump Data::Uniqid DateTime::Calendar::Julian DateTime::Format::Builder IO::String Lingua::Translit  Parse::RecDescent Regexp::Common Text::CSV Text::Roman LWP::Protocol::https #XML::LibXML::Simple XML::LibXSLT XML::Writer List::AllUtils
-          #ln -s $PERLPREFIX/bin/enc2xs$PERLVER $PERLPREFIX/bin/enc2xs
-          # Mozilla::CA is not installed
-          # Unicode::Collate (1.27) is installed, but we need version >= 1.29
-          echo BEFOREENCODE2; find $PERLPREFIX -name Encode.pm; echo AFTERENCODE2
-
-          for MOD in Sort::Key Encode::EUCJPASCII Encode::JIS2K Encode::HanExtra XML::LibXML autovivification Devel::Caller Devel::LexAlias XML::LibXSLT XML::Parser::Expat Unicode::LineBreak Clone PadWalker  PerlIO::utf8_strict HTML::Parser List::MoreUtils::XS List::SomeUtils::XS Net::SSLeay Sub::Identify DateTime Storable Variable::Magic Class::XSAccessor Package::Stash::XS Params::Util DBI DBD::SQLite Text::CSV_XS    Params::Validate::XS Text::BibTeX IO::Compress::Brotli Biber; do 
-              echo BEFORE $MOD
-              PKG=URL_${MOD//::/_}
-              declare -n PKGREF=$PKG; URL=${PKGREF};
-              mkdir -p myext/$PKG
-              curl -L $URL | tar -xzf - --strip-components=1 --directory myext/$PKG
-              cd myext/$PKG
-              if [ "$MOD" == "Params::Validate::XS" ] || [ "$MOD" == "Text::BibTeX" ] || [ "$MOD" == "Biber" ]; then
-                  $PERLBIN ./Build.PL
-                  $PERLBIN ./Build && $PERLBIN ./Build install
-              elif [ "$MOD" == "IO::Compress::Brotli" ]; then
-                  $PERLBIN Makefile.PL LINKTYPE=static
-                  sed -i 's/$(CP) $(MYEXTLIB) "$@"/$(CP) $(MYEXTLIB) "$(dir $@)"/' Makefile
-                  make && make install
-              else
-                  $PERLBIN Makefile.PL LINKTYPE=static
-                  make && make install
-              fi
-              cd -
-              echo AFTER $MOD
-          done
-          echo BEFOREENCODE3; find $PERLPREFIX -name Encode.pm; echo AFTERENCODE3
-
-          ar crs $PERLPREFIX/lib/perl5/site_perl/$PERLVER/x86_64-linux/auto/Params/Validate/XS/XS.a myext/URL_Params_Validate_XS/lib/Params/Validate/XS.o
-          ar crs $PERLPREFIX/lib/libbtparse.a $(printf "myext/URL_Text_BibTeX/btparse/%s " src/init.o src/input.o src/bibtex.o src/err.o src/scan.o src/error.o src/lex_auxiliary.o src/parse_auxiliary.o src/bibtex_ast.o src/sym.o src/util.o src/postprocess.o src/macros.o src/traversal.o src/modify.o src/names.o src/tex_tree.o src/string_util.o src/format_name.o)
-          ar crs $PERLPREFIX/lib/perl5/site_perl/$PERLVER/x86_64-linux/auto/Text/BibTeX/BibTeX.a myext/URL_Text_BibTeX/xscode/BibTeX.o 
-
-          cp $(cc -print-file-name=libc.a) libc_perlpack.a
-          ar x libc_perlpack.a  open.lo close.lo read.lo stat.lo fstat.lo lseek.lo access.lo fopen.lo fileno.lo
-          objcopy --redefine-sym open=orig_open     open.lo
-          objcopy --redefine-sym close=orig_close   close.lo
-          objcopy --redefine-sym read=orig_read     read.lo
-          objcopy --redefine-sym stat=orig_stat     stat.lo
-          objcopy --redefine-sym fstat=orig_fstat   fstat.lo
-          objcopy --redefine-sym lseek=orig_lseek   lseek.lo
-          objcopy --redefine-sym access=orig_access access.lo
-          objcopy --redefine-sym fopen=orig_fopen   fopen.lo
-          objcopy --redefine-sym fileno=orig_fileno fileno.lo
-          ar rs libc_perlpack.a open.lo close.lo read.lo stat.lo fstat.lo lseek.lo access.lo fopen.lo fileno.lo
           
-          find $PERLPREFIX
+          #echo BEFOREENCODE1; find $PERLPREFIX -name Encode.pm; echo AFTERENCODE1
+          #export MAKEFLAGS=-j1
+          #$PERLBIN $CPANBIN -T Alien::Base::Wrapper Alien::Build Alien::Build::MM Alien::cmake3 Alien::Libxml2 inc::Module::Install Module::Implementation Config::AutoConf ExtUtils::LibBuilder DBI  Log::Log4perl Class::Accessor Business::ISBN Business::ISMN Business::ISSN Data::Compare Data::Dump Data::Uniqid DateTime::Calendar::Julian DateTime::Format::Builder IO::String Lingua::Translit  Parse::RecDescent Regexp::Common Text::CSV Text::Roman LWP::Protocol::https #XML::LibXML::Simple XML::LibXSLT XML::Writer List::AllUtils
+          ##ln -s $PERLPREFIX/bin/enc2xs$PERLVER $PERLPREFIX/bin/enc2xs
+          ## Mozilla::CA is not installed
+          ## Unicode::Collate (1.27) is installed, but we need version >= 1.29
+          #echo BEFOREENCODE2; find $PERLPREFIX -name Encode.pm; echo AFTERENCODE2
 
-          $PERLBIN perlpack.pl -i packfs -o perlpack.h --prefix $TRUEPREFIX --ld ld --skip '\.a|\.pod|\.ld'
-          cc -o busybiber busybiber.c -DPACKFS_STATIC -DPACKFS_BUILTIN_PREFIX=$TRUEPREFIX  -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -I$PWD/perlsourcestatic -I/usr/local/include   -Wl,-E -fstack-protector-strong -fwrapv -fno-strict-aliasing -L/usr/local/lib perlsourcestatic/libperl.a libc_perlpack.a -lpthread -ldl -lm -lutil   --static -static -static-libstdc++ -static-libgcc  @perlpack.h.txt  $MODULES_def $(find $PERLPREFIX/lib  -name '*.a') \
-            /lib/libz.a \
-            /usr/lib/libxslt.a \
-            /usr/lib/libssl.a \
-            /usr/lib/libexslt.a \
-            /usr/lib/libcrypto.a \
-            /usr/lib/libxml2.a
-          ./busybiber --help || true
+          #for MOD in Sort::Key Encode::EUCJPASCII Encode::JIS2K Encode::HanExtra XML::LibXML autovivification Devel::Caller Devel::LexAlias XML::LibXSLT XML::Parser::Expat Unicode::LineBreak Clone PadWalker  PerlIO::utf8_strict HTML::Parser List::MoreUtils::XS List::SomeUtils::XS Net::SSLeay Sub::Identify DateTime Storable Variable::Magic Class::XSAccessor Package::Stash::XS Params::Util DBI DBD::SQLite Text::CSV_XS    Params::Validate::XS Text::BibTeX IO::Compress::Brotli Biber; do 
+          #    echo BEFORE $MOD
+          #    PKG=URL_${MOD//::/_}
+          #    declare -n PKGREF=$PKG; URL=${PKGREF};
+          #    mkdir -p myext/$PKG
+          #    curl -L $URL | tar -xzf - --strip-components=1 --directory myext/$PKG
+          #    cd myext/$PKG
+          #    if [ "$MOD" == "Params::Validate::XS" ] || [ "$MOD" == "Text::BibTeX" ] || [ "$MOD" == "Biber" ]; then
+          #        $PERLBIN ./Build.PL
+          #        $PERLBIN ./Build && $PERLBIN ./Build install
+          #    elif [ "$MOD" == "IO::Compress::Brotli" ]; then
+          #        $PERLBIN Makefile.PL LINKTYPE=static
+          #        sed -i 's/$(CP) $(MYEXTLIB) "$@"/$(CP) $(MYEXTLIB) "$(dir $@)"/' Makefile
+          #        make && make install
+          #    else
+          #        $PERLBIN Makefile.PL LINKTYPE=static
+          #        make && make install
+          #    fi
+          #    cd -
+          #    echo AFTER $MOD
+          #done
+          #echo BEFOREENCODE3; find $PERLPREFIX -name Encode.pm; echo AFTERENCODE3
+
+          #ar crs $PERLPREFIX/lib/perl5/site_perl/$PERLVER/x86_64-linux/auto/Params/Validate/XS/XS.a myext/URL_Params_Validate_XS/lib/Params/Validate/XS.o
+          #ar crs $PERLPREFIX/lib/libbtparse.a $(printf "myext/URL_Text_BibTeX/btparse/%s " src/init.o src/input.o src/bibtex.o src/err.o src/scan.o src/error.o src/lex_auxiliary.o src/parse_auxiliary.o src/bibtex_ast.o src/sym.o src/util.o src/postprocess.o src/macros.o src/traversal.o src/modify.o src/names.o src/tex_tree.o src/string_util.o src/format_name.o)
+          #ar crs $PERLPREFIX/lib/perl5/site_perl/$PERLVER/x86_64-linux/auto/Text/BibTeX/BibTeX.a myext/URL_Text_BibTeX/xscode/BibTeX.o 
+
+          #cp $(cc -print-file-name=libc.a) libc_perlpack.a
+          #ar x libc_perlpack.a  open.lo close.lo read.lo stat.lo fstat.lo lseek.lo access.lo fopen.lo fileno.lo
+          #objcopy --redefine-sym open=orig_open     open.lo
+          #objcopy --redefine-sym close=orig_close   close.lo
+          #objcopy --redefine-sym read=orig_read     read.lo
+          #objcopy --redefine-sym stat=orig_stat     stat.lo
+          #objcopy --redefine-sym fstat=orig_fstat   fstat.lo
+          #objcopy --redefine-sym lseek=orig_lseek   lseek.lo
+          #objcopy --redefine-sym access=orig_access access.lo
+          #objcopy --redefine-sym fopen=orig_fopen   fopen.lo
+          #objcopy --redefine-sym fileno=orig_fileno fileno.lo
+          #ar rs libc_perlpack.a open.lo close.lo read.lo stat.lo fstat.lo lseek.lo access.lo fopen.lo fileno.lo
+          #
+          #find $PERLPREFIX
+
+          #$PERLBIN perlpack.pl -i packfs -o perlpack.h --prefix $TRUEPREFIX --ld ld --skip '\.a|\.pod|\.ld'
+          #cc -o busybiber busybiber.c -DPACKFS_STATIC -DPACKFS_BUILTIN_PREFIX=$TRUEPREFIX  -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -I$PWD/perlsourcestatic -I/usr/local/include   -Wl,-E -fstack-protector-strong -fwrapv -fno-strict-aliasing -L/usr/local/lib perlsourcestatic/libperl.a libc_perlpack.a -lpthread -ldl -lm -lutil   --static -static -static-libstdc++ -static-libgcc  @perlpack.h.txt  $MODULES_def $(find $PERLPREFIX/lib  -name '*.a') \
+          #  /lib/libz.a \
+          #  /usr/lib/libxslt.a \
+          #  /usr/lib/libssl.a \
+          #  /usr/lib/libexslt.a \
+          #  /usr/lib/libcrypto.a \
+          #  /usr/lib/libxml2.a
+          #./busybiber --help || true
           # --addfile="data/biber-tool.conf;lib/Biber/biber-tool.conf" \
           # --addfile="data/schemata/config.rnc;lib/Biber/config.rnc" \
           # --addfile="data/schemata/config.rng;lib/Biber/config.rng"\
@@ -264,9 +261,9 @@ jobs:
           #   !  Test::Differences is not installed
 
 
-      - name: Artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          path: |
-            busybiber
-            perlpack.h
+#      - name: Artifacts
+#        uses: actions/upload-artifact@v4
+#        with:
+#          path: |
+#            busybiber
+#            perlpack.h
