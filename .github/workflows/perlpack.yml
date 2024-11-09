@@ -145,7 +145,7 @@ jobs:
           #export CPANBIN=$RUNNER_WORKSPACE/busybiber/packfs/bin/cpan5.32.0
           #export PERLPREFIX=$RUNNER_WORKSPACE/busybiber/packfs
           mkdir perlsourcestatic && curl -L $URLPERL | tar -xzf - --strip-components=1 --directory=perlsourcestatic
-          cd perlsourcestatic && sh +x ./Configure -sde -Dman1dir=none -Dman3dir=none -Dprefix="$TRUEPREFIX" -Dinstallprefix="$PERLPREFIX" -Aldflags="-lm -ldl" -Accflags="-lm -ldl" -Dusedevel -Dlibs="-lpthread -ldl -lm -lutil -lc" -Dstatic_ext="$MODULES_ext" -Dextras="DBI" && cd - && make -C perlsourcestatic && make -C perlsourcestatic install # -Dprefix="$RUNNER_WORKSPACE/localperlstatic"
+          cd perlsourcestatic && sh +x ./Configure -sde -Dman1dir=none -Dman3dir=none -Dprefix="$TRUEPREFIX" -Dinstallprefix="$PERLPREFIX" -Aldflags="-lm -ldl" -Accflags="-lm -ldl" -Dusedevel -Dlibs="-lpthread -ldl -lm -lutil -lc" -Dstatic_ext="$MODULES_ext" -Dextras="DBI Log::Log4perl" && cd - && make -C perlsourcestatic && make -C perlsourcestatic install # -Dprefix="$RUNNER_WORKSPACE/localperlstatic"
           #cd perlsourcestatic && sh +x ./Configure -sde -Dman1dir=none -Dman3dir=none -Dprefix="/mnt/perlpack" -Dinstallprefix=$RUNNER_WORKSPACE/busybiber/packfs -Aldflags="-lm -ldl" -Accflags="-lm -ldl" -Dusedevel -Dlibs="-lpthread -ldl -lm -lutil -lc" -Dstatic_ext="$MODULES_0ext" -Dextras="DBI" && cd - && make -C perlsourcestatic && make -C perlsourcestatic install
           
           #export PERLLIB=$PERLPREFIX/lib/$PERLVER:$PERLPREFIX/lib/$PERLVER/x86_64-linux:$PERLPREFIX/lib/site_perl/$PERLVER
@@ -186,9 +186,6 @@ jobs:
               cd -
               echo AFTER $MOD
           done
-          echo BEFORE DBIVERSION
-          $PERLBIN -MDBI -E 'say DBI->VERSION'
-          echo AFTER DBIVERSION
           ar crs $PERLPREFIX/lib/perl5/site_perl/$PERLVER/x86_64-linux/auto/Params/Validate/XS/XS.a myext/URL_Params_Validate_XS/lib/Params/Validate/XS.o
           ar crs $PERLPREFIX/lib/libbtparse.a $(printf "myext/URL_Text_BibTeX/btparse/%s " src/init.o src/input.o src/bibtex.o src/err.o src/scan.o src/error.o src/lex_auxiliary.o src/parse_auxiliary.o src/bibtex_ast.o src/sym.o src/util.o src/postprocess.o src/macros.o src/traversal.o src/modify.o src/names.o src/tex_tree.o src/string_util.o src/format_name.o)
           ar crs $PERLPREFIX/lib/perl5/site_perl/$PERLVER/x86_64-linux/auto/Text/BibTeX/BibTeX.a myext/URL_Text_BibTeX/xscode/BibTeX.o 
@@ -214,8 +211,7 @@ jobs:
             /usr/lib/libexslt.a \
             /usr/lib/libcrypto.a \
             /usr/lib/libxml2.a
-          ./busybiber
-          find $PERLPREFIX -name '*.a'
+          ./busybiber --help
           # --addfile="data/biber-tool.conf;lib/Biber/biber-tool.conf" \
           # --addfile="data/schemata/config.rnc;lib/Biber/config.rnc" \
           # --addfile="data/schemata/config.rng;lib/Biber/config.rng"\
