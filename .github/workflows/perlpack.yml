@@ -216,6 +216,21 @@ jobs:
             /usr/lib/libxml2.a
           ./busybiber
           find $PERLPREFIX -name '*.a'
+          # --addfile="data/biber-tool.conf;lib/Biber/biber-tool.conf" \
+          # --addfile="data/schemata/config.rnc;lib/Biber/config.rnc" \
+          # --addfile="data/schemata/config.rng;lib/Biber/config.rng"\
+          # --addfile="data/schemata/bcf.rnc;lib/Biber/bcf.rnc" \
+          # --addfile="data/schemata/bcf.rng;lib/Biber/bcf.rng" \
+          # --addfile="lib/Biber/LaTeX/recode_data.xml;lib/Biber/LaTeX/recode_data.xml" \
+          # --addfile="data/bcf.xsl;lib/Biber/bcf.xsl" \
+          # --addfile="${ucpath}/Locale;lib/Unicode/Collate/Locale" \
+          # --addfile="${ucpath}/CJK;lib/Unicode/Collate/CJK" \
+          # --addfile="${ucpath}/allkeys.txt;lib/Unicode/Collate/allkeys.txt" \
+          # --addfile="${ucpath}/keys.txt;lib/Unicode/Collate/keys.txt" \
+          # --addfile="$PWD/../perlprefixdynamic/lib/site_perl/$PERLVER/Mozilla/CA/cacert.pem;lib/Mozilla/CA/cacert.pem" \
+          # --addfile="$PWD/../perlprefixdynamic/lib/$PERLVER/x86_64-linux-thread-multi/PerlIO;lib/PerlIO" \
+          # --addfile="$PWD/../perlprefixdynamic/lib/$PERLVER/x86_64-linux-thread-multi/auto/PerlIO;lib/auto/PerlIO" \
+          # --addfile="$PWD/../perlprefixdynamic/lib/site_perl/$PERLVER/Business/ISBN/RangeMessage.xml;lib/Business/ISBN/RangeMessage.xml" \
           # site_perl/5.32.0/x86_64-linux/auto/IO/Compress/Brotli/libbrotlidec.a  site_perl/5.32.0/x86_64-linux/auto/IO/Compress/Brotli/libbrotlienc.a  site_perl/5.32.0/x86_64-linux/auto/IO/Compress/Brotli/libbrotlicommon.a site_perl/5.32.0/x86_64-linux/auto/Sub/Identify/Identify.a 5.32.0/x86_64-linux/auto/SDBM_File/SDBM_File.a 5.32.0/x86_64-linux/auto/Time/Piece/Piece.a 5.32.0/x86_64-linux/auto/Devel/Peek/Peek.a 5.32.0/x86_64-linux/auto/Hash/Util/Util.a 5.32.0/x86_64-linux/auto/PerlIO/mmap/mmap.a 5.32.0/x86_64-linux/auto/PerlIO/via/via.a 5.32.0/x86_64-linux/auto/Digest/SHA/SHA.a 5.32.0/x86_64-linux/CORE/libperl.a
           # Checking prerequisites...
           # requires:
