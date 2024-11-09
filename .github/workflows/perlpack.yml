@@ -41,7 +41,6 @@ env:
   URL_Class_XSAccessor: https://cpan.metacpan.org/authors/id/S/SM/SMUELLER/Class-XSAccessor-1.19.tar.gz
   URL_Package_Stash_XS: https://cpan.metacpan.org/authors/id/E/ET/ETHER/Package-Stash-XS-0.30.tar.gz
   URL_Params_Util: https://cpan.metacpan.org/authors/id/R/RE/REHSACK/Params-Util-1.102.tar.gz
-  URL_DBI: https://cpan.metacpan.org/authors/id/H/HM/HMBRAND/DBI-1.645.tgz
   URL_DBD_SQLite: https://cpan.metacpan.org/authors/id/I/IS/ISHIGAKI/DBD-SQLite-1.76.tar.gz
   URL_Text_CSV_XS: https://cpan.metacpan.org/authors/id/H/HM/HMBRAND/Text-CSV_XS-1.56.tgz
 # curl https://fastapi.metacpan.org/v1/download_url/IO::Compress::Brotli | grep download_url | cut -d'"' -f4
