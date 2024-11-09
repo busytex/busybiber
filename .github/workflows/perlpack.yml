@@ -216,79 +216,34 @@ jobs:
             /usr/lib/libxml2.a
           ./busybiber
           find $PERLPREFIX -name '*.a'
-
-# site_perl/$PERLVER/x86_64-linux/auto/Class/XSAccessor/XSAccessor.a
-# $PERLVER/x86_64-linux/auto/Unicode/Normalize/Normalize.a
-# site_perl/$PERLVER/x86_64-linux/auto/Unicode/LineBreak/LineBreak.a
-# $PERLVER/x86_64-linux/auto/Unicode/Collate/Collate.a
-# $PERLVER/x86_64-linux/auto/POSIX/POSIX.a
-# site_perl/$PERLVER/x86_64-linux/auto/XML/LibXML/LibXML.a
-# site_perl/$PERLVER/x86_64-linux/auto/XML/Parser/Expat/Expat.a
-# site_perl/$PERLVER/x86_64-linux/auto/XML/LibXSLT/LibXSLT.a
-# $PERLVER/x86_64-linux/auto/I18N/Langinfo/Langinfo.a
-# site_perl/$PERLVER/x86_64-linux/auto/HTML/Parser/Parser.a
-# $PERLVER/x86_64-linux/auto/MIME/Base64/Base64.a
-# $PERLVER/x86_64-linux/auto/Compress/Raw/Zlib/Zlib.a
-# $PERLVER/x86_64-linux/auto/Compress/Raw/Bzip2/Bzip2.a
-# $PERLVER/x86_64-linux/auto/re/re.a
-# $PERLVER/x86_64-linux/auto/Storable/Storable.a
-# $PERLVER/x86_64-linux/auto/Math/BigInt/FastCalc/FastCalc.a
-# $PERLVER/x86_64-linux/auto/Encode/Unicode/Unicode.a
-# site_perl/$PERLVER/x86_64-linux/auto/Encode/EUCJPASCII/EUCJPASCII.a
-# $PERLVER/x86_64-linux/auto/Encode/JP/JP.a
-# $PERLVER/x86_64-linux/auto/Encode/Encode.a
-# $PERLVER/x86_64-linux/auto/Encode/Byte/Byte.a
-# $PERLVER/x86_64-linux/auto/Encode/KR/KR.a
-# $PERLVER/x86_64-linux/auto/Encode/TW/TW.a
-# $PERLVER/x86_64-linux/auto/Encode/CN/CN.a
-# $PERLVER/x86_64-linux/auto/Encode/Symbol/Symbol.a
-# site_perl/$PERLVER/x86_64-linux/auto/Encode/JIS2K/JIS2K.a
-# $PERLVER/x86_64-linux/auto/Encode/EBCDIC/EBCDIC.a
-# site_perl/$PERLVER/x86_64-linux/auto/Encode/HanExtra/HanExtra.a
-# $PERLVER/x86_64-linux/auto/Hash/Util/FieldHash/FieldHash.a
-# site_perl/$PERLVER/x86_64-linux/auto/List/MoreUtils/XS/XS.a
-# $PERLVER/x86_64-linux/auto/List/Util/Util.a
-# site_perl/$PERLVER/x86_64-linux/auto/List/SomeUtils/XS/XS.a
-# $PERLVER/x86_64-linux/auto/File/DosGlob/DosGlob.a
-# $PERLVER/x86_64-linux/auto/File/Glob/Glob.a
-# $PERLVER/x86_64-linux/auto/attributes/attributes.a
-# biberunzip/lib/auto/DBD/SQLite/SQLite.so
-# site_perl/$PERLVER/x86_64-linux/auto/DBI/DBI.a
-# site_perl/$PERLVER/x86_64-linux/auto/Sort/Key/Key.a
-# site_perl/$PERLVER/x86_64-linux/auto/PadWalker/PadWalker.a
-# $PERLVER/x86_64-linux/auto/Digest/MD5/MD5.a
-# $PERLVER/x86_64-linux/auto/Filter/Util/Call/Call.a
-# site_perl/$PERLVER/x86_64-linux/auto/Net/SSLeay/SSLeay.a
-# site_perl/$PERLVER/x86_64-linux/auto/PerlIO/utf8_strict/utf8_strict.a
-# $PERLVER/x86_64-linux/auto/PerlIO/scalar/scalar.a
-# $PERLVER/x86_64-linux/auto/PerlIO/encoding/encoding.a
-# $PERLVER/x86_64-linux/auto/threads/threads.a
-# $PERLVER/x86_64-linux/auto/threads/shared/shared.a
-# $PERLVER/x86_64-linux/auto/IO/IO.a
-# site_perl/$PERLVER/x86_64-linux/auto/IO/Compress/Brotli/Brotli.a
-# site_perl/$PERLVER/x86_64-linux/auto/Text/BibTeX/BibTeX.a
-# site_perl/5.32.0/x86_64-linux/auto/Text/CSV_XS/CSV_XS.a
-# $PERLVER/x86_64-linux/auto/Fcntl/Fcntl.a
-# $PERLVER/x86_64-linux/auto/mro/mro.a
-# site_perl/$PERLVER/x86_64-linux/auto/autovivification/autovivification.a
-# $PERLVER/x86_64-linux/auto/Opcode/Opcode.a
-# $PERLVER/x86_64-linux/auto/Data/Dumper/Dumper.a
-# site_perl/$PERLVER/x86_64-linux/auto/Package/Stash/XS/XS.a
-# $PERLVER/x86_64-linux/auto/Cwd/Cwd.a
-# $PERLVER/x86_64-linux/auto/Time/HiRes/HiRes.a
-# site_perl/$PERLVER/x86_64-linux/auto/Clone/Clone.a
-# $PERLVER/x86_64-linux/auto/IPC/SysV/SysV.a
-# site_perl/$PERLVER/x86_64-linux/auto/DateTime/DateTime.a
-# site_perl/$PERLVER/x86_64-linux/auto/Devel/Caller/Caller.a
-# site_perl/$PERLVER/x86_64-linux/auto/Devel/LexAlias/LexAlias.a
-# $PERLVER/x86_64-linux/auto/B/B.a
-# site_perl/$PERLVER/x86_64-linux/auto/Variable/Magic/Magic.a
-# site_perl/$PERLVER/x86_64-linux/auto/Params/Util/Util.a
-# site_perl/$PERLVER/x86_64-linux/auto/Params/Validate/XS/XS.a
-# $PERLVER/x86_64-linux/auto/Socket/Socket.a
-# $PERLVER/x86_64-linux/auto/Sys/Hostname/Hostname.a
-# $PERLVER/x86_64-linux/auto/Sys/Syslog/Syslog.a
-# site_perl/5.32.0/x86_64-linux/auto/IO/Compress/Brotli/libbrotlidec.a  site_perl/5.32.0/x86_64-linux/auto/IO/Compress/Brotli/libbrotlienc.a  site_perl/5.32.0/x86_64-linux/auto/IO/Compress/Brotli/libbrotlicommon.a site_perl/5.32.0/x86_64-linux/auto/Sub/Identify/Identify.a 5.32.0/x86_64-linux/auto/SDBM_File/SDBM_File.a 5.32.0/x86_64-linux/auto/Time/Piece/Piece.a 5.32.0/x86_64-linux/auto/Devel/Peek/Peek.a 5.32.0/x86_64-linux/auto/Hash/Util/Util.a 5.32.0/x86_64-linux/auto/PerlIO/mmap/mmap.a 5.32.0/x86_64-linux/auto/PerlIO/via/via.a 5.32.0/x86_64-linux/auto/Digest/SHA/SHA.a 5.32.0/x86_64-linux/CORE/libperl.a
+          # site_perl/5.32.0/x86_64-linux/auto/IO/Compress/Brotli/libbrotlidec.a  site_perl/5.32.0/x86_64-linux/auto/IO/Compress/Brotli/libbrotlienc.a  site_perl/5.32.0/x86_64-linux/auto/IO/Compress/Brotli/libbrotlicommon.a site_perl/5.32.0/x86_64-linux/auto/Sub/Identify/Identify.a 5.32.0/x86_64-linux/auto/SDBM_File/SDBM_File.a 5.32.0/x86_64-linux/auto/Time/Piece/Piece.a 5.32.0/x86_64-linux/auto/Devel/Peek/Peek.a 5.32.0/x86_64-linux/auto/Hash/Util/Util.a 5.32.0/x86_64-linux/auto/PerlIO/mmap/mmap.a 5.32.0/x86_64-linux/auto/PerlIO/via/via.a 5.32.0/x86_64-linux/auto/Digest/SHA/SHA.a 5.32.0/x86_64-linux/CORE/libperl.a
+          # Checking prerequisites...
+          # requires:
+          #   !  Business::ISBN is not installed
+          #   !  Business::ISMN is not installed
+          #   !  Business::ISSN is not installed
+          #   !  Class::Accessor is not installed
+          #   !  Data::Compare is not installed
+          #   !  Data::Dump is not installed
+          #   !  Data::Uniqid is not installed
+          #   !  DateTime::Calendar::Julian is not installed
+          #   !  DateTime::Format::Builder is not installed
+          #   !  IO::String is not installed
+          #   !  LWP::Protocol::https is not installed
+          #   !  Lingua::Translit is not installed
+          #   !  List::AllUtils is not installed
+          #   !  List::MoreUtils is not installed
+          #   !  Log::Log4perl is not installed
+          #   !  Mozilla::CA is not installed
+          #   !  Parse::RecDescent is not installed
+          #   !  Regexp::Common is not installed
+          #   !  Text::CSV is not installed
+          #   !  Text::Roman is not installed
+          #   !  Unicode::Collate (1.27) is installed, but we need version >= 1.29
+          #   !  XML::LibXML::Simple is not installed
+          #   !  XML::Writer is not installed
+          # test_requires:
+          #   !  Test::Differences is not installed
 
 
       - name: Artifacts

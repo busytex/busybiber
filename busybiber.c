@@ -695,26 +695,27 @@ void xs_init(pTHX) //EXTERN_C
 
 int main(int argc, char *argv[], char* envp[])
 {
-    static char script[1 << 20] = "print('Hello world! Need more arguments!\n');";
-
     if(argc < 1)
         return -1;
-    else if(argc > 1)
-    {
-        //strcpy(script, argv[2]);
-    }
     
-    packfs_ensure_context();
-
+    struct packfs_context* packfs_ctx = packfs_ensure_context();
+    
+    static char bin_biber[packfs_filepath_max_len];
+    static char* myperl_argv[128];
+    strcpy(bin_biber, packfs_ctx.packfs_builtin_prefix);
+    strcat(bin_biber, "/bin/biber");
+    myperl_argv[0] = argv[0];
+    myperl_argv[1] = bin_biber;
+    for(int i = 1; i < argc; i++) myperl_argv[1 + i] = argv[i];
+    int myperl_argc = argc + 1;
+    
     PERL_SYS_INIT3(&argc, &argv, &envp);
     PerlInterpreter* myperl = perl_alloc();
     if(myperl == NULL)
         return -1;
-
     perl_construct(myperl);
     PL_exit_flags |= PERL_EXIT_DESTRUCT_END;
-    char *myperl_argv[] = { "perlpack", "-e", script, "--", argv[2], NULL };
-    int myperl_argc = sizeof(myperl_argv) / sizeof(myperl_argv[0]) - 1;
+
     int res = perl_parse(myperl, xs_init, myperl_argc, myperl_argv, envp);
     if(res == 0)
         res = perl_run(myperl); // error if res != 0 (or stricter in case exit(0) was called from perl code): (res & 0xFF) != 0: 
