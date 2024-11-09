@@ -162,7 +162,7 @@ jobs:
           #echo AFTER3
           
           export MAKEFLAGS=-j1
-          $PERLBIN $CPANBIN -T Alien::Base::Wrapper Alien::Build Alien::Build::MM Alien::cmake3 Alien::Libxml2 inc::Module::Install Module::Implementation Config::AutoConf ExtUtils::LibBuilder DBI  Log::Log4perl Class::Accessor Business::ISBN Business::ISMN Business::ISSN Data::Compare Data::Dump Data::Uniqid DateTime::Calendar::Julian DateTime::Format::Builder IO::String Lingua::Translit List::AllUtils Parse::RecDescent Regexp::Common Text::CSV Text::Roman LWP::Protocol::https #XML::LibXML::Simple XML::LibXSLT XML::Writer
+          $PERLBIN $CPANBIN -T Alien::Base::Wrapper Alien::Build Alien::Build::MM Alien::cmake3 Alien::Libxml2 inc::Module::Install Module::Implementation Config::AutoConf ExtUtils::LibBuilder DBI  Log::Log4perl Class::Accessor Business::ISBN Business::ISMN Business::ISSN Data::Compare Data::Dump Data::Uniqid DateTime::Calendar::Julian DateTime::Format::Builder IO::String Lingua::Translit  Parse::RecDescent Regexp::Common Text::CSV Text::Roman LWP::Protocol::https #XML::LibXML::Simple XML::LibXSLT XML::Writer List::AllUtils
           #ln -s $PERLPREFIX/bin/enc2xs$PERLVER $PERLPREFIX/bin/enc2xs
           # Mozilla::CA is not installed
           # Unicode::Collate (1.27) is installed, but we need version >= 1.29
@@ -205,6 +205,8 @@ jobs:
           objcopy --redefine-sym fileno=orig_fileno fileno.lo
           ar rs libc_perlpack.a open.lo close.lo read.lo stat.lo fstat.lo lseek.lo access.lo fopen.lo fileno.lo
           
+          find $PERLPREFIX
+
           $PERLBIN perlpack.pl -i packfs -o perlpack.h --prefix $TRUEPREFIX --ld ld --skip '\.a|\.pod|\.ld'
           cc -o busybiber busybiber.c -DPACKFS_STATIC -DPACKFS_BUILTIN_PREFIX=$TRUEPREFIX  -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -I$PWD/perlsourcestatic -I/usr/local/include   -Wl,-E -fstack-protector-strong -fwrapv -fno-strict-aliasing -L/usr/local/lib perlsourcestatic/libperl.a libc_perlpack.a -lpthread -ldl -lm -lutil   --static -static -static-libstdc++ -static-libgcc  @perlpack.h.txt  $MODULES_def $(find $PERLPREFIX/lib  -name '*.a') \
             /lib/libz.a \
