@@ -156,36 +156,36 @@ jobs:
           #$PERLBIN $CPANBIN -T Alien::Base::Wrapper Alien::Build Alien::Build::MM  Alien::cmake3  Alien::Libxml2
           #$PERLBIN $CPANBIN -T inc::Module::Install Module::Implementation
           
-          echo BEFOREENCODE1; find $PERLPREFIX -name Encode.pm; echo AFTERENCODE1
+          echo BEFOREENCODE1; find $PERLPREFIX -name '*.pm'; echo AFTERENCODE1
           export MAKEFLAGS=-j1
           $PERLBIN $CPANBIN -T Alien::Base::Wrapper Alien::Build Alien::Build::MM Alien::cmake3 Alien::Libxml2 inc::Module::Install Module::Implementation Config::AutoConf ExtUtils::LibBuilder DBI  Log::Log4perl Class::Accessor Business::ISBN Business::ISMN Business::ISSN Data::Compare Data::Dump Data::Uniqid DateTime::Calendar::Julian DateTime::Format::Builder IO::String Lingua::Translit  Parse::RecDescent Regexp::Common Text::CSV Text::Roman LWP::Protocol::https #XML::LibXML::Simple XML::LibXSLT XML::Writer List::AllUtils
           #ln -s $PERLPREFIX/bin/enc2xs$PERLVER $PERLPREFIX/bin/enc2xs
           # Mozilla::CA is not installed
           # Unicode::Collate (1.27) is installed, but we need version >= 1.29
-          echo BEFOREENCODE2; find $PERLPREFIX -name Encode.pm; echo AFTERENCODE2
+          echo BEFOREENCODE2; find $PERLPREFIX -name '*.pm'; echo AFTERENCODE2
 
-          #for MOD in Sort::Key Encode::EUCJPASCII Encode::JIS2K Encode::HanExtra XML::LibXML autovivification Devel::Caller Devel::LexAlias XML::LibXSLT XML::Parser::Expat Unicode::LineBreak Clone PadWalker  PerlIO::utf8_strict HTML::Parser List::MoreUtils::XS List::SomeUtils::XS Net::SSLeay Sub::Identify DateTime Storable Variable::Magic Class::XSAccessor Package::Stash::XS Params::Util DBI DBD::SQLite Text::CSV_XS    Params::Validate::XS Text::BibTeX IO::Compress::Brotli Biber; do 
-          #    echo BEFORE $MOD
-          #    PKG=URL_${MOD//::/_}
-          #    declare -n PKGREF=$PKG; URL=${PKGREF};
-          #    mkdir -p myext/$PKG
-          #    curl -L $URL | tar -xzf - --strip-components=1 --directory myext/$PKG
-          #    cd myext/$PKG
-          #    if [ "$MOD" == "Params::Validate::XS" ] || [ "$MOD" == "Text::BibTeX" ] || [ "$MOD" == "Biber" ]; then
-          #        $PERLBIN ./Build.PL
-          #        $PERLBIN ./Build && $PERLBIN ./Build install
-          #    elif [ "$MOD" == "IO::Compress::Brotli" ]; then
-          #        $PERLBIN Makefile.PL LINKTYPE=static
-          #        sed -i 's/$(CP) $(MYEXTLIB) "$@"/$(CP) $(MYEXTLIB) "$(dir $@)"/' Makefile
-          #        make && make install
-          #    else
-          #        $PERLBIN Makefile.PL LINKTYPE=static
-          #        make && make install
-          #    fi
-          #    cd -
-          #    echo AFTER $MOD
-          #done
-          #echo BEFOREENCODE3; find $PERLPREFIX -name Encode.pm; echo AFTERENCODE3
+          for MOD in Sort::Key Encode::EUCJPASCII Encode::JIS2K Encode::HanExtra XML::LibXML autovivification Devel::Caller Devel::LexAlias XML::LibXSLT XML::Parser::Expat Unicode::LineBreak Clone PadWalker  PerlIO::utf8_strict HTML::Parser List::MoreUtils::XS List::SomeUtils::XS Net::SSLeay Sub::Identify DateTime Storable Variable::Magic Class::XSAccessor Package::Stash::XS Params::Util DBI DBD::SQLite Text::CSV_XS    Params::Validate::XS Text::BibTeX IO::Compress::Brotli Biber; do 
+              echo BEFORE $MOD
+              PKG=URL_${MOD//::/_}
+              declare -n PKGREF=$PKG; URL=${PKGREF};
+              mkdir -p myext/$PKG
+              curl -L $URL | tar -xzf - --strip-components=1 --directory myext/$PKG
+              cd myext/$PKG
+              if [ "$MOD" == "Params::Validate::XS" ] || [ "$MOD" == "Text::BibTeX" ] || [ "$MOD" == "Biber" ]; then
+                  $PERLBIN ./Build.PL
+                  $PERLBIN ./Build && $PERLBIN ./Build install
+              elif [ "$MOD" == "IO::Compress::Brotli" ]; then
+                  $PERLBIN Makefile.PL LINKTYPE=static
+                  sed -i 's/$(CP) $(MYEXTLIB) "$@"/$(CP) $(MYEXTLIB) "$(dir $@)"/' Makefile
+                  make && make install
+              else
+                  $PERLBIN Makefile.PL LINKTYPE=static
+                  make && make install
+              fi
+              cd -
+              echo AFTER $MOD
+          done
+          echo BEFOREENCODE3; find $PERLPREFIX -name '*.pm'; echo AFTERENCODE3
 
           #ar crs $PERLPREFIX/lib/perl5/site_perl/$PERLVER/x86_64-linux/auto/Params/Validate/XS/XS.a myext/URL_Params_Validate_XS/lib/Params/Validate/XS.o
           #ar crs $PERLPREFIX/lib/libbtparse.a $(printf "myext/URL_Text_BibTeX/btparse/%s " src/init.o src/input.o src/bibtex.o src/err.o src/scan.o src/error.o src/lex_auxiliary.o src/parse_auxiliary.o src/bibtex_ast.o src/sym.o src/util.o src/postprocess.o src/macros.o src/traversal.o src/modify.o src/names.o src/tex_tree.o src/string_util.o src/format_name.o)
