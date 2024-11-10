@@ -158,12 +158,26 @@ jobs:
           
           echo BEFOREENCODE1; find $PERLPREFIX -name Encode.pm; echo AFTERENCODE1
           export MAKEFLAGS=-j1
-          $PERLBIN $CPANBIN -T Alien::Base::Wrapper Alien::Build Alien::Build::MM Alien::cmake3 Alien::Libxml2 inc::Module::Install Module::Implementation Config::AutoConf ExtUtils::LibBuilder DBI
-          echo BEFOREENCODE10; find $PERLPREFIX -name Encode.pm; echo AFTERENCODE10
-          $PERLBIN $CPANBIN -T Data::Compare Data::Dump Data::Uniqid
+          $PERLBIN $CPANBIN -T Alien::Base::Wrapper Alien::Build Alien::Build::MM Alien::cmake3 Alien::Libxml2 inc::Module::Install Module::Implementation Config::AutoConf ExtUtils::LibBuilder DBI  Data::Compare Data::Dump Data::Uniqid
           echo BEFOREENCODE11; find $PERLPREFIX -name Encode.pm; echo AFTERENCODE11
-          $PERLBIN $CPANBIN -T DateTime::Calendar::Julian DateTime::Format::Builder IO::String Lingua::Translit  Parse::RecDescent Regexp::Common Text::CSV Text::Roman LWP::Protocol::https #XML::LibXML::Simple XML::LibXSLT XML::Writer List::AllUtils
-          echo BEFOREENCODE12; find $PERLPREFIX -name Encode.pm; echo AFTERENCODE12
+          $PERLBIN $CPANBIN -T DateTime::Calendar::Julian
+          echo BEFOREENCODE12; find $PERLPREFIX -name Encode.pm; echo AFTERENCODE11
+          $PERLBIN $CPANBIN -T DateTime::Format::Builder 
+          echo BEFOREENCODE13; find $PERLPREFIX -name Encode.pm; echo AFTERENCODE12
+          $PERLBIN $CPANBIN -T IO::String 
+          echo BEFOREENCODE14; find $PERLPREFIX -name Encode.pm; echo AFTERENCODE13
+          $PERLBIN $CPANBIN -T Lingua::Translit  
+          echo BEFOREENCODE15; find $PERLPREFIX -name Encode.pm; echo AFTERENCODE14
+          $PERLBIN $CPANBIN -T Parse::RecDescent 
+          echo BEFOREENCODE16; find $PERLPREFIX -name Encode.pm; echo AFTERENCODE15
+          $PERLBIN $CPANBIN -T Regexp::Common 
+          echo BEFOREENCODE17; find $PERLPREFIX -name Encode.pm; echo AFTERENCODE16
+          $PERLBIN $CPANBIN -T Text::CSV 
+          echo BEFOREENCODE18; find $PERLPREFIX -name Encode.pm; echo AFTERENCODE17
+          $PERLBIN $CPANBIN -T Text::Roman 
+          echo BEFOREENCODE19; find $PERLPREFIX -name Encode.pm; echo AFTERENCODE18
+          $PERLBIN $CPANBIN -T LWP::Protocol::https #XML::LibXML::Simple XML::LibXSLT XML::Writer List::AllUtils
+          echo BEFOREENCODE12; find $PERLPREFIX -name Encode.pm; echo AFTERENCODE19
           $PERLBIN $CPANBIN -T Log::Log4perl Class::Accessor Business::ISBN Business::ISMN Business::ISSN
           echo BEFOREENCODE13; find $PERLPREFIX -name Encode.pm; echo AFTERENCODE13
           #ln -s $PERLPREFIX/bin/enc2xs$PERLVER $PERLPREFIX/bin/enc2xs
