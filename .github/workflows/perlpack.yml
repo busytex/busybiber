@@ -159,18 +159,15 @@ jobs:
           echo BEFOREENCODE1; find $PERLPREFIX -name Encode.pm; echo AFTERENCODE1
           export MAKEFLAGS=-j1
           $PERLBIN $CPANBIN -T Alien::Base::Wrapper Alien::Build Alien::Build::MM Alien::cmake3 Alien::Libxml2 inc::Module::Install Module::Implementation Config::AutoConf ExtUtils::LibBuilder DBI  Data::Compare Data::Dump Data::Uniqid DateTime::Calendar::Julian DateTime::Format::Builder IO::String Lingua::Translit Parse::RecDescent Regexp::Common Text::Roman LWP::Protocol::https Class::Accessor Business::ISBN Business::ISMN #XML::LibXML::Simple XML::LibXSLT XML::Writer List::AllUtils
-          #echo BEFOREENCODE11; find $PERLPREFIX -name Encode.pm; echo AFTERENCODE11
-          #$PERLBIN $CPANBIN -T Log::Log4perl Text::CSV 
-          #echo BEFOREENCODE12; find $PERLPREFIX -name Encode.pm; echo AFTERENCODE12
+          #$PERLBIN $CPANBIN -T  Text::CSV 
           #$PERLBIN $CPANBIN -T Business::ISSN
-          #echo BEFOREENCODE13; find $PERLPREFIX -name Encode.pm; echo AFTERENCODE13
           find $PERLPREFIX
           ln -s $PERLPREFIX/bin/enc2xs$PERLVER $PERLPREFIX/bin/enc2xs
           # Mozilla::CA is not installed
           # Unicode::Collate (1.27) is installed, but we need version >= 1.29
           echo BEFOREENCODE2; find $PERLPREFIX -name '*.pm'; echo AFTERENCODE2
 
-          for MOD in Sort::Key Encode::EUCJPASCII Encode::JIS2K Encode::HanExtra XML::LibXML autovivification Devel::Caller Devel::LexAlias XML::LibXSLT XML::Parser::Expat Unicode::LineBreak Clone PadWalker  PerlIO::utf8_strict HTML::Parser List::MoreUtils::XS List::SomeUtils::XS Net::SSLeay Sub::Identify DateTime Storable Variable::Magic Class::XSAccessor Package::Stash::XS Params::Util DBI DBD::SQLite Text::CSV_XS    Params::Validate::XS Text::BibTeX IO::Compress::Brotli Biber; do 
+          for MOD in Sort::Key Encode::EUCJPASCII Encode::JIS2K Encode::HanExtra XML::LibXML autovivification Devel::Caller Devel::LexAlias XML::LibXSLT XML::Parser::Expat Unicode::LineBreak Clone PadWalker  PerlIO::utf8_strict HTML::Parser List::MoreUtils::XS List::SomeUtils::XS Net::SSLeay Sub::Identify DateTime Storable Variable::Magic Class::XSAccessor Package::Stash::XS Params::Util DBI DBD::SQLite Text::CSV_XS    Params::Validate::XS Text::BibTeX IO::Compress::Brotli Log::Log4perl Biber; do 
               echo BEFORE $MOD
               PKG=URL_${MOD//::/_}
               declare -n PKGREF=$PKG; URL=${PKGREF};
