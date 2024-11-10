@@ -43,6 +43,7 @@ env:
   URL_DBD_SQLite: https://cpan.metacpan.org/authors/id/I/IS/ISHIGAKI/DBD-SQLite-1.76.tar.gz
   URL_Text_CSV_XS: https://cpan.metacpan.org/authors/id/H/HM/HMBRAND/Text-CSV_XS-1.56.tgz
   URL_Log_Log4perl: https://cpan.metacpan.org/authors/id/E/ET/ETJ/Log-Log4perl-1.57.tar.gz
+  URL_Text_CSV: https://cpan.metacpan.org/authors/id/I/IS/ISHIGAKI/Text-CSV-2.04.tar.gz
 
 jobs:
   perlpack:
@@ -166,7 +167,7 @@ jobs:
           # Unicode::Collate (1.27) is installed, but we need version >= 1.29
           echo BEFOREENCODE2; find $PERLPREFIX -name '*.pm'; echo AFTERENCODE2
 
-          for MOD in Sort::Key Encode::EUCJPASCII Encode::JIS2K Encode::HanExtra XML::LibXML autovivification Devel::Caller Devel::LexAlias XML::LibXSLT XML::Parser::Expat Unicode::LineBreak Clone PadWalker  PerlIO::utf8_strict HTML::Parser List::MoreUtils::XS List::SomeUtils::XS Net::SSLeay Sub::Identify DateTime Storable Variable::Magic Class::XSAccessor Package::Stash::XS Params::Util DBI DBD::SQLite Text::CSV_XS    Params::Validate::XS Text::BibTeX IO::Compress::Brotli Log::Log4perl Biber; do 
+          for MOD in Sort::Key Encode::EUCJPASCII Encode::JIS2K Encode::HanExtra XML::LibXML autovivification Devel::Caller Devel::LexAlias XML::LibXSLT XML::Parser::Expat Unicode::LineBreak Clone PadWalker  PerlIO::utf8_strict HTML::Parser List::MoreUtils::XS List::SomeUtils::XS Net::SSLeay Sub::Identify DateTime Storable Variable::Magic Class::XSAccessor Package::Stash::XS Params::Util DBI DBD::SQLite Text::CSV_XS    Params::Validate::XS Text::BibTeX IO::Compress::Brotli Log::Log4perl Text::CSV Biber; do 
               echo BEFORE $MOD
               PKG=URL_${MOD//::/_}
               declare -n PKGREF=$PKG; URL=${PKGREF};
