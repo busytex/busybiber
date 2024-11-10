@@ -158,16 +158,14 @@ jobs:
           
           echo BEFOREENCODE1; find $PERLPREFIX -name Encode.pm; echo AFTERENCODE1
           export MAKEFLAGS=-j1
-          $PERLBIN $CPANBIN -T Alien::Base::Wrapper Alien::Build Alien::Build::MM Alien::cmake3 Alien::Libxml2 inc::Module::Install Module::Implementation Config::AutoConf ExtUtils::LibBuilder DBI  Data::Compare Data::Dump Data::Uniqid DateTime::Calendar::Julian DateTime::Format::Builder IO::String Lingua::Translit Parse::RecDescent Regexp::Common Text::Roman LWP::Protocol::https #XML::LibXML::Simple XML::LibXSLT XML::Writer List::AllUtils
+          $PERLBIN $CPANBIN -T Alien::Base::Wrapper Alien::Build Alien::Build::MM Alien::cmake3 Alien::Libxml2 inc::Module::Install Module::Implementation Config::AutoConf ExtUtils::LibBuilder DBI  Data::Compare Data::Dump Data::Uniqid DateTime::Calendar::Julian DateTime::Format::Builder IO::String Lingua::Translit Parse::RecDescent Regexp::Common Text::Roman LWP::Protocol::https Class::Accessor #XML::LibXML::Simple XML::LibXSLT XML::Writer List::AllUtils
           echo BEFOREENCODE10; find $PERLPREFIX -name Encode.pm; echo AFTERENCODE10
-          $PERLBIN $CPANBIN -T Log::Log4perl Class::Accessor
-          echo BEFOREENCODE11; find $PERLPREFIX -name Encode.pm; echo AFTERENCODE11
-          $PERLBIN $CPANBIN -T Text::CSV 
-          echo BEFOREENCODE12; find $PERLPREFIX -name Encode.pm; echo AFTERENCODE12
           $PERLBIN $CPANBIN -T Business::ISBN Business::ISMN
-          echo BEFOREENCODE13; find $PERLPREFIX -name Encode.pm; echo AFTERENCODE13
+          echo BEFOREENCODE11; find $PERLPREFIX -name Encode.pm; echo AFTERENCODE11
+          $PERLBIN $CPANBIN -T Log::Log4perl Text::CSV 
+          echo BEFOREENCODE12; find $PERLPREFIX -name Encode.pm; echo AFTERENCODE12
           $PERLBIN $CPANBIN -T Business::ISSN
-          echo BEFOREENCODE14; find $PERLPREFIX -name Encode.pm; echo AFTERENCODE14
+          echo BEFOREENCODE13; find $PERLPREFIX -name Encode.pm; echo AFTERENCODE13
           #ln -s $PERLPREFIX/bin/enc2xs$PERLVER $PERLPREFIX/bin/enc2xs
           # Mozilla::CA is not installed
           # Unicode::Collate (1.27) is installed, but we need version >= 1.29
