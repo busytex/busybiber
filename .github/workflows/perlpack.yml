@@ -264,9 +264,10 @@ jobs:
           #   !  Test::Differences is not installed
 
 
-#      - name: Artifacts
-#        uses: actions/upload-artifact@v4
-#        with:
-#          path: |
-#            busybiber
-#            perlpack.h
+      - name: Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          path: |
+            busybiber
+            perlpack.h
+            packfs/
