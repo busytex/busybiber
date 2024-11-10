@@ -192,34 +192,34 @@ jobs:
           done
           echo BEFOREENCODE3; find $PERLPREFIX -name '*.pm'; echo AFTERENCODE3
 
-          #ar crs $PERLPREFIX/lib/perl5/site_perl/$PERLVER/x86_64-linux/auto/Params/Validate/XS/XS.a myext/URL_Params_Validate_XS/lib/Params/Validate/XS.o
-          #ar crs $PERLPREFIX/lib/libbtparse.a $(printf "myext/URL_Text_BibTeX/btparse/%s " src/init.o src/input.o src/bibtex.o src/err.o src/scan.o src/error.o src/lex_auxiliary.o src/parse_auxiliary.o src/bibtex_ast.o src/sym.o src/util.o src/postprocess.o src/macros.o src/traversal.o src/modify.o src/names.o src/tex_tree.o src/string_util.o src/format_name.o)
-          #ar crs $PERLPREFIX/lib/perl5/site_perl/$PERLVER/x86_64-linux/auto/Text/BibTeX/BibTeX.a myext/URL_Text_BibTeX/xscode/BibTeX.o 
+          ar crs $PERLPREFIX/lib/perl5/site_perl/$PERLVER/x86_64-linux/auto/Params/Validate/XS/XS.a myext/URL_Params_Validate_XS/lib/Params/Validate/XS.o
+          ar crs $PERLPREFIX/lib/libbtparse.a $(printf "myext/URL_Text_BibTeX/btparse/%s " src/init.o src/input.o src/bibtex.o src/err.o src/scan.o src/error.o src/lex_auxiliary.o src/parse_auxiliary.o src/bibtex_ast.o src/sym.o src/util.o src/postprocess.o src/macros.o src/traversal.o src/modify.o src/names.o src/tex_tree.o src/string_util.o src/format_name.o)
+          ar crs $PERLPREFIX/lib/perl5/site_perl/$PERLVER/x86_64-linux/auto/Text/BibTeX/BibTeX.a myext/URL_Text_BibTeX/xscode/BibTeX.o 
 
-          #cp $(cc -print-file-name=libc.a) libc_perlpack.a
-          #ar x libc_perlpack.a  open.lo close.lo read.lo stat.lo fstat.lo lseek.lo access.lo fopen.lo fileno.lo
-          #objcopy --redefine-sym open=orig_open     open.lo
-          #objcopy --redefine-sym close=orig_close   close.lo
-          #objcopy --redefine-sym read=orig_read     read.lo
-          #objcopy --redefine-sym stat=orig_stat     stat.lo
-          #objcopy --redefine-sym fstat=orig_fstat   fstat.lo
-          #objcopy --redefine-sym lseek=orig_lseek   lseek.lo
-          #objcopy --redefine-sym access=orig_access access.lo
-          #objcopy --redefine-sym fopen=orig_fopen   fopen.lo
-          #objcopy --redefine-sym fileno=orig_fileno fileno.lo
-          #ar rs libc_perlpack.a open.lo close.lo read.lo stat.lo fstat.lo lseek.lo access.lo fopen.lo fileno.lo
-          #
-          #find $PERLPREFIX
+          cp $(cc -print-file-name=libc.a) libc_perlpack.a
+          ar x libc_perlpack.a  open.lo close.lo read.lo stat.lo fstat.lo lseek.lo access.lo fopen.lo fileno.lo
+          objcopy --redefine-sym open=orig_open     open.lo
+          objcopy --redefine-sym close=orig_close   close.lo
+          objcopy --redefine-sym read=orig_read     read.lo
+          objcopy --redefine-sym stat=orig_stat     stat.lo
+          objcopy --redefine-sym fstat=orig_fstat   fstat.lo
+          objcopy --redefine-sym lseek=orig_lseek   lseek.lo
+          objcopy --redefine-sym access=orig_access access.lo
+          objcopy --redefine-sym fopen=orig_fopen   fopen.lo
+          objcopy --redefine-sym fileno=orig_fileno fileno.lo
+          ar rs libc_perlpack.a open.lo close.lo read.lo stat.lo fstat.lo lseek.lo access.lo fopen.lo fileno.lo
+          
+          find $PERLPREFIX
 
-          #$PERLBIN perlpack.pl -i packfs -o perlpack.h --prefix $TRUEPREFIX --ld ld --skip '\.a|\.pod|\.ld'
-          #cc -o busybiber busybiber.c -DPACKFS_STATIC -DPACKFS_BUILTIN_PREFIX=$TRUEPREFIX  -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -I$PWD/perlsourcestatic -I/usr/local/include   -Wl,-E -fstack-protector-strong -fwrapv -fno-strict-aliasing -L/usr/local/lib perlsourcestatic/libperl.a libc_perlpack.a -lpthread -ldl -lm -lutil   --static -static -static-libstdc++ -static-libgcc  @perlpack.h.txt  $MODULES_def $(find $PERLPREFIX/lib  -name '*.a') \
-          #  /lib/libz.a \
-          #  /usr/lib/libxslt.a \
-          #  /usr/lib/libssl.a \
-          #  /usr/lib/libexslt.a \
-          #  /usr/lib/libcrypto.a \
-          #  /usr/lib/libxml2.a
-          #./busybiber --help || true
+          $PERLBIN perlpack.pl -i packfs -o perlpack.h --prefix $TRUEPREFIX --ld ld --skip '\.a|\.pod|\.ld'
+          cc -o busybiber busybiber.c -DPACKFS_STATIC -DPACKFS_BUILTIN_PREFIX=$TRUEPREFIX  -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -I$PWD/perlsourcestatic -I/usr/local/include   -Wl,-E -fstack-protector-strong -fwrapv -fno-strict-aliasing -L/usr/local/lib perlsourcestatic/libperl.a libc_perlpack.a -lpthread -ldl -lm -lutil   --static -static -static-libstdc++ -static-libgcc  @perlpack.h.txt  $MODULES_def $(find $PERLPREFIX/lib  -name '*.a') \
+            /lib/libz.a \
+            /usr/lib/libxslt.a \
+            /usr/lib/libssl.a \
+            /usr/lib/libexslt.a \
+            /usr/lib/libcrypto.a \
+            /usr/lib/libxml2.a
+          ./busybiber --help || true
           # --addfile="data/biber-tool.conf;lib/Biber/biber-tool.conf" \
           # --addfile="data/schemata/config.rnc;lib/Biber/config.rnc" \
           # --addfile="data/schemata/config.rng;lib/Biber/config.rng"\
