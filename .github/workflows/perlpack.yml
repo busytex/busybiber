@@ -44,6 +44,7 @@ env:
   URL_Params_Util: https://cpan.metacpan.org/authors/id/R/RE/REHSACK/Params-Util-1.102.tar.gz
   URL_DBD_SQLite: https://cpan.metacpan.org/authors/id/I/IS/ISHIGAKI/DBD-SQLite-1.76.tar.gz
   URL_Text_CSV_XS: https://cpan.metacpan.org/authors/id/H/HM/HMBRAND/Text-CSV_XS-1.56.tgz
+  URL_Log_Log4perl: https://cpan.metacpan.org/authors/id/E/ET/ETJ/Log-Log4perl-1.57.tar.gz
 
 jobs:
   perlpack:
