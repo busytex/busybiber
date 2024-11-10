@@ -164,7 +164,8 @@ jobs:
           #echo BEFOREENCODE12; find $PERLPREFIX -name Encode.pm; echo AFTERENCODE12
           #$PERLBIN $CPANBIN -T Business::ISSN
           #echo BEFOREENCODE13; find $PERLPREFIX -name Encode.pm; echo AFTERENCODE13
-          #ln -s $PERLPREFIX/bin/enc2xs$PERLVER $PERLPREFIX/bin/enc2xs
+          find $PERLPREFIX
+          ln -s $PERLPREFIX/bin/enc2xs$PERLVER $PERLPREFIX/bin/enc2xs
           # Mozilla::CA is not installed
           # Unicode::Collate (1.27) is installed, but we need version >= 1.29
           echo BEFOREENCODE2; find $PERLPREFIX -name '*.pm'; echo AFTERENCODE2
