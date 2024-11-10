@@ -147,7 +147,7 @@ jobs:
           mkdir perlsourcestatic && curl -L $URLPERL | tar -xzf - --strip-components=1 --directory=perlsourcestatic
           cd perlsourcestatic && sh +x ./Configure -sde -Dman1dir=none -Dman3dir=none -Dprefix="$TRUEPREFIX" -Dinstallprefix="$PERLPREFIX" -Aldflags="-lm -ldl" -Accflags="-lm -ldl" -Dusedevel -Dlibs="-lpthread -ldl -lm -lutil -lc" -Dstatic_ext="$MODULES_ext" -Dextras="DBI" && cd -
           make -C perlsourcestatic
-          #make -C perlsourcestatic install # -Dprefix="$RUNNER_WORKSPACE/localperlstatic"
+          make -C perlsourcestatic install # -Dprefix="$RUNNER_WORKSPACE/localperlstatic"
           
           #cd perlsourcestatic && sh +x ./Configure -sde -Dman1dir=none -Dman3dir=none -Dprefix="/mnt/perlpack" -Dinstallprefix=$RUNNER_WORKSPACE/busybiber/packfs -Aldflags="-lm -ldl" -Accflags="-lm -ldl" -Dusedevel -Dlibs="-lpthread -ldl -lm -lutil -lc" -Dstatic_ext="$MODULES_0ext" -Dextras="DBI" && cd - && make -C perlsourcestatic && make -C perlsourcestatic install
           #export PERLLIB=$PERLPREFIX/lib/$PERLVER:$PERLPREFIX/lib/$PERLVER/x86_64-linux:$PERLPREFIX/lib/site_perl/$PERLVER
@@ -156,13 +156,13 @@ jobs:
           #$PERLBIN $CPANBIN -T Alien::Base::Wrapper Alien::Build Alien::Build::MM  Alien::cmake3  Alien::Libxml2
           #$PERLBIN $CPANBIN -T inc::Module::Install Module::Implementation
           
-          #echo BEFOREENCODE1; find $PERLPREFIX -name Encode.pm; echo AFTERENCODE1
-          #export MAKEFLAGS=-j1
-          #$PERLBIN $CPANBIN -T Alien::Base::Wrapper Alien::Build Alien::Build::MM Alien::cmake3 Alien::Libxml2 inc::Module::Install Module::Implementation Config::AutoConf ExtUtils::LibBuilder DBI  Log::Log4perl Class::Accessor Business::ISBN Business::ISMN Business::ISSN Data::Compare Data::Dump Data::Uniqid DateTime::Calendar::Julian DateTime::Format::Builder IO::String Lingua::Translit  Parse::RecDescent Regexp::Common Text::CSV Text::Roman LWP::Protocol::https #XML::LibXML::Simple XML::LibXSLT XML::Writer List::AllUtils
-          ##ln -s $PERLPREFIX/bin/enc2xs$PERLVER $PERLPREFIX/bin/enc2xs
-          ## Mozilla::CA is not installed
-          ## Unicode::Collate (1.27) is installed, but we need version >= 1.29
-          #echo BEFOREENCODE2; find $PERLPREFIX -name Encode.pm; echo AFTERENCODE2
+          echo BEFOREENCODE1; find $PERLPREFIX -name Encode.pm; echo AFTERENCODE1
+          export MAKEFLAGS=-j1
+          $PERLBIN $CPANBIN -T Alien::Base::Wrapper Alien::Build Alien::Build::MM Alien::cmake3 Alien::Libxml2 inc::Module::Install Module::Implementation Config::AutoConf ExtUtils::LibBuilder DBI  Log::Log4perl Class::Accessor Business::ISBN Business::ISMN Business::ISSN Data::Compare Data::Dump Data::Uniqid DateTime::Calendar::Julian DateTime::Format::Builder IO::String Lingua::Translit  Parse::RecDescent Regexp::Common Text::CSV Text::Roman LWP::Protocol::https #XML::LibXML::Simple XML::LibXSLT XML::Writer List::AllUtils
+          #ln -s $PERLPREFIX/bin/enc2xs$PERLVER $PERLPREFIX/bin/enc2xs
+          # Mozilla::CA is not installed
+          # Unicode::Collate (1.27) is installed, but we need version >= 1.29
+          echo BEFOREENCODE2; find $PERLPREFIX -name Encode.pm; echo AFTERENCODE2
 
           #for MOD in Sort::Key Encode::EUCJPASCII Encode::JIS2K Encode::HanExtra XML::LibXML autovivification Devel::Caller Devel::LexAlias XML::LibXSLT XML::Parser::Expat Unicode::LineBreak Clone PadWalker  PerlIO::utf8_strict HTML::Parser List::MoreUtils::XS List::SomeUtils::XS Net::SSLeay Sub::Identify DateTime Storable Variable::Magic Class::XSAccessor Package::Stash::XS Params::Util DBI DBD::SQLite Text::CSV_XS    Params::Validate::XS Text::BibTeX IO::Compress::Brotli Biber; do 
           #    echo BEFORE $MOD
