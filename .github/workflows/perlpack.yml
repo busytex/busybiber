@@ -156,9 +156,17 @@ jobs:
           #$PERLBIN $CPANBIN -T Alien::Base::Wrapper Alien::Build Alien::Build::MM  Alien::cmake3  Alien::Libxml2
           #$PERLBIN $CPANBIN -T inc::Module::Install Module::Implementation
           
-          echo BEFOREENCODE1; find $PERLPREFIX -name '*.pm'; echo AFTERENCODE1
+          echo BEFOREENCODE1; find $PERLPREFIX -name Encode.pm; echo AFTERENCODE1
           export MAKEFLAGS=-j1
-          $PERLBIN $CPANBIN -T Alien::Base::Wrapper Alien::Build Alien::Build::MM Alien::cmake3 Alien::Libxml2 inc::Module::Install Module::Implementation Config::AutoConf ExtUtils::LibBuilder DBI  Log::Log4perl Class::Accessor Business::ISBN Business::ISMN Business::ISSN Data::Compare Data::Dump Data::Uniqid DateTime::Calendar::Julian DateTime::Format::Builder IO::String Lingua::Translit  Parse::RecDescent Regexp::Common Text::CSV Text::Roman LWP::Protocol::https #XML::LibXML::Simple XML::LibXSLT XML::Writer List::AllUtils
+          $PERLBIN $CPANBIN -T Alien::Base::Wrapper Alien::Build Alien::Build::MM Alien::cmake3 Alien::Libxml2 inc::Module::Install Module::Implementation Config::AutoConf ExtUtils::LibBuilder DBI
+          echo BEFOREENCODE10; find $PERLPREFIX -name Encode.pm; echo AFTERENCODE10
+          $PERLBIN $CPANBIN -T Log::Log4perl Class::Accessor
+          echo BEFOREENCODE11; find $PERLPREFIX -name Encode.pm; echo AFTERENCODE11
+          $PERLBIN $CPANBIN -T Business::ISBN Business::ISMN Business::ISSN
+          echo BEFOREENCODE12; find $PERLPREFIX -name Encode.pm; echo AFTERENCODE12
+          $PERLBIN $CPANBIN -T Data::Compare Data::Dump Data::Uniqid
+          echo BEFOREENCODE13; find $PERLPREFIX -name Encode.pm; echo AFTERENCODE13
+          $PERLBIN $CPANBIN -T DateTime::Calendar::Julian DateTime::Format::Builder IO::String Lingua::Translit  Parse::RecDescent Regexp::Common Text::CSV Text::Roman LWP::Protocol::https #XML::LibXML::Simple XML::LibXSLT XML::Writer List::AllUtils
           #ln -s $PERLPREFIX/bin/enc2xs$PERLVER $PERLPREFIX/bin/enc2xs
           # Mozilla::CA is not installed
           # Unicode::Collate (1.27) is installed, but we need version >= 1.29
