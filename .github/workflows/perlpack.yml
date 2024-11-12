@@ -55,7 +55,7 @@ jobs:
       - name: Install Prerequisites
         run:  |
           apk add --update --no-cache libnsl libnsl-dev build-base coreutils gdb cmake git xz curl gperf p7zip zip autoconf automake libtool pkgconfig gnupg libxml2-dev libxslt-dev expat-dev openssl-dev openssl  zlib-static expat-static   # wget perl
-          apk add --update --no-cache --repository=https://dl-cdn.alpinelinux.org/alpine/edge/main libxml2-static libxslt-static openssl-libs-static
+          apk add --update --no-cache --repository=https://dl-cdn.alpinelinux.org/alpine/edge/main libxml2-static libxslt-static openssl-libs-static xz-static
 
       - uses: actions/checkout@v4
       
@@ -213,12 +213,13 @@ jobs:
 
           $PERLBIN perlpack.pl -i packfs -o perlpack.h --prefix $TRUEPREFIX --ld ld --skip '\.a|\.pod|\.ld'
           cc -o busybiber busybiber.c -DPACKFS_STATIC -DPACKFS_BUILTIN_PREFIX=$TRUEPREFIX  -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -I$PWD/perlsourcestatic -I/usr/local/include   -Wl,-E -fstack-protector-strong -fwrapv -fno-strict-aliasing -L/usr/local/lib perlsourcestatic/libperl.a libc_perlpack.a -lpthread -ldl -lm -lutil   --static -static -static-libstdc++ -static-libgcc  @perlpack.h.txt $(find $PERLPREFIX/lib  -name '*.a') \
-            /lib/libz.a \
+            /usr/lib/libxml2.a \
             /usr/lib/libxslt.a \
             /usr/lib/libssl.a \
             /usr/lib/libexslt.a \
             /usr/lib/libcrypto.a \
-            /usr/lib/libxml2.a
+            /lib/libz.a \
+            /usr/lib/liblzma.a
           PERL_DATETIME_PP=1 ./busybiber --help || true
           # --addfile="data/biber-tool.conf;lib/Biber/biber-tool.conf" \
           # --addfile="data/schemata/config.rnc;lib/Biber/config.rnc" \
