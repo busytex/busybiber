@@ -131,6 +131,7 @@ jobs:
 #            --cachedeps=scancache \
 #            --output=biber-linux_x86_64 \
 #            $PWD/../perlprefixdynamic/bin/biber
+#          ./biber-linux_x86_64 --help
 #          unzip -l biber-linux_x86_64
 
       - name: Install Perl static

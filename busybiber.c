@@ -564,7 +564,7 @@ void xs_init(pTHX) //EXTERN_C
     extern void boot_Sort__Key(pTHX_ CV* cv); newXS("Sort::Key::bootstrap", boot_Sort__Key, file);
     extern void boot_Variable__Magic(pTHX_ CV* cv); newXS("Variable::Magic::bootstrap", boot_Variable__Magic, file);
 
-    // extern void boot_XML__LibXML(pTHX_ CV* cv); newXS("XML::LibXML::bootstrap", boot_XML__LibXML, file);
+    extern void boot_XML__LibXML(pTHX_ CV* cv); newXS("XML::LibXML::bootstrap", boot_XML__LibXML, file);
     // extern void boot_XML__LibXSLT(pTHX_ CV* cv); newXS("XML::LibXSLT::bootstrap", boot_XML__LibXSLT, file);
     // extern void boot_Text__BibTeX(pTHX_ CV* cv); newXS("Text::BibTeX::bootstrap", boot_Text__BibTeX, file);
     // extern void boot_Text__CSV_XS(pTHX_ CV* cv); newXS("Text::CSV_XS::bootstrap", boot_Text__CSV_XS, file);
