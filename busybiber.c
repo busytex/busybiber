@@ -565,7 +565,9 @@ void xs_init(pTHX) //EXTERN_C
     extern void boot_Variable__Magic(pTHX_ CV* cv); newXS("Variable::Magic::bootstrap", boot_Variable__Magic, file);
 
     extern void boot_XML__LibXML(pTHX_ CV* cv); newXS("XML::LibXML::bootstrap", boot_XML__LibXML, file);
-    // extern void boot_XML__LibXSLT(pTHX_ CV* cv); newXS("XML::LibXSLT::bootstrap", boot_XML__LibXSLT, file);
+    extern void boot_XML__LibXSLT(pTHX_ CV* cv); newXS("XML::LibXSLT::bootstrap", boot_XML__LibXSLT, file);
+    extern void boot_XML__Parser__Expat(pTHX_ CV* cv); newXS("XML::Parser::Expat::bootstrap", boot_XML__Parser__Expat, file); 
+
     // extern void boot_Text__BibTeX(pTHX_ CV* cv); newXS("Text::BibTeX::bootstrap", boot_Text__BibTeX, file);
     // extern void boot_Text__CSV_XS(pTHX_ CV* cv); newXS("Text::CSV_XS::bootstrap", boot_Text__CSV_XS, file);
     // extern void boot_DBI(pTHX_ CV* cv); newXS("DBI::bootstrap", boot_DBI, file);
@@ -573,7 +575,6 @@ void xs_init(pTHX) //EXTERN_C
     // extern void boot_Net__SSLeay(pTHX_ CV* cv); newXS("Net::SSLeay::bootstrap", boot_Net__SSLeay, file);
     // extern void boot_Package__Stash__XS(pTHX_ CV* cv); newXS("Package::Stash::XS::bootstrap", boot_Package__Stash__XS, file); 
     // extern void boot_Params__Validate__XS(pTHX_ CV* cv); newXS("Params::Validate::XS::bootstrap", boot_Params__Validate__XS, file); 
-    // extern void boot_XML__Parser__Expat(pTHX_ CV* cv); newXS("XML::Parser::Expat::bootstrap", boot_XML__Parser__Expat, file); 
     // extern void boot_Filter__Util__Call(pTHX_ CV* cv); newXS("Filter::Util::Call::bootstrap", boot_Filter__Util__Call, file); 
     // extern void boot_IO__Compress__Brotli(pTHX_ CV* cv); newXS("IO::Compress::Brotli::bootstrap", boot_IO__Compress__Brotli, file); 
 }
