@@ -159,8 +159,7 @@ jobs:
           echo BEFOREENCODE1; find $PERLPREFIX -name Encode.pm; echo AFTERENCODE1
           export MAKEFLAGS=-j1
           $PERLBIN $CPANBIN -T Alien::Base::Wrapper Alien::Build Alien::Build::MM Alien::cmake3 Alien::Libxml2 inc::Module::Install Module::Implementation Config::AutoConf ExtUtils::LibBuilder DBI  Data::Compare Data::Dump Data::Uniqid DateTime::Calendar::Julian DateTime::Format::Builder IO::String Lingua::Translit Parse::RecDescent Regexp::Common Text::Roman LWP::Protocol::https Class::Accessor Business::ISBN Business::ISMN #XML::LibXML::Simple XML::LibXSLT XML::Writer List::AllUtils
-          #$PERLBIN $CPANBIN -T  Text::CSV 
-          #$PERLBIN $CPANBIN -T Business::ISSN
+          #$PERLBIN $CPANBIN -T Text::CSV Business::ISSN
           find $PERLPREFIX
           ln -s $PERLPREFIX/bin/enc2xs$PERLVER $PERLPREFIX/bin/enc2xs
           # Mozilla::CA is not installed
