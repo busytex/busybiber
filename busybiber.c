@@ -546,6 +546,7 @@ void xs_init(pTHX) //EXTERN_C
     
     extern void boot_DateTime(pTHX_ CV* cv); newXS("DateTime::bootstrap", boot_DateTime, file);
     extern void boot_Clone(pTHX_ CV* cv); newXS("Clone::bootstrap", boot_Clone, file);
+    extern void boot_autovivification(pTHX_ CV* cv); newXS("autovivification::bootstrap", boot_autovivification, file);
 }
 
 int main(int argc, char *argv[], char* envp[])
