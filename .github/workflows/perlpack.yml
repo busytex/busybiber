@@ -210,6 +210,17 @@ jobs:
           ar rs libc_perlpack.a open.lo close.lo read.lo stat.lo fstat.lo lseek.lo access.lo fopen.lo fileno.lo
           
           #find $PERLPREFIX -name '*.a'
+          
+          ucpath="$PERLPREFIX/lib/$PERLVER/Unicode/Collate"
+          mkdir biber && curl -L $URL_Biber | tar -xzf - --strip-components=1 --directory=biber
+          mkdir -p packfs/lib/Biber packfs/lib/Biber/LaTeX packfs/lib/Unicode/Collate
+          cp biber/data/biber-tools.conf data/schemata/config.rnc biber/data/schemata/config.rng biber/data/schemata/bcf.rnc biber/data/schemata/bcf.rng biber/data/bcf.xsl packfs/lib/Biber
+          cp biber/lib/Biber/LaTeX/recode_data.xml packfs/lib/Biber/LaTeX
+          cp -r $ucpath/Locale $ucpath/CJK $ucpath/allkeys.txt $ucpath/keys.txt packfs/lib/Unicode/Collate
+          #cp $PERLPREFIX/lib/site_perl/$PERLVER/Mozilla/CA/cacert.pem packfs/lib/Mozilla/CA/cacert.pem
+          #cp -r $PERLPREFIX/lib/$PERLVER/x86_64-linux-thread-multi/PerlIO packfs/lib/PerlIO
+          #cp -r $PERLPREFIX/lib/$PERLVER/x86_64-linux-thread-multi/auto/PerlIO packfs/lib/auto/PerlIO
+          #cp $PERLPREFIX/lib/site_perl/$PERLVER/Business/ISBN/RangeMessage.xml packfs/lib/Business/ISBN/RangeMessage.xml
 
           $PERLBIN perlpack.pl -i packfs -o perlpack.h --prefix $TRUEPREFIX --ld ld --skip '\.a|\.pod|\.ld'
           cc -o busybiber busybiber.c -DPACKFS_STATIC -DPACKFS_BUILTIN_PREFIX=$TRUEPREFIX  -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -I$PWD/perlsourcestatic -I/usr/local/include   -Wl,-E -fstack-protector-strong -fwrapv -fno-strict-aliasing -L/usr/local/lib perlsourcestatic/libperl.a libc_perlpack.a -lpthread -ldl -lm -lutil   --static -static -static-libstdc++ -static-libgcc  @perlpack.h.txt $(find $PERLPREFIX/lib  -name '*.a') \
@@ -222,50 +233,7 @@ jobs:
             /usr/lib/liblzma.a \
             /usr/lib/libssl.a
           PERL_DATETIME_PP=1 ./busybiber --help || true
-          # --addfile="data/biber-tool.conf;lib/Biber/biber-tool.conf" \
-          # --addfile="data/schemata/config.rnc;lib/Biber/config.rnc" \
-          # --addfile="data/schemata/config.rng;lib/Biber/config.rng"\
-          # --addfile="data/schemata/bcf.rnc;lib/Biber/bcf.rnc" \
-          # --addfile="data/schemata/bcf.rng;lib/Biber/bcf.rng" \
-          # --addfile="lib/Biber/LaTeX/recode_data.xml;lib/Biber/LaTeX/recode_data.xml" \
-          # --addfile="data/bcf.xsl;lib/Biber/bcf.xsl" \
-          # --addfile="${ucpath}/Locale;lib/Unicode/Collate/Locale" \
-          # --addfile="${ucpath}/CJK;lib/Unicode/Collate/CJK" \
-          # --addfile="${ucpath}/allkeys.txt;lib/Unicode/Collate/allkeys.txt" \
-          # --addfile="${ucpath}/keys.txt;lib/Unicode/Collate/keys.txt" \
-          # --addfile="$PWD/../perlprefixdynamic/lib/site_perl/$PERLVER/Mozilla/CA/cacert.pem;lib/Mozilla/CA/cacert.pem" \
-          # --addfile="$PWD/../perlprefixdynamic/lib/$PERLVER/x86_64-linux-thread-multi/PerlIO;lib/PerlIO" \
-          # --addfile="$PWD/../perlprefixdynamic/lib/$PERLVER/x86_64-linux-thread-multi/auto/PerlIO;lib/auto/PerlIO" \
-          # --addfile="$PWD/../perlprefixdynamic/lib/site_perl/$PERLVER/Business/ISBN/RangeMessage.xml;lib/Business/ISBN/RangeMessage.xml" \
-          # site_perl/5.32.0/x86_64-linux/auto/IO/Compress/Brotli/libbrotlidec.a  site_perl/5.32.0/x86_64-linux/auto/IO/Compress/Brotli/libbrotlienc.a  site_perl/5.32.0/x86_64-linux/auto/IO/Compress/Brotli/libbrotlicommon.a site_perl/5.32.0/x86_64-linux/auto/Sub/Identify/Identify.a 5.32.0/x86_64-linux/auto/SDBM_File/SDBM_File.a 5.32.0/x86_64-linux/auto/Time/Piece/Piece.a 5.32.0/x86_64-linux/auto/Devel/Peek/Peek.a 5.32.0/x86_64-linux/auto/Hash/Util/Util.a 5.32.0/x86_64-linux/auto/PerlIO/mmap/mmap.a 5.32.0/x86_64-linux/auto/PerlIO/via/via.a 5.32.0/x86_64-linux/auto/Digest/SHA/SHA.a 5.32.0/x86_64-linux/CORE/libperl.a
-          # Checking prerequisites...
-          # requires:
-          #   !  Business::ISBN is not installed
-          #   !  Business::ISMN is not installed
-          #   !  Business::ISSN is not installed
-          #   !  Class::Accessor is not installed
-          #   !  Data::Compare is not installed
-          #   !  Data::Dump is not installed
-          #   !  Data::Uniqid is not installed
-          #   !  DateTime::Calendar::Julian is not installed
-          #   !  DateTime::Format::Builder is not installed
-          #   !  IO::String is not installed
-          #   !  LWP::Protocol::https is not installed
-          #   !  Lingua::Translit is not installed
-          #   !  List::AllUtils is not installed
-          #   !  List::MoreUtils is not installed
-          #   !  Log::Log4perl is not installed
-          #   !  Mozilla::CA is not installed
-          #   !  Parse::RecDescent is not installed
-          #   !  Regexp::Common is not installed
-          #   !  Text::CSV is not installed
-          #   !  Text::Roman is not installed
-          #   !  Unicode::Collate (1.27) is installed, but we need version >= 1.29
-          #   !  XML::LibXML::Simple is not installed
-          #   !  XML::Writer is not installed
-          # test_requires:
-          #   !  Test::Differences is not installed
-
+          # libbrotlidec.a  libbrotlienc.a  libbrotlicommon.a Identify.a SDBM_File.a Piece.a Peek.a Hash/Util/Util.a mmap.a via.a SHA.a 
 
       - name: Artifacts
         uses: actions/upload-artifact@v4
