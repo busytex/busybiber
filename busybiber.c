@@ -504,10 +504,12 @@ void xs_init(pTHX) //EXTERN_C
     extern void boot_PerlIO__mmap(pTHX_ CV* cv); newXS("PerlIO::mmap::bootstrap", boot_PerlIO__mmap, file);
     extern void boot_PerlIO__encoding(pTHX_ CV* cv); newXS("PerlIO::encoding::bootstrap", boot_PerlIO__encoding, file);
     extern void boot_PerlIO__scalar(pTHX_ CV* cv); newXS("PerlIO::scalar::bootstrap", boot_PerlIO__scalar, file);
+    extern void boot_PerlIO__utf8_strict(pTHX_ CV* cv); newXS("PerlIO::utf8_strict::bootstrap", boot_PerlIO__utf8_strict, file);
     extern void boot_B(pTHX_ CV* cv); newXS("B::bootstrap", boot_B, file);
     extern void boot_attributes(pTHX_ CV* cv); newXS("attributes::bootstrap", boot_attributes, file);
     extern void boot_Unicode__Normalize(pTHX_ CV* cv); newXS("Unicode::Normalize::bootstrap", boot_Unicode__Normalize, file);
     extern void boot_Unicode__Collate(pTHX_ CV* cv); newXS("Unicode::Collate::bootstrap", boot_Unicode__Collate, file);
+    extern void boot_Unicode__LineBreak(pTHX_ CV* cv); newXS("Unicode::LineBreak::bootstrap", boot_Unicode__LineBreak, file);
     extern void boot_threads(pTHX_ CV* cv); newXS("threads::bootstrap", boot_threads, file);
     extern void boot_threads__shared(pTHX_ CV* cv); newXS("threads::shared::bootstrap", boot_threads__shared, file);
     extern void boot_IPC__SysV(pTHX_ CV* cv); newXS("IPC::SysV::bootstrap", boot_IPC__SysV, file);
@@ -535,18 +537,45 @@ void xs_init(pTHX) //EXTERN_C
     extern void boot_Encode__Symbol(pTHX_ CV* cv); newXS("Encode::Symbol::bootstrap", boot_Encode__Symbol, file);
     extern void boot_Encode__Byte(pTHX_ CV* cv); newXS("Encode::Byte::bootstrap", boot_Encode__Byte, file);
     extern void boot_Encode__TW(pTHX_ CV* cv); newXS("Encode::TW::bootstrap", boot_Encode__TW, file);
+    extern void boot_Encode__EUCJPASCII(pTHX_ CV* cv); newXS("Encode::EUCJPASCII::bootstrap", boot_Encode__EUCJPASCII, file);
+    extern void boot_Encode__JIS2K(pTHX_ CV* cv); newXS("Encode::JIS2K::bootstrap", boot_Encode__JIS2K, file);
+    extern void boot_Encode__HanExtra(pTHX_ CV* cv); newXS("Encode::HanExtra::bootstrap", boot_Encode__HanExtra, file);
     extern void boot_Compress__Raw__Zlib(pTHX_ CV* cv); newXS("Compress::Raw::Zlib::bootstrap", boot_Compress__Raw__Zlib, file);
     extern void boot_Compress__Raw__Bzip2(pTHX_ CV* cv); newXS("Compress::Raw::Bzip2::bootstrap", boot_Compress__Raw__Bzip2, file);
     extern void boot_MIME__Base64(pTHX_ CV* cv); newXS("MIME::Base64::bootstrap", boot_MIME__Base64, file);
     extern void boot_Cwd(pTHX_ CV* cv); newXS("Cwd::bootstrap", boot_Cwd, file);
     extern void boot_Storable(pTHX_ CV* cv); newXS("Storable::bootstrap", boot_Storable, file);
     extern void boot_List__Util(pTHX_ CV* cv); newXS("List::Util::bootstrap", boot_List__Util, file);
+    extern void boot_List__MoreUtils(pTHX_ CV* cv); newXS("List::MoreUtils::bootstrap", boot_List__MoreUtils, file);
+    extern void boot_List__SomeUtils(pTHX_ CV* cv); newXS("List::SomeUtils::bootstrap", boot_List__SomeUtils, file);
     extern void boot_Fcntl(pTHX_ CV* cv); newXS("Fcntl::bootstrap", boot_Fcntl, file);
     extern void boot_Opcode(pTHX_ CV* cv); newXS("Opcode::bootstrap", boot_Opcode, file);
     
     extern void boot_DateTime(pTHX_ CV* cv); newXS("DateTime::bootstrap", boot_DateTime, file);
     extern void boot_Clone(pTHX_ CV* cv); newXS("Clone::bootstrap", boot_Clone, file);
     extern void boot_autovivification(pTHX_ CV* cv); newXS("autovivification::bootstrap", boot_autovivification, file);
+    extern void boot_PadWalker(pTHX_ CV* cv); newXS("PadWalker::bootstrap", boot_PadWalker, file);
+
+    extern void boot_Devel__Caller(pTHX_ CV* cv); newXS("Devel::Caller::bootstrap", boot_Devel__Caller, file);
+    extern void boot_Devel__LexAlias(pTHX_ CV* cv); newXS("Devel::LexAlias::bootstrap", boot_Devel__LexAlias, file);
+    extern void boot_Params__Util(pTHX_ CV* cv); newXS("Params::Util::bootstrap", boot_Params__Util, file);
+    extern void boot_HTML__Parser(pTHX_ CV* cv); newXS("HTML::Parser::bootstrap", boot_HTML__Parser, file);
+    extern void boot_Class__XSAccessor(pTHX_ CV* cv); newXS("Class::XSAccessor::bootstrap", boot_Class__XSAccessor, file);
+    extern void boot_Sort__Key(pTHX_ CV* cv); newXS("Sort::Key::bootstrap", boot_Sort__Key, file);
+    extern void boot_Variable__Magic(pTHX_ CV* cv); newXS("Variable::Magic::bootstrap", boot_Variable__Magic, file);
+
+    // extern void boot_XML__LibXML(pTHX_ CV* cv); newXS("XML::LibXML::bootstrap", boot_XML__LibXML, file);
+    // extern void boot_XML__LibXSLT(pTHX_ CV* cv); newXS("XML::LibXSLT::bootstrap", boot_XML__LibXSLT, file);
+    // extern void boot_Text__BibTeX(pTHX_ CV* cv); newXS("Text::BibTeX::bootstrap", boot_Text__BibTeX, file);
+    // extern void boot_Text__CSV_XS(pTHX_ CV* cv); newXS("Text::CSV_XS::bootstrap", boot_Text__CSV_XS, file);
+    // extern void boot_DBI(pTHX_ CV* cv); newXS("DBI::bootstrap", boot_DBI, file);
+    // extern void boot_DBD__SQLite(pTHX_ CV* cv); newXS("DBD::SQLite::bootstrap", boot_DBD__SQLite, file);
+    // extern void boot_Net__SSLeay(pTHX_ CV* cv); newXS("Net::SSLeay::bootstrap", boot_Net__SSLeay, file);
+    // extern void boot_Package__Stash__XS(pTHX_ CV* cv); newXS("Package::Stash::XS::bootstrap", boot_Package__Stash__XS, file); 
+    // extern void boot_Params__Validate__XS(pTHX_ CV* cv); newXS("Params::Validate::XS::bootstrap", boot_Params__Validate__XS, file); 
+    // extern void boot_XML__Parser__Expat(pTHX_ CV* cv); newXS("XML::Parser::Expat::bootstrap", boot_XML__Parser__Expat, file); 
+    // extern void boot_Filter__Util__Call(pTHX_ CV* cv); newXS("Filter::Util::Call::bootstrap", boot_Filter__Util__Call, file); 
+    // extern void boot_IO__Compress__Brotli(pTHX_ CV* cv); newXS("IO::Compress::Brotli::bootstrap", boot_IO__Compress__Brotli, file); 
 }
 
 int main(int argc, char *argv[], char* envp[])
