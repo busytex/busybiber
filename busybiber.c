@@ -504,7 +504,7 @@ void xs_init(pTHX) //EXTERN_C
     extern void boot_PerlIO__mmap(pTHX_ CV* cv); newXS("PerlIO::mmap::bootstrap", boot_PerlIO__mmap, file);
     extern void boot_PerlIO__encoding(pTHX_ CV* cv); newXS("PerlIO::encoding::bootstrap", boot_PerlIO__encoding, file);
     extern void boot_PerlIO__scalar(pTHX_ CV* cv); newXS("PerlIO::scalar::bootstrap", boot_PerlIO__scalar, file);
-    extern void boot_PerlIO__utf8_strict(pTHX_ CV* cv); newXS("PerlIO::utf8_strict::bootstrap", boot_PerlIO__utf8_strict, file);
+    //extern void boot_PerlIO__utf8_strict(pTHX_ CV* cv); newXS("PerlIO::utf8_strict::bootstrap", boot_PerlIO__utf8_strict, file);
     extern void boot_B(pTHX_ CV* cv); newXS("B::bootstrap", boot_B, file);
     extern void boot_attributes(pTHX_ CV* cv); newXS("attributes::bootstrap", boot_attributes, file);
     extern void boot_Unicode__Normalize(pTHX_ CV* cv); newXS("Unicode::Normalize::bootstrap", boot_Unicode__Normalize, file);
@@ -546,8 +546,8 @@ void xs_init(pTHX) //EXTERN_C
     extern void boot_Cwd(pTHX_ CV* cv); newXS("Cwd::bootstrap", boot_Cwd, file);
     extern void boot_Storable(pTHX_ CV* cv); newXS("Storable::bootstrap", boot_Storable, file);
     extern void boot_List__Util(pTHX_ CV* cv); newXS("List::Util::bootstrap", boot_List__Util, file);
-    extern void boot_List__MoreUtils(pTHX_ CV* cv); newXS("List::MoreUtils::bootstrap", boot_List__MoreUtils, file);
-    extern void boot_List__SomeUtils(pTHX_ CV* cv); newXS("List::SomeUtils::bootstrap", boot_List__SomeUtils, file);
+    //extern void boot_List__SomeUtils(pTHX_ CV* cv); newXS("List::SomeUtils::bootstrap", boot_List__SomeUtils, file);
+    //extern void boot_List__MoreUtils(pTHX_ CV* cv); newXS("List::MoreUtils::bootstrap", boot_List__MoreUtils, file);
     extern void boot_Fcntl(pTHX_ CV* cv); newXS("Fcntl::bootstrap", boot_Fcntl, file);
     extern void boot_Opcode(pTHX_ CV* cv); newXS("Opcode::bootstrap", boot_Opcode, file);
     
