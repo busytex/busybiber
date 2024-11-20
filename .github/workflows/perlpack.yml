@@ -55,7 +55,7 @@ jobs:
       - name: Install Prerequisites
         run:  |
           apk add --update --no-cache libnsl libnsl-dev build-base coreutils gdb cmake git xz curl gperf p7zip zip autoconf automake libtool pkgconfig gnupg libxml2-dev libxslt-dev expat-dev openssl-dev openssl  zlib-static expat-static   # wget perl
-          apk add --update --no-cache --repository=https://dl-cdn.alpinelinux.org/alpine/edge/main libxml2-static libxslt-static openssl-libs-static xz-static libgcrypt-static
+          apk add --update --no-cache --repository=https://dl-cdn.alpinelinux.org/alpine/edge/main libxml2-static libxslt-static openssl-libs-static xz-static libgcrypt-static libgpg-error-static
 
       - uses: actions/checkout@v4
       
@@ -233,7 +233,7 @@ jobs:
             /usr/lib/libexslt.a \
             /usr/lib/libexpat.a \
             /usr/lib/libcrypto.a \
-            /usr/lib/libgcrypt.a \
+            /usr/lib/libgcrypt.a /usr/lib/libgpg-error.a \
             /usr/lib/libxml2.a \
             /lib/libz.a \
             /usr/lib/liblzma.a \
