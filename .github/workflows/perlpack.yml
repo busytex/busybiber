@@ -235,11 +235,11 @@ jobs:
             /usr/lib/libcrypto.a \
             /usr/lib/libgcrypt.a /usr/lib/libgpg-error.a \
             /usr/lib/libxml2.a \
-            /lib/libz.a \
             /usr/lib/liblzma.a \
             /usr/lib/libssl.a
           PERL_DATETIME_PP=1 ./busybiber --help || true
-          # libbrotlidec.a  libbrotlienc.a  libbrotlicommon.a Identify.a SDBM_File.a Piece.a Peek.a Hash/Util/Util.a mmap.a via.a SHA.a 
+#            /lib/libz.a \
+# libbrotlidec.a  libbrotlienc.a  libbrotlicommon.a Identify.a SDBM_File.a Piece.a Peek.a Hash/Util/Util.a mmap.a via.a SHA.a 
 
       - name: Artifacts
         uses: actions/upload-artifact@v4
