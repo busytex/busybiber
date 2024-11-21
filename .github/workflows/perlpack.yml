@@ -59,81 +59,6 @@ jobs:
 
       - uses: actions/checkout@v4
       
-#      - name: Install Perl dynamic
-#        shell: bash
-#        run: |
-#          mkdir perlsourcedynamic && curl -L $URLPERL | tar -xzf - --strip-components=1 --directory=perlsourcedynamic
-#          cd perlsourcedynamic && sh +x ./Configure -sde -Dprefix="$PWD/../perlprefixdynamic" && make && make install && cd -
-#          export PERLBIN=$PWD/perlprefixdynamic/bin/perl
-#          export CPANBIN=$PWD/perlprefixdynamic/bin/cpan
-#          export PATH="$PWD/perlprefixdynamic/bin:$PATH"
-#          export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$PWD/perlprefixdynamic/lib"
-#          mkdir biber && curl -L $URL_Biber | tar -xzf - --strip-components=1 --directory=biber
-#          cd biber
-#          $CPANBIN -T Module::Build PAR::Packer
-#          $PERLBIN Build.PL
-#          $PERLBIN ./Build installdeps --cpan_client "$CPANBIN -T"
-#          $PERLBIN ./Build test
-#          $PERLBIN ./Build install
-#          # declare -r perlv='5.38.2'
-#          # bash ./dist/linux_x86_64/build.sh
-#          # declare ucpath="/usr/local/perl/lib/${perlv}/Unicode/Collate"
-#          # if [ -d "/usr/local/perl/lib/site_perl/${perlv}/x86_64-linux-thread-multi/Unicode/Collate" ]; then ucpath="/usr/local/perl/lib/site_perl/${perlv}/x86_64-linux-thread-multi/Unicode/Collate"; fi
-#          # Unicode::Collate has a site_perl version so has been updated since this
-#          # perl was released
-#          ucpath="$PWD/../perlprefixdynamic/lib/$PERLVER/Unicode/Collate"
-#          echo "USING Unicode::Collate at: ${ucpath}"
-#          PAR_VERBATIM=1 $PWD/../perlprefixdynamic/bin/pp \
-#            --module=deprecate \
-#            --module=Biber::Input::file::bibtex \
-#            --module=Biber::Input::file::biblatexml \
-#            --module=Biber::Output::dot \
-#            --module=Biber::Output::bbl \
-#            --module=Biber::Output::bblxml \
-#            --module=Biber::Output::bibtex \
-#            --module=Biber::Output::biblatexml \
-#            --module=Pod::Simple::TranscodeSmart \
-#            --module=Pod::Simple::TranscodeDumb \
-#            --module=List::MoreUtils::XS \
-#            --module=List::SomeUtils::XS \
-#            --module=List::MoreUtils::PP \
-#            --module=HTTP::Status \
-#            --module=HTTP::Date \
-#            --module=Encode:: \
-#            --module=File::Find::Rule \
-#            --module=IO::Socket::SSL \
-#            --module=IO::String \
-#            --module=PerlIO::utf8_strict \
-#            --module=Text::CSV_XS \
-#            --module=DateTime \
-#            --link=$PWD/../perlprefixdynamic/lib/libbtparse.so \
-#            --link=/usr/lib/libxml2.so \
-#            --link=/lib/libz.so \
-#            --link=/usr/lib/libxslt.so \
-#            --link=/usr/lib/libexslt.so \
-#            --link=/usr/lib//libssl.so \
-#            --link=/usr/lib/libcrypto.so \
-#            --addfile="data/biber-tool.conf;lib/Biber/biber-tool.conf" \
-#            --addfile="data/schemata/config.rnc;lib/Biber/config.rnc" \
-#            --addfile="data/schemata/config.rng;lib/Biber/config.rng"\
-#            --addfile="data/schemata/bcf.rnc;lib/Biber/bcf.rnc" \
-#            --addfile="data/schemata/bcf.rng;lib/Biber/bcf.rng" \
-#            --addfile="lib/Biber/LaTeX/recode_data.xml;lib/Biber/LaTeX/recode_data.xml" \
-#            --addfile="data/bcf.xsl;lib/Biber/bcf.xsl" \
-#            --addfile="${ucpath}/Locale;lib/Unicode/Collate/Locale" \
-#            --addfile="${ucpath}/CJK;lib/Unicode/Collate/CJK" \
-#            --addfile="${ucpath}/allkeys.txt;lib/Unicode/Collate/allkeys.txt" \
-#            --addfile="${ucpath}/keys.txt;lib/Unicode/Collate/keys.txt" \
-#            --addfile="$PWD/../perlprefixdynamic/lib/site_perl/$PERLVER/Mozilla/CA/cacert.pem;lib/Mozilla/CA/cacert.pem" \
-#            --addfile="$PWD/../perlprefixdynamic/lib/$PERLVER/x86_64-linux-thread-multi/PerlIO;lib/PerlIO" \
-#            --addfile="$PWD/../perlprefixdynamic/lib/$PERLVER/x86_64-linux-thread-multi/auto/PerlIO;lib/auto/PerlIO" \
-#            --addfile="$PWD/../perlprefixdynamic/lib/site_perl/$PERLVER/Business/ISBN/RangeMessage.xml;lib/Business/ISBN/RangeMessage.xml" \
-#            --cachedeps=scancache \
-#            --output=biber-linux_x86_64 \
-#            $PWD/../perlprefixdynamic/bin/biber
-#          ./biber-linux_x86_64 --help
-#          unzip -l biber-linux_x86_64
-
       - name: Install Perl static
         shell: bash
         run: |
@@ -146,11 +71,10 @@ jobs:
           mkdir perlsourcestatic && curl -L $URLPERL | tar -xzf - --strip-components=1 --directory=perlsourcestatic
           cd perlsourcestatic && sh +x ./Configure -sde -Dman1dir=none -Dman3dir=none -Dprefix="$TRUEPREFIX" -Dinstallprefix="$PERLPREFIX" -Aldflags="-lm -ldl" -Accflags="-lm -ldl" -Dusedevel -Dlibs="-lpthread -ldl -lm -lutil -lc" -Dstatic_ext="$MODULES_ext" -Dextras="DBI" && cd -
           make -C perlsourcestatic
-          make -C perlsourcestatic install # -Dprefix="$RUNNER_WORKSPACE/localperlstatic"
+          make -C perlsourcestatic install
           
           export MAKEFLAGS=-j1
-          $PERLBIN $CPANBIN -T Alien::Base::Wrapper Alien::Build Alien::Build::MM Alien::cmake3 Alien::Libxml2 inc::Module::Install Module::Implementation Config::AutoConf ExtUtils::LibBuilder DBI  Data::Compare Data::Dump Data::Uniqid DateTime::Calendar::Julian DateTime::Format::Builder IO::String Lingua::Translit Parse::RecDescent Regexp::Common Text::Roman LWP::Protocol::https Class::Accessor Business::ISBN Business::ISMN List::AllUtils XML::SAX::Exception #XML::LibXML::Simple XML::LibXSLT XML::Writer 
-          #$PERLBIN $CPANBIN -T Business::ISSN
+          $PERLBIN $CPANBIN -T Alien::Base::Wrapper Alien::Build Alien::Build::MM Alien::cmake3 Alien::Libxml2 inc::Module::Install Module::Implementation Config::AutoConf ExtUtils::LibBuilder DBI  Data::Compare Data::Dump Data::Uniqid DateTime::Calendar::Julian DateTime::Format::Builder IO::String Lingua::Translit Parse::RecDescent Regexp::Common Text::Roman LWP::Protocol::https Class::Accessor Business::ISBN Business::ISMN List::AllUtils XML::SAX::Exception #  XML::Writer Business::ISSN
           ln -s $PERLPREFIX/bin/enc2xs$PERLVER $PERLPREFIX/bin/enc2xs
           # Mozilla::CA is not installed
           # Unicode::Collate (1.27) is installed, but we need version >= 1.29
@@ -223,8 +147,7 @@ jobs:
             /usr/lib/libxslt.a \
             /usr/lib/libexslt.a \
             /usr/lib/libexpat.a \
-            /usr/lib/libcrypto.a \
-            /usr/lib/libgcrypt.a /usr/lib/libgpg-error.a \
+            /usr/lib/libcrypto.a /usr/lib/libgcrypt.a /usr/lib/libgpg-error.a \
             /usr/lib/libxml2.a \
             /lib/libz.a \
             /usr/lib/liblzma.a \
@@ -237,4 +160,3 @@ jobs:
           path: |
             busybiber
             perlpack.h
-            packfs/
