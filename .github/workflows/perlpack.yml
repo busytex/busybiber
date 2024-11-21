@@ -194,7 +194,7 @@ jobs:
 
           ar crs $PERLPREFIX/lib/perl5/site_perl/$PERLVER/x86_64-linux/auto/Params/Validate/XS/XS.a myext/URL_Params_Validate_XS/lib/Params/Validate/XS.o
           ar crs $PERLPREFIX/lib/libbtparse.a $(printf "myext/URL_Text_BibTeX/btparse/%s " src/init.o src/input.o src/bibtex.o src/err.o src/scan.o src/error.o src/lex_auxiliary.o src/parse_auxiliary.o src/bibtex_ast.o src/sym.o src/util.o src/postprocess.o src/macros.o src/traversal.o src/modify.o src/names.o src/tex_tree.o src/string_util.o src/format_name.o)
-          ar crs $PERLPREFIX/lib/perl5/site_perl/$PERLVER/x86_64-linux/auto/Text/BibTeX/BibTeX.a myext/URL_Text_BibTeX/xscode/BibTeX.o 
+          ar crs $PERLPREFIX/lib/perl5/site_perl/$PERLVER/x86_64-linux/auto/Text/BibTeX/BibTeX.a $(printf "myext/URL_Text_BibTeX/%s " xscode/BibTeX.o xscode/btxs_support.o)
 
           cp $(cc -print-file-name=libc.a) libc_perlpack.a
           ar x libc_perlpack.a  open.lo close.lo read.lo stat.lo fstat.lo lseek.lo access.lo fopen.lo fileno.lo
