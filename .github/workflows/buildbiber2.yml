@@ -17,7 +17,7 @@ jobs:
       
       - name: Install Prerequisites
         run: |
-          sudo apt install libxml2-dev libz-dev libxslt-dev libexslt-dev
+          sudo apt-get install libxml2-dev libz-dev libxslt-dev #libexslt-dev
           find / -name libxml2.so || true
           find / -name libz.so || true
           find / -name libxslt.so || true
