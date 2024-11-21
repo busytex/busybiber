@@ -137,6 +137,8 @@ jobs:
           #cp $PERLPREFIX/lib/site_perl/$PERLVER/Mozilla/CA/cacert.pem packfs/lib/Mozilla/CA/cacert.pem
           #cp -r $PERLPREFIX/lib/$PERLVER/x86_64-linux-thread-multi/PerlIO packfs/lib/PerlIO
           #cp -r $PERLPREFIX/lib/$PERLVER/x86_64-linux-thread-multi/auto/PerlIO packfs/lib/auto/PerlIO
+          find $PERLPREFIX -name RangeMessage.xml || true
+          find $PERLPREFIX -name '*.xml'
           cp $PERLPREFIX/lib/site_perl/$PERLVER/Business/ISBN/RangeMessage.xml packfs/lib/Business/ISBN/RangeMessage.xml
 
           $PERLBIN perlpack.pl -i packfs -o perlpack.h --prefix $TRUEPREFIX --ld ld --skip '\.a|\.pod|\.ld'
