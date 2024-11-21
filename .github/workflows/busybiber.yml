@@ -129,16 +129,16 @@ jobs:
 
           ucpath="$PERLPREFIX/lib/perl5/$PERLVER/Unicode/Collate"
           mkdir biber && curl -L $URL_Biber | tar -xzf - --strip-components=1 --directory=biber
-          mkdir -p packfs/lib/Biber packfs/lib/Biber/LaTeX packfs/lib/Unicode/Collate packfs/lib/auto packfs/lib/Business/ISBN
+          mkdir -p packfs/lib/Biber packfs/lib/Biber/LaTeX packfs/lib/Unicode/Collate packfs/lib/auto packfs/lib/Business/ISBN packfs/lib/auto
           cp biber/data/biber-tool.conf biber/data/schemata/config.rnc biber/data/schemata/config.rng biber/data/schemata/bcf.rnc biber/data/schemata/bcf.rng biber/data/bcf.xsl packfs/lib/Biber
           cp biber/lib/Biber/LaTeX/recode_data.xml packfs/lib/Biber/LaTeX
           
           cp -r $ucpath/Locale $ucpath/CJK $ucpath/allkeys.txt $ucpath/keys.txt packfs/lib/Unicode/Collate
           find $PERLPREFIX -name cacert.pem
           find $PERLPREFIX -name PerlIO
-          #cp $PERLPREFIX/lib/site_perl/$PERLVER/Mozilla/CA/cacert.pem packfs/lib/Mozilla/CA/cacert.pem
-          #cp -r $PERLPREFIX/lib/$PERLVER/x86_64-linux-thread-multi/PerlIO packfs/lib/PerlIO
-          #cp -r $PERLPREFIX/lib/$PERLVER/x86_64-linux-thread-multi/auto/PerlIO packfs/lib/auto/PerlIO
+          cp $PERLPREFIX/lib/perl5/site_perl/$PERLVER/Mozilla/CA/cacert.pem packfs/lib/Mozilla/CA/cacert.pem
+          cp -r $PERLPREFIX/lib/perl5/$PERLVER/x86_64-linux/PerlIO packfs/lib/PerlIO
+          cp -r $PERLPREFIX/lib/perl5/$PERLVER/x86_64-linux/auto/PerlIO packfs/lib/auto/PerlIO
           cp $PERLPREFIX/lib/perl5/site_perl/$PERLVER/Business/ISBN/RangeMessage.xml packfs/lib/Business/ISBN/RangeMessage.xml
 
           $PERLBIN perlpack.pl -i packfs -o perlpack.h --prefix $TRUEPREFIX --ld ld --skip '\.a|\.pod|\.ld'
