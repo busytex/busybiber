@@ -211,6 +211,7 @@ jobs:
           
           #find $PERLPREFIX -name '*.a'
           
+          cp $PERLPREFIX/lib/perl5/$PERLVER/x86_64-linux/auto/Compress/Raw/Zlib/Zlib.a .
           ar x Zlib.a crc32.o
           objcopy --redefine-sym crc32_combine_gen64=_crc32_combine_gen64 crc32.o
           objcopy --redefine-sym crc32_combine_gen=_crc32_combine_gen     crc32.o
