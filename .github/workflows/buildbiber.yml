@@ -93,6 +93,7 @@ jobs:
             $PWD/../perlprefixdynamic/bin/biber
           ./biber-linux_x86_64 --help
           unzip -l ./biber-linux_x86_64
+          cd testfiles && ../biber-linux_x86_64 --validate-datamodel --convert-control test
 
       - name: Artifacts
         uses: actions/upload-artifact@v4
