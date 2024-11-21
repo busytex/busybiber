@@ -15,8 +15,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
-#      - name: Install Prerequisites
-#        run:  sudo apt install libxml2-dev
+      - name: Install Prerequisites
+        run: |
+          # sudo apt install libxml2-dev
+          find -name libxml2.so
+          find -name libz.so
+          find -name libxslt.so
+          find -name libexslt.so
+          find -name libssl.so 
+          find -name libcrypto.so
       
       - name: Install Perl dynamic
         shell: bash
