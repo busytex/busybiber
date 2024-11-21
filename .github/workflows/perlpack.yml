@@ -209,15 +209,14 @@ jobs:
           objcopy --redefine-sym fileno=orig_fileno fileno.lo
           ar rs libc_perlpack.a open.lo close.lo read.lo stat.lo fstat.lo lseek.lo access.lo fopen.lo fileno.lo
           
-          #find $PERLPREFIX -name '*.a'
-          
           cp $PERLPREFIX/lib/perl5/$PERLVER/x86_64-linux/auto/Compress/Raw/Zlib/Zlib.a .
-          ar x Zlib.a crc32.o
+          ar x Zlib.a crc32.o zutil.o
           objcopy --redefine-sym crc32_combine_gen64=_crc32_combine_gen64 crc32.o
           objcopy --redefine-sym crc32_combine_gen=_crc32_combine_gen     crc32.o
           objcopy --redefine-sym crc32_combine_op=_crc32_combine_op       crc32.o
-          ar rs Zlib.a crc32.o
-          
+          objcopy --redefine-sym z_errmsg=_z_errmsg                       zutil.o
+          ar rs Zlib.a crc32.o zutil.o
+
           ucpath="$PERLPREFIX/lib/$PERLVER/Unicode/Collate"
           mkdir biber && curl -L $URL_Biber | tar -xzf - --strip-components=1 --directory=biber
           mkdir -p packfs/lib/Biber packfs/lib/Biber/LaTeX packfs/lib/Unicode/Collate
