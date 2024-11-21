@@ -127,20 +127,17 @@ jobs:
           ar rs Zlib.a crc32.o zutil.o
           mv Zlib.a $PERLPREFIX/lib/perl5/$PERLVER/x86_64-linux/auto/Compress/Raw/Zlib/Zlib.a
 
-          ucpath="$PERLPREFIX/lib/$PERLVER/Unicode/Collate"
+          ucpath="$PERLPREFIX/lib/perl5/$PERLVER/Unicode/Collate"
           mkdir biber && curl -L $URL_Biber | tar -xzf - --strip-components=1 --directory=biber
           mkdir -p packfs/lib/Biber packfs/lib/Biber/LaTeX packfs/lib/Unicode/Collate packfs/lib/auto packfs/lib/Business/ISBN
           cp biber/data/biber-tool.conf biber/data/schemata/config.rnc biber/data/schemata/config.rng biber/data/schemata/bcf.rnc biber/data/schemata/bcf.rng biber/data/bcf.xsl packfs/lib/Biber
           cp biber/lib/Biber/LaTeX/recode_data.xml packfs/lib/Biber/LaTeX
           
-          find $PERLPREFIX -name Collate
-          find $PERLPREFIX -name allkeys.txt
-
-          #cp -r $ucpath/Locale $ucpath/CJK $ucpath/allkeys.txt $ucpath/keys.txt packfs/lib/Unicode/Collate
+          cp -r $ucpath/Locale $ucpath/CJK $ucpath/allkeys.txt $ucpath/keys.txt packfs/lib/Unicode/Collate
           #cp $PERLPREFIX/lib/site_perl/$PERLVER/Mozilla/CA/cacert.pem packfs/lib/Mozilla/CA/cacert.pem
           #cp -r $PERLPREFIX/lib/$PERLVER/x86_64-linux-thread-multi/PerlIO packfs/lib/PerlIO
           #cp -r $PERLPREFIX/lib/$PERLVER/x86_64-linux-thread-multi/auto/PerlIO packfs/lib/auto/PerlIO
-          #cp $PERLPREFIX/lib/site_perl/$PERLVER/Business/ISBN/RangeMessage.xml packfs/lib/Business/ISBN/RangeMessage.xml
+          cp $PERLPREFIX/lib/site_perl/$PERLVER/Business/ISBN/RangeMessage.xml packfs/lib/Business/ISBN/RangeMessage.xml
 
           $PERLBIN perlpack.pl -i packfs -o perlpack.h --prefix $TRUEPREFIX --ld ld --skip '\.a|\.pod|\.ld'
           cc -o busybiber busybiber.c -DPACKFS_STATIC -DPACKFS_BUILTIN_PREFIX=$TRUEPREFIX  -D_LARGEFILE_SOURCE -D_FILE_OFFSET_BITS=64 -I$PWD/perlsourcestatic -I/usr/local/include   -Wl,-E -fstack-protector-strong -fwrapv -fno-strict-aliasing -L/usr/local/lib perlsourcestatic/libperl.a libc_perlpack.a -lpthread -ldl -lm -lutil   --static -static -static-libstdc++ -static-libgcc  @perlpack.h.txt \
