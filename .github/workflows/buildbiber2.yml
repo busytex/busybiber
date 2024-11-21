@@ -17,13 +17,13 @@ jobs:
       
       - name: Install Prerequisites
         run: |
-          # sudo apt install libxml2-dev
-          find / -name libxml2.so
-          find / -name libz.so
-          find / -name libxslt.so
-          find / -name libexslt.so
-          find / -name libssl.so 
-          find / -name libcrypto.so
+          sudo apt install libxml2-dev libz-dev libxslt-dev libexslt-dev
+          find / -name libxml2.so || true
+          find / -name libz.so || true
+          find / -name libxslt.so || true
+          find / -name libexslt.so || true
+          find / -name libssl.so || true
+          find / -name libcrypto.so || true
       
       - name: Install Perl dynamic
         shell: bash
@@ -74,7 +74,7 @@ jobs:
             --module=Text::CSV_XS \
             --module=DateTime \
             --link=$PWD/../perlprefixdynamic/lib/libbtparse.so \
-            --link=/usr/lib/libxml2.so \
+            --link=/usr/lib/x86_64-linux-gnu/libxml2.so \
             --link=/lib/libz.so \
             --link=/usr/lib/libxslt.so \
             --link=/usr/lib/libexslt.so \
