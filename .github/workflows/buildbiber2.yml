@@ -18,12 +18,12 @@ jobs:
       - name: Install Prerequisites
         run: |
           # sudo apt install libxml2-dev
-          find -name libxml2.so
-          find -name libz.so
-          find -name libxslt.so
-          find -name libexslt.so
-          find -name libssl.so 
-          find -name libcrypto.so
+          find / -name libxml2.so
+          find / -name libz.so
+          find / -name libxslt.so
+          find / -name libexslt.so
+          find / -name libssl.so 
+          find / -name libcrypto.so
       
       - name: Install Perl dynamic
         shell: bash
