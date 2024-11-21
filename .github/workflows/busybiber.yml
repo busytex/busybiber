@@ -7,8 +7,6 @@ env:
   BIBER_DEV_TESTS: 0
   PERLVER: "5.36.0"
   URLPERL: https://www.cpan.org/src/5.0/perl-5.36.0.tar.gz
-  MODULES_ext: "mro Devel/Peek File/DosGlob File/Glob Sys/Syslog Sys/Hostname PerlIO/via PerlIO/mmap PerlIO/encoding PerlIO/scalar B attributes Unicode/Normalize Unicode/Collate threads threads/shared IPC/SysV re Digest/MD5 Digest/SHA SDBM_File Math/BigInt/FastCalc Data/Dumper I18N/Langinfo Time/HiRes Time/Piece IO Socket Hash/Util/FieldHash Hash/Util Filter/Util/Call POSIX Encode/Unicode Encode Encode/JP Encode/KR Encode/EBCDIC Encode/CN Encode/Symbol Encode/Byte Encode/TW Compress/Raw/Zlib Compress/Raw/Bzip2 MIME/Base64 Cwd Storable List/Util Fcntl Opcode"
-  # unneded: SDBM_File Time/Piece Storable
   # curl https://fastapi.metacpan.org/v1/download_url/IO::Compress::Brotli | grep download_url | cut -d'"' -f4
   URL_Biber: https://github.com/plk/biber/archive/v2.20.tar.gz
   URL_Params_Validate_XS : https://cpan.metacpan.org/authors/id/D/DR/DROLSKY/Params-Validate-1.31.tar.gz
@@ -54,7 +52,7 @@ jobs:
     steps:
       - name: Install Prerequisites
         run:  |
-          apk add --update --no-cache libnsl libnsl-dev build-base coreutils gdb cmake git xz curl gperf p7zip zip autoconf automake libtool pkgconfig gnupg libxml2-dev libxslt-dev expat-dev openssl-dev openssl  zlib-static expat-static   # wget perl
+          apk add --update --no-cache libnsl libnsl-dev build-base coreutils git curl p7zip zip autoconf automake libtool pkgconfig gnupg libxml2-dev libxslt-dev expat-dev openssl-dev openssl  zlib-static expat-static   # wget perl
           apk add --update --no-cache --repository=https://dl-cdn.alpinelinux.org/alpine/edge/main libxml2-static libxslt-static openssl-libs-static xz-static libgcrypt-static libgpg-error-static
 
       - uses: actions/checkout@v4
@@ -83,9 +81,10 @@ jobs:
           export LD_LIBRARY_PATH=$PERLPREFIX/lib:$LD_LIBRARY_PATH
           
           mkdir perlsourcestatic && curl -L $URLPERL | tar -xzf - --strip-components=1 --directory=perlsourcestatic
-          cd perlsourcestatic && sh +x ./Configure -sde -Dman1dir=none -Dman3dir=none -Dprefix="$TRUEPREFIX" -Dinstallprefix="$PERLPREFIX" -Aldflags="-lm -ldl" -Accflags="-lm -ldl" -Dusedevel -Dlibs="-lpthread -ldl -lm -lutil -lc" -Dstatic_ext="$MODULES_ext" -Dextras="DBI" && cd -
+          cd perlsourcestatic && sh +x ./Configure -sde -Dman1dir=none -Dman3dir=none -Dprefix="$TRUEPREFIX" -Dinstallprefix="$PERLPREFIX" -Aldflags="-lm -ldl" -Accflags="-lm -ldl" -Dusedevel -Dlibs="-lpthread -ldl -lm -lutil -lc" -Dstatic_ext="mro Devel/Peek File/DosGlob File/Glob Sys/Syslog Sys/Hostname PerlIO/via PerlIO/mmap PerlIO/encoding PerlIO/scalar B attributes Unicode/Normalize Unicode/Collate threads threads/shared IPC/SysV re Digest/MD5 Digest/SHA SDBM_File Math/BigInt/FastCalc Data/Dumper I18N/Langinfo Time/HiRes Time/Piece IO Socket Hash/Util/FieldHash Hash/Util Filter/Util/Call POSIX Encode/Unicode Encode Encode/JP Encode/KR Encode/EBCDIC Encode/CN Encode/Symbol Encode/Byte Encode/TW Compress/Raw/Zlib Compress/Raw/Bzip2 MIME/Base64 Cwd Storable List/Util Fcntl Opcode" -Dextras="DBI" && cd -
           make -C perlsourcestatic
           make -C perlsourcestatic install
+          # unneded: SDBM_File Time/Piece Storable
           
           export MAKEFLAGS=-j1
           $PERLBIN $CPANBIN -T Alien::Base::Wrapper Alien::Build Alien::Build::MM Alien::cmake3 Alien::Libxml2 inc::Module::Install Module::Implementation Config::AutoConf ExtUtils::LibBuilder DBI  Data::Compare Data::Dump Data::Uniqid DateTime::Calendar::Julian DateTime::Format::Builder IO::String Lingua::Translit Parse::RecDescent Regexp::Common Text::Roman LWP::Protocol::https Class::Accessor Business::ISBN Business::ISMN List::AllUtils XML::SAX::Exception #  XML::Writer Business::ISSN
