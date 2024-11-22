@@ -84,12 +84,12 @@ jobs:
           cd perlsourcestatic && sh +x ./Configure -sde -Dman1dir=none -Dman3dir=none -Dprefix="$TRUEPREFIX" -Dinstallprefix="$PERLPREFIX" -Aldflags="-lm -ldl" -Accflags="-lm -ldl" -Dusedevel -Dlibs="-lpthread -ldl -lm -lutil -lc" -Dstatic_ext="mro Devel/Peek File/DosGlob File/Glob Sys/Syslog Sys/Hostname PerlIO/via PerlIO/mmap PerlIO/encoding PerlIO/scalar B attributes Unicode/Normalize Unicode/Collate threads threads/shared IPC/SysV re Digest/MD5 Digest/SHA SDBM_File Math/BigInt/FastCalc Data/Dumper I18N/Langinfo Time/HiRes Time/Piece IO Socket Hash/Util/FieldHash Hash/Util Filter/Util/Call POSIX Encode/Unicode Encode Encode/JP Encode/KR Encode/EBCDIC Encode/CN Encode/Symbol Encode/Byte Encode/TW Compress/Raw/Zlib Compress/Raw/Bzip2 MIME/Base64 Cwd Storable List/Util Fcntl Opcode" -Dextras="DBI" && cd -
           make -C perlsourcestatic
           make -C perlsourcestatic install
-          # unneded: SDBM_File Time/Piece Storable
           
           export MAKEFLAGS=-j1
-          $PERLBIN $CPANBIN -T Alien::Base::Wrapper Alien::Build Alien::Build::MM Alien::cmake3 Alien::Libxml2 inc::Module::Install Module::Implementation Config::AutoConf ExtUtils::LibBuilder DBI  Data::Compare Data::Dump Data::Uniqid DateTime::Calendar::Julian DateTime::Format::Builder IO::String Lingua::Translit Parse::RecDescent Regexp::Common Text::Roman LWP::Protocol::https Class::Accessor Business::ISBN Business::ISMN List::AllUtils XML::SAX::Exception Mozilla::CA #  XML::Writer Business::ISSN
+          $PERLBIN $CPANBIN -T Alien::Base::Wrapper Alien::Build Alien::Build::MM Alien::cmake3 Alien::Libxml2 inc::Module::Install Module::Implementation Config::AutoConf ExtUtils::LibBuilder DBI  Data::Compare Data::Dump Data::Uniqid DateTime::Calendar::Julian DateTime::Format::Builder IO::String Lingua::Translit Parse::RecDescent Regexp::Common Text::Roman LWP::Protocol::https Class::Accessor Business::ISBN Business::ISMN List::AllUtils XML::SAX::Exception Mozilla::CA
           ln -s $PERLPREFIX/bin/enc2xs$PERLVER $PERLPREFIX/bin/enc2xs
-          # Mozilla::CA is not installed, Unicode::Collate (1.27) is installed, but we need version >= 1.29
+          #  XML::Writer Business::ISSN Unicode::Collate (1.27) is installed, but we need version >= 1.29
+          # unneded: SDBM_File Time/Piece Storable
 
           for MOD in Sort::Key Encode::EUCJPASCII Encode::JIS2K Encode::HanExtra XML::LibXML autovivification Devel::Caller Devel::LexAlias XML::LibXSLT XML::Parser::Expat Unicode::LineBreak Clone PadWalker  PerlIO::utf8_strict HTML::Parser List::MoreUtils::XS List::SomeUtils::XS Net::SSLeay Sub::Identify DateTime Storable Variable::Magic Class::XSAccessor Package::Stash::XS Params::Util DBI DBD::SQLite Text::CSV_XS    Params::Validate::XS Text::BibTeX IO::Compress::Brotli Log::Log4perl Text::CSV XML::LibXML::Simple Biber; do 
               echo BEFORE $MOD
@@ -128,12 +128,11 @@ jobs:
 
           ucpath="$PERLPREFIX/lib/perl5/$PERLVER/Unicode/Collate"
           mkdir biber && curl -L $URL_Biber | tar -xzf - --strip-components=1 --directory=biber
-          mkdir -p packfs/lib/Biber packfs/lib/Biber/LaTeX packfs/lib/Unicode/Collate packfs/lib/Mozilla/CA packfs/lib/auto packfs/lib/Business/ISBN packfs/lib/auto 
+          mkdir -p packfs/lib/Biber packfs/lib/Biber/LaTeX packfs/lib/Unicode/Collate packfs/lib/Mozilla/CA packfs/lib/auto packfs/lib/Business/ISBN
           cp biber/data/biber-tool.conf biber/data/schemata/config.rnc biber/data/schemata/config.rng biber/data/schemata/bcf.rnc biber/data/schemata/bcf.rng biber/data/bcf.xsl packfs/lib/Biber
           cp biber/lib/Biber/LaTeX/recode_data.xml packfs/lib/Biber/LaTeX
           
           cp -r $ucpath/Locale $ucpath/CJK $ucpath/allkeys.txt $ucpath/keys.txt packfs/lib/Unicode/Collate
-          find / -name cacert.pem
           cp $PERLPREFIX/lib/perl5/site_perl/$PERLVER/Mozilla/CA/cacert.pem packfs/lib/Mozilla/CA/cacert.pem
           cp -r $PERLPREFIX/lib/perl5/$PERLVER/x86_64-linux/PerlIO packfs/lib/PerlIO
           cp -r $PERLPREFIX/lib/perl5/$PERLVER/x86_64-linux/auto/PerlIO packfs/lib/auto/PerlIO
@@ -154,6 +153,7 @@ jobs:
             /usr/lib/liblzma.a \
             /usr/lib/libssl.a
           ./busybiber --help
+        cd biber/testfiles && ../../busybiber --validate-datamodel --convert-control test
 
       - name: Artifacts
         uses: actions/upload-artifact@v4
