@@ -126,7 +126,7 @@ jobs:
           ar rs Zlib.a crc32.o zutil.o
           mv Zlib.a $PERLPREFIX/lib/perl5/$PERLVER/x86_64-linux/auto/Compress/Raw/Zlib/Zlib.a
 
-          ucpath="$PERLPREFIX/lib/$PERLVER/Unicode/Collate"
+          ucpath="$PERLPREFIX/lib/perl5/$PERLVER/Unicode/Collate"
           mkdir biber && curl -L $URL_Biber | tar -xzf - --strip-components=1 --directory=biber
           mkdir -p packfs/lib/Biber packfs/lib/Biber/LaTeX packfs/lib/Unicode/Collate packfs/lib/Mozilla/CA packfs/lib/auto packfs/lib/Business/ISBN packfs/lib/auto 
           cp biber/data/biber-tool.conf biber/data/schemata/config.rnc biber/data/schemata/config.rng biber/data/schemata/bcf.rnc biber/data/schemata/bcf.rng biber/data/bcf.xsl packfs/lib/Biber
