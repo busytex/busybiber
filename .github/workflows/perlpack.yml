@@ -7,7 +7,6 @@ env:
   BIBER_DEV_TESTS: 0
   PERLVER: "5.36.0"
   URLPERL: https://www.cpan.org/src/5.0/perl-5.36.0.tar.gz
-  MODULES_ext: "mro Devel/Peek File/DosGlob File/Glob Sys/Syslog Sys/Hostname PerlIO/via PerlIO/mmap PerlIO/encoding PerlIO/scalar B attributes Unicode/Normalize Unicode/Collate threads threads/shared IPC/SysV re Digest/MD5 Digest/SHA SDBM_File Math/BigInt/FastCalc Data/Dumper I18N/Langinfo Time/HiRes Time/Piece IO Socket Hash/Util/FieldHash Hash/Util Filter/Util/Call POSIX Encode/Unicode Encode Encode/JP Encode/KR Encode/EBCDIC Encode/CN Encode/Symbol Encode/Byte Encode/TW Compress/Raw/Zlib Compress/Raw/Bzip2 MIME/Base64 Cwd Storable List/Util Fcntl Opcode"
   # unneded: SDBM_File Time/Piece Storable
   # curl https://fastapi.metacpan.org/v1/download_url/IO::Compress::Brotli | grep download_url | cut -d'"' -f4
   URL_Biber: https://github.com/plk/biber/archive/v2.20.tar.gz
@@ -82,7 +81,7 @@ jobs:
           export CPANBIN=$PERLPREFIX/bin/cpan$PERLVER
           export LD_LIBRARY_PATH=$PERLPREFIX/lib:$LD_LIBRARY_PATH
           mkdir perlsourcestatic && curl -L $URLPERL | tar -xzf - --strip-components=1 --directory=perlsourcestatic
-          cd perlsourcestatic && sh +x ./Configure -sde -Dman1dir=none -Dman3dir=none -Dprefix="$TRUEPREFIX" -Dinstallprefix="$PERLPREFIX" -Aldflags="-lm -ldl" -Accflags="-lm -ldl" -Dusedevel -Dlibs="-lpthread -ldl -lm -lutil -lc" -Dstatic_ext="$MODULES_ext" -Dextras="DBI" && cd -
+          cd perlsourcestatic && sh +x ./Configure -sde -Dman1dir=none -Dman3dir=none -Dprefix="$TRUEPREFIX" -Dinstallprefix="$PERLPREFIX" -Aldflags="-lm -ldl" -Accflags="-lm -ldl" -Dusedevel -Dlibs="-lpthread -ldl -lm -lutil -lc" -Dstatic_ext="mro Devel/Peek File/DosGlob File/Glob Sys/Syslog Sys/Hostname PerlIO/via PerlIO/mmap PerlIO/encoding PerlIO/scalar B attributes Unicode/Normalize Unicode/Collate threads threads/shared IPC/SysV re Digest/MD5 Digest/SHA SDBM_File Math/BigInt/FastCalc Data/Dumper I18N/Langinfo Time/HiRes Time/Piece IO Socket Hash/Util/FieldHash Hash/Util Filter/Util/Call POSIX Encode/Unicode Encode Encode/JP Encode/KR Encode/EBCDIC Encode/CN Encode/Symbol Encode/Byte Encode/TW Compress/Raw/Zlib Compress/Raw/Bzip2 MIME/Base64 Cwd Storable List/Util Fcntl Opcode" -Dextras="DBI" && cd -
           make -C perlsourcestatic
           make -C perlsourcestatic install
           
@@ -127,9 +126,9 @@ jobs:
           ar rs Zlib.a crc32.o zutil.o
           mv Zlib.a $PERLPREFIX/lib/perl5/$PERLVER/x86_64-linux/auto/Compress/Raw/Zlib/Zlib.a
 
-          ucpath="$PERLPREFIX/lib/$PERLVER/Unicode/Collate"
+          ucpath="$PERLPREFIX/lib/perl5/$PERLVER/Unicode/Collate"
           mkdir biber && curl -L $URL_Biber | tar -xzf - --strip-components=1 --directory=biber
-          mkdir -p packfs/lib/Biber packfs/lib/Biber/LaTeX packfs/lib/Unicode/Collate
+          mkdir -p packfs/lib/Biber packfs/lib/Biber/LaTeX packfs/lib/Unicode/Collate packfs/lib/Mozilla/CA packfs/lib/auto packfs/lib/Business/ISBN packfs/lib/auto 
           cp biber/data/biber-tool.conf biber/data/schemata/config.rnc biber/data/schemata/config.rng biber/data/schemata/bcf.rnc biber/data/schemata/bcf.rng biber/data/bcf.xsl packfs/lib/Biber
           cp biber/lib/Biber/LaTeX/recode_data.xml packfs/lib/Biber/LaTeX
           #cp -r $ucpath/Locale $ucpath/CJK $ucpath/allkeys.txt $ucpath/keys.txt packfs/lib/Unicode/Collate
