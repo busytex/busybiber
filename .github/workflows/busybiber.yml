@@ -134,6 +134,7 @@ jobs:
           cp biber/lib/Biber/LaTeX/recode_data.xml packfs/lib/Biber/LaTeX
           
           cp -r $ucpath/Locale $ucpath/CJK $ucpath/allkeys.txt $ucpath/keys.txt packfs/lib/Unicode/Collate
+          find $PERLPREFIX -name cacert.pem
           cp $PERLPREFIX/lib/perl5/site_perl/$PERLVER/Mozilla/CA/cacert.pem packfs/lib/Mozilla/CA/cacert.pem
           cp -r $PERLPREFIX/lib/perl5/$PERLVER/x86_64-linux/PerlIO packfs/lib/PerlIO
           cp -r $PERLPREFIX/lib/perl5/$PERLVER/x86_64-linux/auto/PerlIO packfs/lib/auto/PerlIO
