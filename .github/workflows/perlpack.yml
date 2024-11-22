@@ -62,6 +62,19 @@ jobs:
       - name: Install Perl static
         shell: bash
         run: |
+          cp $(cc -print-file-name=libc.a) libc_perlpack.a
+          ar x libc_perlpack.a  open.lo close.lo read.lo stat.lo fstat.lo lseek.lo access.lo fopen.lo fileno.lo
+          objcopy --redefine-sym open=orig_open     open.lo
+          objcopy --redefine-sym close=orig_close   close.lo
+          objcopy --redefine-sym read=orig_read     read.lo
+          objcopy --redefine-sym stat=orig_stat     stat.lo
+          objcopy --redefine-sym fstat=orig_fstat   fstat.lo
+          objcopy --redefine-sym lseek=orig_lseek   lseek.lo
+          objcopy --redefine-sym access=orig_access access.lo
+          objcopy --redefine-sym fopen=orig_fopen   fopen.lo
+          objcopy --redefine-sym fileno=orig_fileno fileno.lo
+          ar rs libc_perlpack.a open.lo close.lo read.lo stat.lo fstat.lo lseek.lo access.lo fopen.lo fileno.lo
+          
           #export PERLPREFIX=$RUNNER_WORKSPACE/localperlstatic
           export PERLPREFIX=$RUNNER_WORKSPACE/busybiber/packfs
           export TRUEPREFIX=/__w/busybiber/busybiber/packfs
@@ -105,19 +118,6 @@ jobs:
           ar crs $PERLPREFIX/lib/libbtparse.a $(printf "myext/URL_Text_BibTeX/btparse/%s " src/init.o src/input.o src/bibtex.o src/err.o src/scan.o src/error.o src/lex_auxiliary.o src/parse_auxiliary.o src/bibtex_ast.o src/sym.o src/util.o src/postprocess.o src/macros.o src/traversal.o src/modify.o src/names.o src/tex_tree.o src/string_util.o src/format_name.o)
           ar crs $PERLPREFIX/lib/perl5/site_perl/$PERLVER/x86_64-linux/auto/Text/BibTeX/BibTeX.a $(printf "myext/URL_Text_BibTeX/%s " xscode/BibTeX.o xscode/btxs_support.o)
 
-          cp $(cc -print-file-name=libc.a) libc_perlpack.a
-          ar x libc_perlpack.a  open.lo close.lo read.lo stat.lo fstat.lo lseek.lo access.lo fopen.lo fileno.lo
-          objcopy --redefine-sym open=orig_open     open.lo
-          objcopy --redefine-sym close=orig_close   close.lo
-          objcopy --redefine-sym read=orig_read     read.lo
-          objcopy --redefine-sym stat=orig_stat     stat.lo
-          objcopy --redefine-sym fstat=orig_fstat   fstat.lo
-          objcopy --redefine-sym lseek=orig_lseek   lseek.lo
-          objcopy --redefine-sym access=orig_access access.lo
-          objcopy --redefine-sym fopen=orig_fopen   fopen.lo
-          objcopy --redefine-sym fileno=orig_fileno fileno.lo
-          ar rs libc_perlpack.a open.lo close.lo read.lo stat.lo fstat.lo lseek.lo access.lo fopen.lo fileno.lo
-          
           mv $PERLPREFIX/lib/perl5/$PERLVER/x86_64-linux/auto/Compress/Raw/Zlib/Zlib.a .
           ar x Zlib.a crc32.o zutil.o
           objcopy --redefine-sym crc32_combine_gen64=_crc32_combine_gen64 crc32.o
