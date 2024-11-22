@@ -7,7 +7,6 @@ env:
   BIBER_DEV_TESTS: 0
   PERLVER: "5.36.0"
   URLPERL: https://www.cpan.org/src/5.0/perl-5.36.0.tar.gz
-  MODULES_ext: "mro Devel/Peek File/DosGlob File/Glob Sys/Syslog Sys/Hostname PerlIO/via PerlIO/mmap PerlIO/encoding PerlIO/scalar B attributes Unicode/Normalize Unicode/Collate threads threads/shared IPC/SysV re Digest/MD5 Digest/SHA SDBM_File Math/BigInt/FastCalc Data/Dumper I18N/Langinfo Time/HiRes Time/Piece IO Socket Hash/Util/FieldHash Hash/Util Filter/Util/Call POSIX Encode/Unicode Encode Encode/JP Encode/KR Encode/EBCDIC Encode/CN Encode/Symbol Encode/Byte Encode/TW Compress/Raw/Zlib Compress/Raw/Bzip2 MIME/Base64 Cwd Storable List/Util Fcntl Opcode"
   # unneded: SDBM_File Time/Piece Storable
   # curl https://fastapi.metacpan.org/v1/download_url/IO::Compress::Brotli | grep download_url | cut -d'"' -f4
   URL_Biber: https://github.com/plk/biber/archive/v2.20.tar.gz
@@ -54,7 +53,7 @@ jobs:
     steps:
       - name: Install Prerequisites
         run:  |
-          apk add --update --no-cache libnsl libnsl-dev build-base coreutils gdb cmake git xz curl gperf p7zip zip autoconf automake libtool pkgconfig gnupg libxml2-dev libxslt-dev expat-dev openssl-dev openssl  zlib-static expat-static   # wget perl
+          apk add --update --no-cache libnsl libnsl-dev build-base coreutils git curl p7zip zip autoconf automake libtool pkgconfig gnupg libxml2-dev libxslt-dev expat-dev openssl-dev openssl  zlib-static expat-static   # wget perl
           apk add --update --no-cache --repository=https://dl-cdn.alpinelinux.org/alpine/edge/main libxml2-static libxslt-static openssl-libs-static xz-static libgcrypt-static libgpg-error-static
 
       - uses: actions/checkout@v4
@@ -62,6 +61,19 @@ jobs:
       - name: Install Perl static
         shell: bash
         run: |
+          cp $(cc -print-file-name=libc.a) libc_perlpack.a
+          ar x libc_perlpack.a  open.lo close.lo read.lo stat.lo fstat.lo lseek.lo access.lo fopen.lo fileno.lo
+          objcopy --redefine-sym open=orig_open     open.lo
+          objcopy --redefine-sym close=orig_close   close.lo
+          objcopy --redefine-sym read=orig_read     read.lo
+          objcopy --redefine-sym stat=orig_stat     stat.lo
+          objcopy --redefine-sym fstat=orig_fstat   fstat.lo
+          objcopy --redefine-sym lseek=orig_lseek   lseek.lo
+          objcopy --redefine-sym access=orig_access access.lo
+          objcopy --redefine-sym fopen=orig_fopen   fopen.lo
+          objcopy --redefine-sym fileno=orig_fileno fileno.lo
+          ar rs libc_perlpack.a open.lo close.lo read.lo stat.lo fstat.lo lseek.lo access.lo fopen.lo fileno.lo
+          
           #export PERLPREFIX=$RUNNER_WORKSPACE/localperlstatic
           export PERLPREFIX=$RUNNER_WORKSPACE/busybiber/packfs
           export TRUEPREFIX=/__w/busybiber/busybiber/packfs
@@ -69,7 +81,7 @@ jobs:
           export CPANBIN=$PERLPREFIX/bin/cpan$PERLVER
           export LD_LIBRARY_PATH=$PERLPREFIX/lib:$LD_LIBRARY_PATH
           mkdir perlsourcestatic && curl -L $URLPERL | tar -xzf - --strip-components=1 --directory=perlsourcestatic
-          cd perlsourcestatic && sh +x ./Configure -sde -Dman1dir=none -Dman3dir=none -Dprefix="$TRUEPREFIX" -Dinstallprefix="$PERLPREFIX" -Aldflags="-lm -ldl" -Accflags="-lm -ldl" -Dusedevel -Dlibs="-lpthread -ldl -lm -lutil -lc" -Dstatic_ext="$MODULES_ext" -Dextras="DBI" && cd -
+          cd perlsourcestatic && sh +x ./Configure -sde -Dman1dir=none -Dman3dir=none -Dprefix="$TRUEPREFIX" -Dinstallprefix="$PERLPREFIX" -Aldflags="-lm -ldl" -Accflags="-lm -ldl" -Dusedevel -Dlibs="-lpthread -ldl -lm -lutil -lc" -Dstatic_ext="mro Devel/Peek File/DosGlob File/Glob Sys/Syslog Sys/Hostname PerlIO/via PerlIO/mmap PerlIO/encoding PerlIO/scalar B attributes Unicode/Normalize Unicode/Collate threads threads/shared IPC/SysV re Digest/MD5 Digest/SHA SDBM_File Math/BigInt/FastCalc Data/Dumper I18N/Langinfo Time/HiRes Time/Piece IO Socket Hash/Util/FieldHash Hash/Util Filter/Util/Call POSIX Encode/Unicode Encode Encode/JP Encode/KR Encode/EBCDIC Encode/CN Encode/Symbol Encode/Byte Encode/TW Compress/Raw/Zlib Compress/Raw/Bzip2 MIME/Base64 Cwd Storable List/Util Fcntl Opcode" -Dextras="DBI" && cd -
           make -C perlsourcestatic
           make -C perlsourcestatic install
           
@@ -104,20 +116,7 @@ jobs:
           ar crs $PERLPREFIX/lib/perl5/site_perl/$PERLVER/x86_64-linux/auto/Params/Validate/XS/XS.a myext/URL_Params_Validate_XS/lib/Params/Validate/XS.o
           ar crs $PERLPREFIX/lib/libbtparse.a $(printf "myext/URL_Text_BibTeX/btparse/%s " src/init.o src/input.o src/bibtex.o src/err.o src/scan.o src/error.o src/lex_auxiliary.o src/parse_auxiliary.o src/bibtex_ast.o src/sym.o src/util.o src/postprocess.o src/macros.o src/traversal.o src/modify.o src/names.o src/tex_tree.o src/string_util.o src/format_name.o)
           ar crs $PERLPREFIX/lib/perl5/site_perl/$PERLVER/x86_64-linux/auto/Text/BibTeX/BibTeX.a $(printf "myext/URL_Text_BibTeX/%s " xscode/BibTeX.o xscode/btxs_support.o)
-
-          cp $(cc -print-file-name=libc.a) libc_perlpack.a
-          ar x libc_perlpack.a  open.lo close.lo read.lo stat.lo fstat.lo lseek.lo access.lo fopen.lo fileno.lo
-          objcopy --redefine-sym open=orig_open     open.lo
-          objcopy --redefine-sym close=orig_close   close.lo
-          objcopy --redefine-sym read=orig_read     read.lo
-          objcopy --redefine-sym stat=orig_stat     stat.lo
-          objcopy --redefine-sym fstat=orig_fstat   fstat.lo
-          objcopy --redefine-sym lseek=orig_lseek   lseek.lo
-          objcopy --redefine-sym access=orig_access access.lo
-          objcopy --redefine-sym fopen=orig_fopen   fopen.lo
-          objcopy --redefine-sym fileno=orig_fileno fileno.lo
-          ar rs libc_perlpack.a open.lo close.lo read.lo stat.lo fstat.lo lseek.lo access.lo fopen.lo fileno.lo
-          
+         
           mv $PERLPREFIX/lib/perl5/$PERLVER/x86_64-linux/auto/Compress/Raw/Zlib/Zlib.a .
           ar x Zlib.a crc32.o zutil.o
           objcopy --redefine-sym crc32_combine_gen64=_crc32_combine_gen64 crc32.o
@@ -129,7 +128,7 @@ jobs:
 
           ucpath="$PERLPREFIX/lib/$PERLVER/Unicode/Collate"
           mkdir biber && curl -L $URL_Biber | tar -xzf - --strip-components=1 --directory=biber
-          mkdir -p packfs/lib/Biber packfs/lib/Biber/LaTeX packfs/lib/Unicode/Collate
+          mkdir -p packfs/lib/Biber packfs/lib/Biber/LaTeX packfs/lib/Unicode/Collate packfs/lib/Mozilla/CA packfs/lib/auto packfs/lib/Business/ISBN packfs/lib/auto 
           cp biber/data/biber-tool.conf biber/data/schemata/config.rnc biber/data/schemata/config.rng biber/data/schemata/bcf.rnc biber/data/schemata/bcf.rng biber/data/bcf.xsl packfs/lib/Biber
           cp biber/lib/Biber/LaTeX/recode_data.xml packfs/lib/Biber/LaTeX
           #cp -r $ucpath/Locale $ucpath/CJK $ucpath/allkeys.txt $ucpath/keys.txt packfs/lib/Unicode/Collate
