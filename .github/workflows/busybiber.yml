@@ -153,7 +153,7 @@ jobs:
             /usr/lib/liblzma.a \
             /usr/lib/libssl.a
           ./busybiber --help
-        cd biber/testfiles && ../../busybiber --validate-datamodel --convert-control test
+          cd biber/testfiles && ../../busybiber --validate-datamodel --convert-control test
 
       - name: Artifacts
         uses: actions/upload-artifact@v4
