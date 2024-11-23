@@ -88,7 +88,7 @@ jobs:
           #  XML::Writer Business::ISSN Unicode::Collate (1.27) is installed, but we need version >= 1.29
           # unneded: SDBM_File Time/Piece Storable
 
-          for MOD in Sort::Key Encode::EUCJPASCII Encode::JIS2K Encode::HanExtra XML::LibXML autovivification Devel::Caller Devel::LexAlias XML::LibXSLT XML::Parser::Expat Unicode::LineBreak Clone PadWalker  PerlIO::utf8_strict HTML::Parser List::MoreUtils::XS List::SomeUtils::XS Net::SSLeay Sub::Identify DateTime Storable Variable::Magic Class::XSAccessor Package::Stash::XS Params::Util DBI DBD::SQLite Text::CSV_XS    Params::Validate::XS Text::BibTeX IO::Compress::Brotli Log::Log4perl Text::CSV XML::LibXML::Simple Biber; do 
+          for MOD in Sort::Key Encode::EUCJPASCII Encode::JIS2K Encode::HanExtra XML::LibXML autovivification Devel::Caller Devel::LexAlias XML::LibXSLT XML::Parser::Expat Unicode::LineBreak Clone PadWalker  PerlIO::utf8_strict HTML::Parser List::MoreUtils::XS List::SomeUtils::XS Net::SSLeay Sub::Identify DateTime Storable Variable::Magic Class::XSAccessor Package::Stash::XS Params::Util DBI DBD::SQLite Text::CSV_XS    Params::Validate::XS Text::BibTeX IO::Compress::Brotli Log::Log4perl Text::CSV XML::LibXML::Simple ; do # Biber
               echo BEFORE $MOD
               PKG=URL_${MOD//::/_}
               declare -n PKGREF=$PKG; URL=${PKGREF};
@@ -109,6 +109,7 @@ jobs:
               cd -
               echo AFTER $MOD
           done
+          cd bibersrc && $PERLBIN ./Build.PL && $PERLBIN ./Build && $PERLBIN ./Build install && cd -
 
           ar crs $PERLPREFIX/lib/perl5/site_perl/$PERLVER/x86_64-linux/auto/Params/Validate/XS/XS.a myext/URL_Params_Validate_XS/lib/Params/Validate/XS.o
           ar crs $PERLPREFIX/lib/libbtparse.a $(printf "myext/URL_Text_BibTeX/btparse/%s " src/init.o src/input.o src/bibtex.o src/err.o src/scan.o src/error.o src/lex_auxiliary.o src/parse_auxiliary.o src/bibtex_ast.o src/sym.o src/util.o src/postprocess.o src/macros.o src/traversal.o src/modify.o src/names.o src/tex_tree.o src/string_util.o src/format_name.o)
