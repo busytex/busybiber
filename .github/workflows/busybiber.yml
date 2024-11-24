@@ -158,4 +158,4 @@ jobs:
           path: |
             busybiber
             perlpack.h
-            biber/testfiles/test.html
+            biber/testfiles/
