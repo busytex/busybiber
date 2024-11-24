@@ -94,10 +94,20 @@ struct packfs_context* packfs_ensure_context()
     return &packfs_ctx;
 }
 
-
-const char* packfs_sanitize_path(const char* path)
+void packfs_sanitize_path(char* dest, const char* path)
 {
-    return (path != NULL && strlen(path) > 2 && path[0] == '.' && path[1] == '/') ? (path + 2) : path;
+    size_t len = path != NULL ? strlen(path) : 0;
+    if(len == 0)
+        path_sanitized[0] = '\0';
+
+    for(int i = (path != NULL && len > 2 && path[0] == '.' && path[1] == '/') ? 2 : 0, k = 0; len > 0 && i < len; i++)
+    {
+        if(!(i > 1 && path[i] == '/' && path[i - 1] == '/'))
+        {
+            path_sanitized[k++] = path[i];
+            path_sanitized[k] = '\0';
+        }
+    }
 }
 
 int packfs_strncmp(const char* prefix, const char* path, size_t count)
@@ -107,16 +117,16 @@ int packfs_strncmp(const char* prefix, const char* path, size_t count)
 
 int packfs_open(struct packfs_context* packfs_ctx, const char* path, FILE** out)
 {
-    path = packfs_sanitize_path(path);
+    char path_sanitized[packfs_filepath_max_len]; packfs_sanitize_path(path_sanitized, path);
 
     FILE* fileptr = NULL;
     size_t filesize = 0;
     
-    if(packfs_ctx->packfs_builtin_files_num > 0 && 0 == packfs_strncmp(packfs_ctx->packfs_builtin_prefix, path, strlen(packfs_ctx->packfs_builtin_prefix)))
+    if(packfs_ctx->packfs_builtin_files_num > 0 && 0 == packfs_strncmp(packfs_ctx->packfs_builtin_prefix, path_sanitized, strlen(packfs_ctx->packfs_builtin_prefix)))
     {
         for(size_t i = 0; i < packfs_ctx->packfs_builtin_files_num; i++)
         {
-            if(0 == strcmp(path, packfs_ctx->packfs_builtin_abspaths[i]))
+            if(0 == strcmp(path_sanitized, packfs_ctx->packfs_builtin_abspaths[i]))
             {
                 filesize = (size_t)(packfs_ctx->packfs_builtin_ends[i] - packfs_ctx->packfs_builtin_starts[i]);
                 fileptr = fmemopen((void*)packfs_ctx->packfs_builtin_starts[i], filesize, "r");
@@ -204,13 +214,13 @@ int packfs_seek(struct packfs_context* packfs_ctx, int fd, long offset, int when
 
 int packfs_access(struct packfs_context* packfs_ctx, const char* path)
 {
-    path = packfs_sanitize_path(path);
+    char path_sanitized[packfs_filepath_max_len]; packfs_sanitize_path(path_sanitized, path);
 
-    if(0 == packfs_strncmp(packfs_ctx->packfs_builtin_prefix, path, strlen(packfs_ctx->packfs_builtin_prefix)))
+    if(0 == packfs_strncmp(packfs_ctx->packfs_builtin_prefix, path_sanitized, strlen(packfs_ctx->packfs_builtin_prefix)))
     {
         for(size_t i = 0; i < packfs_ctx->packfs_builtin_files_num; i++)
         {
-            if(0 == strcmp(path, packfs_ctx->packfs_builtin_abspaths[i]))
+            if(0 == strcmp(path_sanitized, packfs_ctx->packfs_builtin_abspaths[i]))
                 return 0;
         }
         return -1;
@@ -221,13 +231,13 @@ int packfs_access(struct packfs_context* packfs_ctx, const char* path)
 
 int packfs_stat(struct packfs_context* packfs_ctx, const char* path, int fd, struct stat *restrict statbuf)
 {
-    path = packfs_sanitize_path(path);
+    char path_sanitized[packfs_filepath_max_len]; packfs_sanitize_path(path_sanitized, path);
     
-    if(0 == packfs_strncmp(packfs_ctx->packfs_builtin_prefix, path, strlen(packfs_ctx->packfs_builtin_prefix)))
+    if(0 == packfs_strncmp(packfs_ctx->packfs_builtin_prefix, path_sanitized, strlen(packfs_ctx->packfs_builtin_prefix)))
     {
         for(size_t i = 0; i < packfs_ctx->packfs_builtin_files_num; i++)
         {
-            if(0 == strcmp(path, packfs_ctx->packfs_builtin_abspaths[i]))
+            if(0 == strcmp(path_sanitized, packfs_ctx->packfs_builtin_abspaths[i]))
             {
                 *statbuf = (struct stat){0};
                 //if(packfs_builtin[i].isdir)
