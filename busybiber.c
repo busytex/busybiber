@@ -94,7 +94,7 @@ struct packfs_context* packfs_ensure_context()
     return &packfs_ctx;
 }
 
-void packfs_sanitize_path(char* dest, const char* path)
+void packfs_sanitize_path(char* path_sanitized, const char* path)
 {
     size_t len = path != NULL ? strlen(path) : 0;
     if(len == 0)
