@@ -443,7 +443,7 @@ void xs_init(pTHX) //EXTERN_C
     extern void boot_PerlIO__via(pTHX_ CV* cv); newXS("PerlIO::via::bootstrap", boot_PerlIO__via, file);
     extern void boot_PerlIO__mmap(pTHX_ CV* cv); newXS("PerlIO::mmap::bootstrap", boot_PerlIO__mmap, file);
     extern void boot_PerlIO__encoding(pTHX_ CV* cv); newXS("PerlIO::encoding::bootstrap", boot_PerlIO__encoding, file);
-    extern void boot_PerlIO__scalar(pTHX_ CV* cv); newXS("PerlIO::scalar::bootstrap", boot_PerlIO__scalar, file);
+    //extern void boot_PerlIO__scalar(pTHX_ CV* cv); newXS("PerlIO::scalar::bootstrap", boot_PerlIO__scalar, file);
     //extern void boot_PerlIO__utf8_strict(pTHX_ CV* cv); newXS("PerlIO::utf8_strict::bootstrap", boot_PerlIO__utf8_strict, file);
     extern void boot_B(pTHX_ CV* cv); newXS("B::bootstrap", boot_B, file);
     extern void boot_attributes(pTHX_ CV* cv); newXS("attributes::bootstrap", boot_attributes, file);
