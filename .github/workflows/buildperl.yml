@@ -1,4 +1,4 @@
-name: busybiber
+name: buildperl
 
 on: workflow_dispatch
 # https://github.com/plk/biber/blob/dev/dist/linux_x86_64/build.sh
@@ -44,7 +44,7 @@ env:
   URL_Business_ISSN: https://cpan.metacpan.org/authors/id/B/BD/BDFOY/Business-ISSN-1.005.tar.gz
 
 jobs:
-  busybiber:
+  buildperl:
     runs-on: ubuntu-20.04
     container: alpine:3.14
     steps:
