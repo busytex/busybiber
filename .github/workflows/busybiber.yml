@@ -115,14 +115,9 @@ jobs:
           ar crs $PERLPREFIX/lib/perl5/site_perl/$PERLVER/x86_64-linux/auto/Text/BibTeX/BibTeX.a $(printf "myext/URL_Text_BibTeX/%s " xscode/BibTeX.o xscode/btxs_support.o)
 
           mv $PERLPREFIX/lib/perl5/$PERLVER/x86_64-linux/auto/Compress/Raw/Zlib/Zlib.a .
-          #ar x Zlib.a crc32.o zutil.o
           ar x Zlib.a zutil.o
-          #objcopy --redefine-sym crc32_combine_gen64=_crc32_combine_gen64 crc32.o
-          #objcopy --redefine-sym crc32_combine_gen=_crc32_combine_gen     crc32.o
-          #objcopy --redefine-sym crc32_combine_op=_crc32_combine_op       crc32.o
-          objcopy --redefine-sym z_errmsg=_z_errmsg                       zutil.o
+          objcopy --redefine-sym z_errmsg=_z_errmsg zutil.o
           ar rs Zlib.a zutil.o
-          #ar rs Zlib.a crc32.o zutil.o
           mv Zlib.a $PERLPREFIX/lib/perl5/$PERLVER/x86_64-linux/auto/Compress/Raw/Zlib/Zlib.a
 
           ucpath="$PERLPREFIX/lib/perl5/$PERLVER/Unicode/Collate"
