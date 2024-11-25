@@ -2,8 +2,7 @@ name: buildperl
 
 on: workflow_dispatch
 env:
-  PERLVER: "5.36.0"
-  URLPERL: https://www.cpan.org/src/5.0/perl-5.36.0.tar.gz
+  URLPERL: https://www.cpan.org/src/5.0/perl-5.40.0.tar.gz
 
 jobs:
   buildperl:
