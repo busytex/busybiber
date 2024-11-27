@@ -78,12 +78,12 @@ jobs:
           export CPANBIN=$PERLPREFIX/bin/cpan
           export LD_LIBRARY_PATH=$PERLPREFIX/lib:$LD_LIBRARY_PATH
           
-          export BUILD_ZLIB=False
-          export ZLIB_INCLUDE=/usr/include
-          export ZLIB_LIB=/usr/lib
-          export OLD_ZLIB=False
-          export GZIP_OS_CODE=AUTO_DETECT
-          export USE_ZLIB_NG=False
+          export BUILD_ZLIB=0
+          #export ZLIB_INCLUDE=/usr/include
+          #export ZLIB_LIB=/usr/lib
+          #export OLD_ZLIB=False
+          #export GZIP_OS_CODE=AUTO_DETECT
+          #export USE_ZLIB_NG=False
 
           mkdir perlsourcestatic && curl -L $URLPERL | tar -xzf - --strip-components=1 --directory=perlsourcestatic
           CLDFLAGS="-lm -ldl /lib/libz.a"
@@ -120,12 +120,6 @@ jobs:
           ar crs $PERLPREFIX/lib/perl5/site_perl/$PERLVER/x86_64-linux/auto/Params/Validate/XS/XS.a myext/URL_Params_Validate_XS/lib/Params/Validate/XS.o
           ar crs $PERLPREFIX/lib/libbtparse.a $(printf "myext/URL_Text_BibTeX/btparse/%s " src/init.o src/input.o src/bibtex.o src/err.o src/scan.o src/error.o src/lex_auxiliary.o src/parse_auxiliary.o src/bibtex_ast.o src/sym.o src/util.o src/postprocess.o src/macros.o src/traversal.o src/modify.o src/names.o src/tex_tree.o src/string_util.o src/format_name.o)
           ar crs $PERLPREFIX/lib/perl5/site_perl/$PERLVER/x86_64-linux/auto/Text/BibTeX/BibTeX.a $(printf "myext/URL_Text_BibTeX/%s " xscode/BibTeX.o xscode/btxs_support.o)
-
-          #mv $PERLPREFIX/lib/perl5/$PERLVER/x86_64-linux/auto/Compress/Raw/Zlib/Zlib.a .
-          #ar x Zlib.a zutil.o
-          #objcopy --redefine-sym z_errmsg=_z_errmsg zutil.o
-          #ar rs Zlib.a zutil.o
-          #mv Zlib.a $PERLPREFIX/lib/perl5/$PERLVER/x86_64-linux/auto/Compress/Raw/Zlib/Zlib.a
 
           ucpath="$PERLPREFIX/lib/perl5/$PERLVER/Unicode/Collate"
           mkdir biber && curl -L $URL_Biber | tar -xzf - --strip-components=1 --directory=biber
