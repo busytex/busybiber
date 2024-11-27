@@ -4,8 +4,6 @@ on: workflow_dispatch
 env:
   PERLVER: "5.40.0"
   URLPERL: https://www.cpan.org/src/5.0/perl-5.40.0.tar.gz
-
-env:
   EMSCRIPTEN_VERSION: 3.1.43
 
 jobs:
