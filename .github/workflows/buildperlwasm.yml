@@ -32,7 +32,7 @@ jobs:
           mkdir wasm && curl -L $URLPERL | tar -xzf - --strip-components=1 --directory=wasm
           cp hintfile_wasm.sh wasm/hints/emscripten.sh
           cd wasm
-          emconfigure bash ./Configure -sde -Dhintfile=emscripten -Dsysroot=$(dirname $(which emcc))/system -Dhostperl=$PWD/../native/miniperl -Dhostgenerate=$PWD/../native/generate_uudmap -Dprefix=$PWD/prefix
+          emconfigure bash ./Configure -sde -Dhintfile=emscripten -Dsysroot=$(dirname $(which emcc))/system -Dhostperl=$PWD/../native/miniperl -Dhostgenerate=$PWD/../native/generate_uudmap -Dprefix=$PWD/prefix -Accflags=-DNO_LOCALE
           sed -i 's/$(generated_pods)//' Makefile
           emmake make perl
           emmake make install
