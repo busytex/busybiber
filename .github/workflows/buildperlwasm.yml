@@ -219,7 +219,7 @@ jobs:
           mkdir wasm && curl -L $URLPERL | tar -xzf - --strip-components=1 --directory=wasm
           cp hintfile_wasm.sh wasm/hints/emscripten.sh
           # https://github.com/Perl/perl5/issues/22728
-          sed -i -e "17836r patch.sh" ./wasm/Configure
+          #sed -i -e "17836r patch.sh" ./wasm/Configure
           cd wasm
           emconfigure bash ./Configure -sde -Dhintfile=emscripten -Dsysroot=$(dirname $(which emcc))/system -Dhostperl=$PWD/../native/miniperl -Dhostgenerate=$PWD/../native/generate_uudmap -Dprefix=$PWD/prefix
           sed -i 's/$(generated_pods)//' Makefile
