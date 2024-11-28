@@ -74,6 +74,7 @@ usenm='undef'
 usemallocwrap="define"
 d_procselfexe='undef'
 d_dlopen='undef'
+d_setlocale='undef'
 dlsrc='none'
 d_getgrgid_r='define'
 d_getgrnam_r='define'
