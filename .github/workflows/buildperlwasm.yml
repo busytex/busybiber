@@ -222,9 +222,5 @@ jobs:
           #ls -lah perl miniperl
           #emmake make utilities
           
-          #emmake make perl
-          #echo PERLDONE
           emmake make
-          #mv perl perl.wasm
-          #mv ./perl ./perl.wasm
-          #emmake make install
+          emmake make install
