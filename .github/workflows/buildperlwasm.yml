@@ -25,13 +25,24 @@ jobs:
           cd native && BUILD_ZLIB=0 sh +x ./Configure -sde -Dman1dir=none -Dman3dir=none -Dprefix="$PWD/prefix" -Dusedevel -Uversiononly -Dlibs="-lpthread -ldl -lm -lutil -lc -lz" -Dstatic_ext="mro Devel/Peek File/DosGlob File/Glob Sys/Syslog Sys/Hostname PerlIO/via PerlIO/mmap PerlIO/encoding B attributes Unicode/Normalize Unicode/Collate threads threads/shared IPC/SysV re Digest/MD5 Digest/SHA SDBM_File Math/BigInt/FastCalc Data/Dumper I18N/Langinfo Time/HiRes Time/Piece IO Socket Hash/Util/FieldHash Hash/Util Filter/Util/Call POSIX Encode/Unicode Encode Encode/JP Encode/KR Encode/EBCDIC Encode/CN Encode/Symbol Encode/Byte Encode/TW Compress/Raw/Zlib Compress/Raw/Bzip2 MIME/Base64 Cwd Storable List/Util Fcntl Opcode" && cd -
           make -C native
           make -C native install
+          
+      - name: Heredoc
+        run: |
+          cat <<'EOF' > patch.txt
+d_perl_lc_all_uses_name_value_pairs="$undef"
+d_perl_lc_all_separator="$undef"
+perl_lc_all_separator=
+d_perl_lc_all_category_positions_init=1;
+perl_lc_all_category_positions_init="{}"
+EOF
 
       - name: Install Perl static wasm
         shell: bash
         run: |
-          emcc try.c
+          cat patch.txt
           mkdir wasm && curl -L $URLPERL | tar -xzf - --strip-components=1 --directory=wasm
           cp hintfile_wasm.sh wasm/hints/emscripten.sh
+          # https://github.com/Perl/perl5/issues/22728
           sed -i -e "17836r patch.sh" ./wasm/Configure
           cd wasm
           emconfigure bash ./Configure -sde -Dhintfile=emscripten -Dsysroot=$(dirname $(which emcc))/system -Dhostperl=$PWD/../native/miniperl -Dhostgenerate=$PWD/../native/generate_uudmap -Dprefix=$PWD/prefix
