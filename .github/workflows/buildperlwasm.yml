@@ -216,6 +216,8 @@ jobs:
           emconfigure bash ./Configure -sde -Dhintfile=emscripten -Dsysroot=$(dirname $(which emcc))/system -Dhostperl=$PWD/../native/miniperl -Dhostgenerate=$PWD/../native/generate_uudmap -Dprefix=$PWD/prefix
           sed -i 's/$(generated_pods)//' Makefile
           emmake make perl
-          
-          ln -s ./perl $PWD/../native/miniperl
-          emmake make install
+          ls
+          emmake make
+          #mv ./perl ./perl.wasm
+          #ln -s ./perl $PWD/../native/miniperl
+          #emmake make install
