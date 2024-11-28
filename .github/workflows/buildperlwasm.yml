@@ -213,8 +213,9 @@ jobs:
           cp hintfile_wasm.sh wasm/hints/emscripten.sh
           # https://github.com/Perl/perl5/issues/22728
           cd wasm
-          ln -s ./perl $PWD/../native/miniperl
           emconfigure bash ./Configure -sde -Dhintfile=emscripten -Dsysroot=$(dirname $(which emcc))/system -Dhostperl=$PWD/../native/miniperl -Dhostgenerate=$PWD/../native/generate_uudmap -Dprefix=$PWD/prefix
           sed -i 's/$(generated_pods)//' Makefile
           emmake make perl
+          
+          ln -s ./perl $PWD/../native/miniperl
           emmake make install
