@@ -70,7 +70,9 @@ jobs:
             # Sys/Hostname Sys/Syslog threads threads/shared Tie/Hash/NamedCapture
             # Time/HiRes Time/Piece Unicode/Collate Unicode/Normalize XS/APItest XS/Typemap]  
             #TODO Later: Reinsert Storable after Socket, its Makefile seems to not work in our environment    POSIX Tie/Hash/NamedCapture
-            static_ext="attributes B Cwd Data/Dumper Devel/Peek Digest/MD5 Digest/SHA Encode/Unicode Encode Encode/JP Encode/KR Encode/EBCDIC Encode/CN Encode/Symbol Encode/Byte Encode/TW  Fcntl File/Glob Hash/Util I18N/Langinfo IO List/Util mro Opcode PerlIO/encoding PerlIO/via re SDBM_File Socket  Time/HiRes Time/Piece Unicode/Normalize"
+            static_ext="POSIX attributes B Cwd Data/Dumper Devel/Peek Digest/MD5 Digest/SHA Encode/Unicode Encode Encode/JP Encode/KR Encode/EBCDIC Encode/CN Encode/Symbol Encode/Byte Encode/TW  Fcntl File/Glob Hash/Util I18N/Langinfo IO List/Util mro Opcode PerlIO/encoding PerlIO/via re SDBM_File Socket  Time/HiRes Time/Piece Unicode/Normalize"
+            #static_ext="mro Devel/Peek File/DosGlob File/Glob Sys/Syslog Sys/Hostname PerlIO/via PerlIO/mmap PerlIO/encoding B attributes Unicode/Normalize Unicode/Collate threads threads/shared IPC/SysV re Digest/MD5 Digest/SHA SDBM_File Math/BigInt/FastCalc Data/Dumper I18N/Langinfo Time/HiRes Time/Piece IO Socket Hash/Util/FieldHash Hash/Util Filter/Util/Call POSIX Encode/Unicode Encode Encode/JP Encode/KR Encode/EBCDIC Encode/CN Encode/Symbol Encode/Byte Encode/TW Compress/Raw/Zlib Compress/Raw/Bzip2 MIME/Base64 Cwd Storable List/Util Fcntl Opcode"
+
             dynamic_ext=''
             noextensions='IPC/SysV'
 
@@ -145,8 +147,9 @@ jobs:
             # you'll see the unsupported stuff (as of 1.37.35):
             # signal() sigaction() sigprocmask() __libc_current_sigrtmin __libc_current_sigrtmax kill() killpg() siginterrupt() raise() pause()
             # plus: "Calling longjmp() instead of siglongjmp()"
-            d_sigaction='undef'
-            d_sigprocmask='undef'
+            #d_sigaction='undef'
+            #d_sigprocmask='undef'
+            
             d_killpg='undef'
             d_pause='undef'
             d_sigsetjmp='undef' # this also disables Perl's use of siglongjmp() (see config.h)
@@ -223,4 +226,5 @@ jobs:
           #emmake make utilities
           
           emmake make
+          mv ./perl ./perl.wasm
           emmake make install
