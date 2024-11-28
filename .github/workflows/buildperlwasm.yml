@@ -32,7 +32,7 @@ jobs:
           emcc try.c
           mkdir wasm && curl -L $URLPERL | tar -xzf - --strip-components=1 --directory=wasm
           cp hintfile_wasm.sh wasm/hints/emscripten.sh
-          sed -e "17836r patch.sh" ./wasm/Configure
+          sed -i -e "17836r patch.sh" ./wasm/Configure
           cat ./wasm/Configure
           cd wasm
           emconfigure bash ./Configure -sde -Dhintfile=emscripten -Dsysroot=$(dirname $(which emcc))/system -Dhostperl=$PWD/../native/miniperl -Dhostgenerate=$PWD/../native/generate_uudmap -Dprefix=$PWD/prefix
