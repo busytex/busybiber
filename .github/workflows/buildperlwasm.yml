@@ -217,7 +217,7 @@ jobs:
           sed -i 's/$(generated_pods)//' Makefile
           emmake make perl
           ls
-          emmake make
+          #emmake make
           #mv ./perl ./perl.wasm
           #ln -s ./perl $PWD/../native/miniperl
           #emmake make install
