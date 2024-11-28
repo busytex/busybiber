@@ -17,6 +17,9 @@ jobs:
         with:
           version: ${{env.EMSCRIPTEN_VERSION}}
 
+      - name: Setup wasmtime
+        uses: bytecodealliance/actions/wasmtime/setup@v1
+
       - name: Install Perl static native
         shell: bash
         run: |
@@ -70,11 +73,11 @@ jobs:
             # Sys/Hostname Sys/Syslog threads threads/shared Tie/Hash/NamedCapture
             # Time/HiRes Time/Piece Unicode/Collate Unicode/Normalize XS/APItest XS/Typemap]  
             #TODO Later: Reinsert Storable after Socket, its Makefile seems to not work in our environment    POSIX Tie/Hash/NamedCapture
-            static_ext="POSIX attributes B Cwd Data/Dumper Devel/Peek Digest/MD5 Digest/SHA Encode/Unicode Encode Encode/JP Encode/KR Encode/EBCDIC Encode/CN Encode/Symbol Encode/Byte Encode/TW  Fcntl File/Glob Hash/Util I18N/Langinfo IO List/Util mro Opcode PerlIO/encoding PerlIO/via re SDBM_File Socket  Time/HiRes Time/Piece Unicode/Normalize"
-            #static_ext="mro Devel/Peek File/DosGlob File/Glob Sys/Syslog Sys/Hostname PerlIO/via PerlIO/mmap PerlIO/encoding B attributes Unicode/Normalize Unicode/Collate threads threads/shared IPC/SysV re Digest/MD5 Digest/SHA SDBM_File Math/BigInt/FastCalc Data/Dumper I18N/Langinfo Time/HiRes Time/Piece IO Socket Hash/Util/FieldHash Hash/Util Filter/Util/Call POSIX Encode/Unicode Encode Encode/JP Encode/KR Encode/EBCDIC Encode/CN Encode/Symbol Encode/Byte Encode/TW Compress/Raw/Zlib Compress/Raw/Bzip2 MIME/Base64 Cwd Storable List/Util Fcntl Opcode"
+            #static_ext="mro Devel/Peek              File/Glob                         PerlIO/via             PerlIO/encoding B attributes Unicode/Normalize                                                 re Digest/MD5 Digest/SHA SDBM_File                      Data/Dumper I18N/Langinfo Time/HiRes Time/Piece IO Socket Hash/Util/FieldHash Hash/Util                  POSIX Encode/Unicode Encode Encode/JP Encode/KR Encode/EBCDIC Encode/CN Encode/Symbol Encode/Byte Encode/TW                                                  Cwd          List/Util Fcntl Opcode"
+            static_ext="mro Devel/Peek File/DosGlob File/Glob Sys/Syslog Sys/Hostname PerlIO/via PerlIO/mmap PerlIO/encoding B attributes Unicode/Normalize Unicode/Collate threads threads/shared IPC/SysV re Digest/MD5 Digest/SHA SDBM_File Math/BigInt/FastCalc Data/Dumper I18N/Langinfo Time/HiRes Time/Piece IO Socket Hash/Util/FieldHash Hash/Util Filter/Util/Call POSIX Encode/Unicode Encode Encode/JP Encode/KR Encode/EBCDIC Encode/CN Encode/Symbol Encode/Byte Encode/TW Compress/Raw/Zlib Compress/Raw/Bzip2 MIME/Base64 Cwd Storable List/Util Fcntl Opcode"
 
             dynamic_ext=''
-            noextensions='IPC/SysV'
+            #noextensions='IPC/SysV'
 
             cc="emcc"
             ld="emcc"
@@ -226,10 +229,4 @@ jobs:
           #emmake make utilities
           
           emmake make
-          
-          echo BEFOREINSTALL
-          mv ./perl ./perl.wasm
-          ln -s $PWD/../native/prefix/bin/perl ./perl
-          ls -lah ./perl
-          ./perl -e 'print("hello world\n");'
-          emmake make install
+          wasmtime perl -e 'print("hello world\n");'
