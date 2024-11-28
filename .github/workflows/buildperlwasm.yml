@@ -27,7 +27,7 @@ jobs:
           
       - name: Heredoc
         run: |
-          cat <<'EOF' > patch.txt
+          cat <<'EOF' > patch.sh
             d_perl_lc_all_uses_name_value_pairs="$undef"
             d_perl_lc_all_separator="$undef"
             perl_lc_all_separator=
@@ -216,14 +216,12 @@ jobs:
       - name: Install Perl static wasm
         shell: bash
         run: |
-          cat patch.txt
-          cat hintfile_wasm.sh
-          #mkdir wasm && curl -L $URLPERL | tar -xzf - --strip-components=1 --directory=wasm
-          #cp hintfile_wasm.sh wasm/hints/emscripten.sh
+          mkdir wasm && curl -L $URLPERL | tar -xzf - --strip-components=1 --directory=wasm
+          cp hintfile_wasm.sh wasm/hints/emscripten.sh
           # https://github.com/Perl/perl5/issues/22728
-          #sed -i -e "17836r patch.sh" ./wasm/Configure
-          #cd wasm
-          #emconfigure bash ./Configure -sde -Dhintfile=emscripten -Dsysroot=$(dirname $(which emcc))/system -Dhostperl=$PWD/../native/miniperl -Dhostgenerate=$PWD/../native/generate_uudmap -Dprefix=$PWD/prefix
-          #sed -i 's/$(generated_pods)//' Makefile
-          #emmake make perl
-          #emmake make install
+          sed -i -e "17836r patch.sh" ./wasm/Configure
+          cd wasm
+          emconfigure bash ./Configure -sde -Dhintfile=emscripten -Dsysroot=$(dirname $(which emcc))/system -Dhostperl=$PWD/../native/miniperl -Dhostgenerate=$PWD/../native/generate_uudmap -Dprefix=$PWD/prefix
+          sed -i 's/$(generated_pods)//' Makefile
+          emmake make perl
+          emmake make install
