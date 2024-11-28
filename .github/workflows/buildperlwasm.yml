@@ -66,11 +66,11 @@ jobs:
             # Devel/Peek Devel/PPPort Digest/MD5 Digest/SHA Encode Fcntl File/DosGlob
             # File/Glob Filter/Util/Call Hash/Util Hash/Util/FieldHash I18N/Langinfo IO
             # List/Util Math/BigInt/FastCalc MIME/Base64 mro Opcode PerlIO/encoding
-            # PerlIO/mmap PerlIO/scalar PerlIO/via POSIX re SDBM_File Socket Storable
+            # PerlIO/mmap PerlIO/via POSIX re SDBM_File Socket Storable
             # Sys/Hostname Sys/Syslog threads threads/shared Tie/Hash/NamedCapture
             # Time/HiRes Time/Piece Unicode/Collate Unicode/Normalize XS/APItest XS/Typemap]  
             #TODO Later: Reinsert Storable after Socket, its Makefile seems to not work in our environment    POSIX 
-            static_ext="attributes B Cwd Data/Dumper Devel/Peek Digest/MD5 Digest/SHA Encode Fcntl File/Glob Hash/Util I18N/Langinfo IO List/Util mro Opcode PerlIO/encoding PerlIO/scalar PerlIO/via re SDBM_File Socket Tie/Hash/NamedCapture Time/HiRes Time/Piece Unicode/Normalize"
+            static_ext="attributes B Cwd Data/Dumper Devel/Peek Digest/MD5 Digest/SHA Encode Fcntl File/Glob Hash/Util I18N/Langinfo IO List/Util mro Opcode PerlIO/encoding PerlIO/via re SDBM_File Socket Tie/Hash/NamedCapture Time/HiRes Time/Piece Unicode/Normalize"
             dynamic_ext=''
             noextensions='IPC/SysV'
 
