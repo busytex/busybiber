@@ -193,8 +193,8 @@ jobs:
 
             # the following is needed for the "musl" libc provided by emscripten to provide all functions
             ccflags="$ccflags -D_GNU_SOURCE -D_POSIX_C_SOURCE"
-            # from Makefile.emcc / Makefile.micro
-            ccflags="$ccflags -DSTANDARD_C -DPERL_USE_SAFE_PUTENV -DNO_MATHOMS"
+            # from Makefile.emcc / Makefile.micro  -DSTANDARD_C -DPERL_USE_SAFE_PUTENV
+            ccflags="$ccflags -DNO_MATHOMS"
             # disable this warning, I don't think we need it - TODO: how to append this after -Wall?
             ccflags="$ccflags -Wno-null-pointer-arithmetic"
 
@@ -217,14 +217,14 @@ jobs:
           sed -i 's/$(generated_pods)//' Makefile
           sed -i 's/public = $(PERL_EXE) utilities/public = $(PERL_EXE)/' Makefile
           
-          ln -s $PWD/../native/prefix/bin/perl ./perl
-          ln -s $PWD/../native/prefix/bin/miniperl ./miniperl
-          ls -lah perl miniperl
-          emmake make utilities
+          #ln -s $PWD/../native/prefix/bin/perl ./perl
+          #ln -s $PWD/../native/prefix/bin/miniperl ./miniperl
+          #ls -lah perl miniperl
+          #emmake make utilities
           
           #emmake make perl
           #echo PERLDONE
-          #emmake make
+          emmake make
           #mv perl perl.wasm
           #mv ./perl ./perl.wasm
           #emmake make install
