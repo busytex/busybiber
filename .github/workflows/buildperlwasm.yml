@@ -69,8 +69,8 @@ jobs:
             # PerlIO/mmap PerlIO/scalar PerlIO/via POSIX re SDBM_File Socket Storable
             # Sys/Hostname Sys/Syslog threads threads/shared Tie/Hash/NamedCapture
             # Time/HiRes Time/Piece Unicode/Collate Unicode/Normalize XS/APItest XS/Typemap]  
-            #TODO Later: Reinsert Storable after Socket, its Makefile seems to not work in our environment
-            static_ext="attributes B Cwd Data/Dumper Devel/Peek Digest/MD5 Digest/SHA Encode Fcntl File/Glob Hash/Util I18N/Langinfo IO List/Util mro Opcode PerlIO/encoding PerlIO/scalar PerlIO/via POSIX re SDBM_File Socket Tie/Hash/NamedCapture Time/HiRes Time/Piece Unicode/Normalize"
+            #TODO Later: Reinsert Storable after Socket, its Makefile seems to not work in our environment    POSIX 
+            static_ext="attributes B Cwd Data/Dumper Devel/Peek Digest/MD5 Digest/SHA Encode Fcntl File/Glob Hash/Util I18N/Langinfo IO List/Util mro Opcode PerlIO/encoding PerlIO/scalar PerlIO/via re SDBM_File Socket Tie/Hash/NamedCapture Time/HiRes Time/Piece Unicode/Normalize"
             dynamic_ext=''
             noextensions='IPC/SysV'
 
@@ -196,12 +196,12 @@ jobs:
             # from Makefile.emcc / Makefile.micro
             ccflags="$ccflags -DSTANDARD_C -DPERL_USE_SAFE_PUTENV -DNO_MATHOMS"
             # disable this warning, I don't think we need it - TODO: how to append this after -Wall?
-            ccflags="$ccflags -Wno-null-pointer-arithmetic -Wno-error=incompatible-function-pointer-type"
+            ccflags="$ccflags -Wno-null-pointer-arithmetic"
 
 
             # Configure apparently changes "-s ASSERTIONS=2 -s STACK_OVERFLOW_CHECK=2" to "-s -s" when converting ccflags to cppflags
             # this is the current hack/workaround: copy cppflags from config.sh and fix it (TODO Later: better way would be to patch Configure)
-            cppflags='-lm -s ERROR_ON_UNDEFINED_SYMBOLS=0 -D_GNU_SOURCE -D_POSIX_C_SOURCE -DSTANDARD_C -DPERL_USE_SAFE_PUTENV -DNO_MATHOMS -Wno-null-pointer-arithmetic -fno-strict-aliasing -Wno-error=incompatible-function-pointer-type -pipe -fstack-protector-strong -I/usr/local/include'
+            cppflags='-lm -s ERROR_ON_UNDEFINED_SYMBOLS=0 -D_GNU_SOURCE -D_POSIX_C_SOURCE -DSTANDARD_C -DPERL_USE_SAFE_PUTENV -DNO_MATHOMS -Wno-null-pointer-arithmetic -fno-strict-aliasing -pipe -fstack-protector-strong -I/usr/local/include'
 
             libs='-lm'
           EOF
