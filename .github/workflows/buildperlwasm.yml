@@ -217,14 +217,14 @@ jobs:
           sed -i 's/$(generated_pods)//' Makefile
           sed -i 's/public = $(PERL_EXE) utilities/public = $(PERL_EXE)/' Makefile
           
-          #ln -s $PWD/../native/perl ./perl
-          #ln -s $PWD/../native/miniperl ./miniperl
-          #emmake make utilities
-          #rm ./perl ./miniperl
+          ln -s $PWD/../native/prefix/bin/perl ./perl
+          ln -s $PWD/../native/prefix/bin/miniperl ./miniperl
+          ls -lah perl miniperl
+          emmake make utilities
           
-          emmake make perl
-          echo PERLDONE
-          emmake make
+          #emmake make perl
+          #echo PERLDONE
+          #emmake make
           #mv perl perl.wasm
           #mv ./perl ./perl.wasm
           #emmake make install
