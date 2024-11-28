@@ -226,5 +226,10 @@ jobs:
           #emmake make utilities
           
           emmake make
+          
+          echo BEFOREINSTALL
           mv ./perl ./perl.wasm
+          ln -s $PWD/../native/prefix/bin/perl ./perl
+          ls -lah ./perl
+          ./perl -e 'print("hello world\n");'
           emmake make install
