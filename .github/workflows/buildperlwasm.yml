@@ -111,9 +111,8 @@ jobs:
             d_perl_lc_all_category_positions_init='define'
             d_perl_lc_all_separator='define'
             d_perl_lc_all_uses_name_value_pairs='undef'
-            #perl_lc_all_category_positions_init='{0,1,5,2,3,4}'
-            perl_lc_all_category_positions_init='{12,11,10,9,8,7,5,4,3,2,1,0}'
-            perl_lc_all_separator='";"'
+            perl_lc_all_category_positions_init='{0,1,5,2,3,4}'
+            perl_lc_all_separator=''
 
             dlsrc='none'
             d_getgrgid_r='define'
