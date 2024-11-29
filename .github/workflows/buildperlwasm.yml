@@ -28,19 +28,9 @@ jobs:
       - name: Heredoc
         run: |
           cat <<'EOF' > hintfile_wasm.sh
-            #2020-11-29T00:24:34.8505712Z warning: undefined symbol: __stack_chk_fail (referenced by top-level compiled C/C++ code)
-            #2020-11-29T00:24:34.8573524Z warning: undefined symbol: sigsuspend (referenced by top-level compiled C/C++ code)
-
             osname="emscripten"
             archname="wasm"
             osvers="2.0.5"
-
-            myhostname='localhost'
-            mydomain='.local'
-
-            #TODO: almost all of the known_extensions are still being built. we should probably exclude some of them! (see also nonxs_ext)
-            #dynamic_ext=''
-            #noextensions='IPC/SysV'
 
             cc="emcc"
             ld="emcc"
@@ -49,6 +39,9 @@ jobs:
             ar="`which emar`"  # note from Glossary: 'After Configure runs, the value is reset to a plain "ar" and is not useful.'
             ranlib="`which emranlib`"
 
+            #TODO: almost all of the known_extensions are still being built. we should probably exclude some of them! (see also nonxs_ext)
+            #dynamic_ext=''
+            #noextensions='IPC/SysV'
             # Here's a fun one: apparently, when building perlmini.c, emcc notices that it's a symlink to perl.c, and compiles to perl.o
             # (because there is no -o option), so the final perl ends up thinking it's miniperl (shown in "perl -v", @INC doesn't work, etc.).
             # Because of this and other issues I've had with symlinks, I'm switching to hard links instead.
@@ -156,7 +149,6 @@ jobs:
             # For now, just use this number from a build with an earlier version where this didn't fail:
             selectminbits='32'
             alignbytes='4'
-
             optimize="-O2"
 
 
@@ -181,11 +173,14 @@ jobs:
           cp hintfile_wasm.sh wasm/hints/emscripten.sh
           # https://github.com/Perl/perl5/issues/22728
           cd wasm
-          emconfigure bash ./Configure -sde -Dman1dir=none -Dman3dir=none -Dhintfile=emscripten -Dsysroot=$(dirname $(which emcc))/system -Dhostperl=$PWD/../native/miniperl -Dhostgenerate=$PWD/../native/generate_uudmap -Dprefix=$PWD/prefix -Dstatic_ext="mro Devel/Peek File/DosGlob File/Glob Sys/Syslog Sys/Hostname PerlIO/via PerlIO/mmap PerlIO/encoding B attributes Unicode/Normalize Unicode/Collate threads threads/shared IPC/SysV re Digest/MD5 Digest/SHA SDBM_File Math/BigInt/FastCalc Data/Dumper I18N/Langinfo Time/HiRes Time/Piece IO Socket Hash/Util/FieldHash Hash/Util Filter/Util/Call POSIX Encode/Unicode Encode Encode/JP Encode/KR Encode/EBCDIC Encode/CN Encode/Symbol Encode/Byte Encode/TW Compress/Raw/Zlib Compress/Raw/Bzip2 MIME/Base64 Cwd Storable List/Util Fcntl Opcode"
+          emconfigure bash ./Configure -sde -Dman1dir=none -Dman3dir=none -Dmyhostname='localhost' -Dmydomain='.local' -Dperladmin=root -Dhintfile=emscripten -Dsysroot=$(dirname $(which emcc))/system -Dhostperl=$PWD/../native/miniperl -Dhostgenerate=$PWD/../native/generate_uudmap -Dprefix=$PWD/prefix -Dstatic_ext="mro Devel/Peek File/DosGlob File/Glob Sys/Syslog Sys/Hostname PerlIO/via PerlIO/mmap PerlIO/encoding B attributes Unicode/Normalize Unicode/Collate threads threads/shared IPC/SysV re Digest/MD5 Digest/SHA SDBM_File Math/BigInt/FastCalc Data/Dumper I18N/Langinfo Time/HiRes Time/Piece IO Socket Hash/Util/FieldHash Hash/Util Filter/Util/Call POSIX Encode/Unicode Encode Encode/JP Encode/KR Encode/EBCDIC Encode/CN Encode/Symbol Encode/Byte Encode/TW Compress/Raw/Zlib Compress/Raw/Bzip2 MIME/Base64 Cwd Storable List/Util Fcntl Opcode"
           sed -i 's/$(generated_pods)//' Makefile
           sed -i 's/public = $(PERL_EXE) utilities/public = $(PERL_EXE)/' Makefile
           
           emmake make
-          LC_ALL="C" node ./perl -e 'print("hello world\n");' || true
+          #LC_ALL="C" node ./perl -e 'print("hello world\n");' || true
+          emcc -o try try.c
+          node ./try
+          echo TRYRESULT: $?
 
           #emcc -o perl -lm -O2 -s EXIT_RUNTIME=1 -s ALLOW_MEMORY_GROWTH=1 -Wno-almost-asm -s ERROR_ON_UNDEFINED_SYMBOLS=0 -s WASM=1 -fstack-protector-strong  perlmain.o  lib/auto/mro/mro.a lib/auto/Devel/Peek/Peek.a lib/auto/File/DosGlob/DosGlob.a lib/auto/File/Glob/Glob.a lib/auto/Sys/Syslog/Syslog.a lib/auto/Sys/Hostname/Hostname.a lib/auto/PerlIO/via/via.a lib/auto/PerlIO/mmap/mmap.a lib/auto/PerlIO/encoding/encoding.a lib/auto/B/B.a lib/auto/attributes/attributes.a lib/auto/Unicode/Normalize/Normalize.a lib/auto/Unicode/Collate/Collate.a lib/auto/threads/threads.a lib/auto/threads/shared/shared.a lib/auto/IPC/SysV/SysV.a lib/auto/re/re.a lib/auto/Digest/MD5/MD5.a lib/auto/Digest/SHA/SHA.a lib/auto/SDBM_File/SDBM_File.a lib/auto/Math/BigInt/FastCalc/FastCalc.a lib/auto/Data/Dumper/Dumper.a lib/auto/I18N/Langinfo/Langinfo.a lib/auto/Time/HiRes/HiRes.a lib/auto/Time/Piece/Piece.a lib/auto/IO/IO.a lib/auto/Socket/Socket.a lib/auto/Hash/Util/FieldHash/FieldHash.a lib/auto/Hash/Util/Util.a lib/auto/Filter/Util/Call/Call.a lib/auto/POSIX/POSIX.a lib/auto/Encode/Unicode/Unicode.a lib/auto/Encode/Encode.a lib/auto/Encode/JP/JP.a lib/auto/Encode/KR/KR.a lib/auto/Encode/EBCDIC/EBCDIC.a lib/auto/Encode/CN/CN.a lib/auto/Encode/Symbol/Symbol.a lib/auto/Encode/Byte/Byte.a lib/auto/Encode/TW/TW.a lib/auto/Compress/Raw/Zlib/Zlib.a lib/auto/Compress/Raw/Bzip2/Bzip2.a lib/auto/MIME/Base64/Base64.a lib/auto/Cwd/Cwd.a lib/auto/Storable/Storable.a lib/auto/List/Util/Util.a lib/auto/Fcntl/Fcntl.a lib/auto/Opcode/Opcode.a lib/auto/Encode/Byte/Byte.a lib/auto/Encode/CN/CN.a lib/auto/Encode/EBCDIC/EBCDIC.a lib/auto/Encode/JP/JP.a lib/auto/Encode/KR/KR.a lib/auto/Encode/Symbol/Symbol.a lib/auto/Encode/TW/TW.a lib/auto/Encode/Unicode/Unicode.a libperl.a `cat ext.libs` -lm
