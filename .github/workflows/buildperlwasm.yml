@@ -179,7 +179,8 @@ jobs:
           
           emmake make
           #LC_ALL="C" node ./perl -e 'print("hello world\n");' || true
-          emcc -o try try.c
+          emcc -o try ../try.c
+          set +e
           node ./try
           echo TRYRESULT: $?
 
