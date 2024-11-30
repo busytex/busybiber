@@ -166,8 +166,8 @@ jobs:
           #emmake make utils/Makefile
           #emmake make -C utils PERL=../miniperl REALPERL=../miniperl
           
-          export PERL=../miniperl
-          export REALPERL=../miniperl
+          export PERL=$PWD/../native/miniperl
+          export REALPERL=$PWD/../native/miniperl
           
           emmake make
           node ./perl -e 'print("hello world\n");'
