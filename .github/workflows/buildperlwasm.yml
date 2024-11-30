@@ -172,8 +172,9 @@ jobs:
           emmake make
           node ./perl -e 'print("hello world\n");'
 
-          sed -i 's|RUN_PERL = $(LDLIBPTH) $(RUN) ./perl|RUN_PERL = $(LDLIBPTH) $(RUN) /usr/bin/perl|' Makefile
+          #sed -i 's|RUN_PERL = $(LDLIBPTH) $(RUN) ./perl|RUN_PERL = $(LDLIBPTH) $(RUN) /usr/bin/perl|' Makefile
           cat Makefile
 
           #export SHELL="bash -x"
-          strace -s 128 -f emmake make install
+          chmod +x perl
+          emmake make install
