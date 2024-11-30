@@ -175,4 +175,4 @@ jobs:
           emmake make
           node ./perl -e 'print("hello world\n");'
 
-          #emmake make install
+          emmake make install
