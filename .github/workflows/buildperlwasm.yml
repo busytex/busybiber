@@ -174,6 +174,6 @@ jobs:
           node ./perl -e 'print("hello world\n");'
           
           emmake make utils/Makefile
-          cat utils/Makefile
+          emmake make -C utils
           #chmod +x ./perl
           #emmake make install
