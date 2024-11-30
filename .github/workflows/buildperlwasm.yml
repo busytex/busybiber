@@ -32,11 +32,6 @@ jobs:
             archname="wasm"
             osvers="2.0.5"
 
-            #cc="emcc"
-            #ld="emcc"
-            #ar="`which emar`"  # note from Glossary: 'After Configure runs, the value is reset to a plain "ar" and is not useful.'
-            #ranlib="`which emranlib`"
-            
             #nm="`which llvm-nm`"  # note from Glossary: 'After Configure runs, the value is reset to a plain "nm" and is not useful.'
 
             #TODO: almost all of the known_extensions are still being built. we should probably exclude some of them! (see also nonxs_ext)
@@ -49,7 +44,6 @@ jobs:
             #TODO Later: In NODEFS, does Perl's -e test work correctly on symlinks? (./t/TEST was having issues detecting ./t/perl, a symlink to ./perl).
             lns="/bin/ln"
 
-            #prefix="/opt/perl"
             inc_version_list="none"
 
             loclibpth=''
@@ -142,7 +136,7 @@ jobs:
             # For now, just use this number from a build with an earlier version where this didn't fail:
             selectminbits='32'
             alignbytes='4'
-            optimize="-O2"
+            #optimize="-O2"
 
 
             ldflags="$ldflags -lm -O2 -s NO_EXIT_RUNTIME=1 -s ALLOW_MEMORY_GROWTH=1 -Wno-almost-asm -s ERROR_ON_UNDEFINED_SYMBOLS=0 -s WASM=1"
@@ -166,13 +160,12 @@ jobs:
           cp hintfile_wasm.sh wasm/hints/emscripten.sh
           cd wasm
           
-          emconfigure bash ./Configure -sde -Dman1dir=none -Dman3dir=none -Dmyhostname='localhost' -Dmydomain='.local' -Dperladmin=root -Dcc="emcc" -Dld="emcc" -Dar="`which emar`" -Dranlib="`which emranlib`" -Dhintfile=emscripten -Dsysroot=$(dirname $(which emcc))/system -Dhostperl=$PWD/../native/miniperl -Dhostgenerate=$PWD/../native/generate_uudmap -Dprefix=$PWD/prefix -Dstatic_ext="mro Devel/Peek File/DosGlob File/Glob Sys/Syslog Sys/Hostname PerlIO/via PerlIO/mmap PerlIO/encoding B attributes Unicode/Normalize Unicode/Collate threads threads/shared IPC/SysV re Digest/MD5 Digest/SHA SDBM_File Math/BigInt/FastCalc Data/Dumper I18N/Langinfo Time/HiRes Time/Piece IO Socket Hash/Util/FieldHash Hash/Util Filter/Util/Call POSIX Encode/Unicode Encode Encode/JP Encode/KR Encode/EBCDIC Encode/CN Encode/Symbol Encode/Byte Encode/TW Compress/Raw/Zlib Compress/Raw/Bzip2 MIME/Base64 Cwd Storable List/Util Fcntl Opcode"
+          emconfigure bash ./Configure -sde -Dman1dir=none -Dman3dir=none -Dmyhostname='localhost' -Dmydomain='.local' -Dperladmin=root -Dcc="emcc" -Dld="emcc" -Dar="`which emar`" -Dranlib="`which emranlib`" -Doptimize="-O2" -Dhintfile=emscripten -Dsysroot=$(dirname $(which emcc))/system -Dhostperl=$PWD/../native/miniperl -Dhostgenerate=$PWD/../native/generate_uudmap -Dprefix=$PWD/prefix -Dstatic_ext="mro Devel/Peek File/DosGlob File/Glob Sys/Syslog Sys/Hostname PerlIO/via PerlIO/mmap PerlIO/encoding B attributes Unicode/Normalize Unicode/Collate threads threads/shared IPC/SysV re Digest/MD5 Digest/SHA SDBM_File Math/BigInt/FastCalc Data/Dumper I18N/Langinfo Time/HiRes Time/Piece IO Socket Hash/Util/FieldHash Hash/Util Filter/Util/Call POSIX Encode/Unicode Encode Encode/JP Encode/KR Encode/EBCDIC Encode/CN Encode/Symbol Encode/Byte Encode/TW Compress/Raw/Zlib Compress/Raw/Bzip2 MIME/Base64 Cwd Storable List/Util Fcntl Opcode"
           
           emmake make utils/Makefile
           emmake make -C utils PERL=../miniperl REALPERL=../miniperl
           
           sed -i 's/$(generated_pods)//' Makefile
-          #sed -i 's/public = $(PERL_EXE) utilities/public = $(PERL_EXE)/' Makefile
           emmake make
           node ./perl -e 'print("hello world\n");'
           
