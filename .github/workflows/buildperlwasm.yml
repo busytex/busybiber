@@ -34,9 +34,11 @@ jobs:
 
             cc="emcc"
             ld="emcc"
+
             #nm="`which llvm-nm`"  # note from Glossary: 'After Configure runs, the value is reset to a plain "nm" and is not useful.'
             ar="`which emar`"  # note from Glossary: 'After Configure runs, the value is reset to a plain "ar" and is not useful.'
             ranlib="`which emranlib`"
+
             #TODO: almost all of the known_extensions are still being built. we should probably exclude some of them! (see also nonxs_ext)
             #dynamic_ext=''
             #noextensions='IPC/SysV'
@@ -46,14 +48,18 @@ jobs:
             # (Another possible fix might be to fix the Makefile steps so that they use the -o option, but this solution works for now.)
             #TODO Later: In NODEFS, does Perl's -e test work correctly on symlinks? (./t/TEST was having issues detecting ./t/perl, a symlink to ./perl).
             lns="/bin/ln"
+
+            #prefix="/opt/perl"
             inc_version_list="none"
+
             loclibpth=''
             glibpth=''
+
             usemymalloc="n"
             uselargefiles="n"
             usenm='undef'
-            usemallocwrap="define"
 
+            usemallocwrap="define"
             d_procselfexe='undef'
             d_dlopen='undef'
             
@@ -118,6 +124,15 @@ jobs:
             d_pthread_attr_setscope='undef'
             d_pthread_yield='undef'
 
+            # We're avoiding all the 64-bit stuff for now.
+            # Commented out stuff is correctly detected.
+            #TODO: JavaScript uses 64-bit IEEE double FP numbers - will Perl use those?
+            #TODO: Now that we've switched to WebAssembly, can we use 64 bits everywhere?
+            # see https://groups.google.com/forum/#!topic/emscripten-discuss/nWmO3gi8_Jg
+            #use64bitall='undef'
+            #use64bitint='undef'
+            #usemorebits='undef'
+            #usequadmath='undef'
             #TODO Later: Why does Configure seem to ignore the following? (and do we care?)
             d_quad='undef'
 
@@ -127,18 +142,21 @@ jobs:
             # For now, just use this number from a build with an earlier version where this didn't fail:
             selectminbits='32'
             alignbytes='4'
-            
-            #ldflags="$ldflags -lm -O2 -s NO_EXIT_RUNTIME=1 -s ALLOW_MEMORY_GROWTH=1 -Wno-almost-asm -s ERROR_ON_UNDEFINED_SYMBOLS=0 -s WASM=1"
+            optimize="-O2"
 
-            # Configure apparently changes "-s ASSERTIONS=2 -s STACK_OVERFLOW_CHECK=2" to "-s -s" when converting ccflags to cppflags
-            # this is the current hack/workaround: copy cppflags from config.sh and fix it (TODO Later: better way would be to patch Configure)
+
+            ldflags="$ldflags -lm -O2 -s NO_EXIT_RUNTIME=1 -s ALLOW_MEMORY_GROWTH=1 -Wno-almost-asm -s ERROR_ON_UNDEFINED_SYMBOLS=0 -s WASM=1"
 
             # the following is needed for the "musl" libc provided by emscripten to provide all functions
             # from Makefile.emcc / Makefile.micro  -DSTANDARD_C -DPERL_USE_SAFE_PUTENV
             # disable this warning, I don't think we need it - TODO: how to append this after -Wall?
             ccflags="$ccflags -D_GNU_SOURCE -D_POSIX_C_SOURCE  -DNO_MATHOMS -Wno-null-pointer-arithmetic"
-            
+
+            # Configure apparently changes "-s ASSERTIONS=2 -s STACK_OVERFLOW_CHECK=2" to "-s -s" when converting ccflags to cppflags
+            # this is the current hack/workaround: copy cppflags from config.sh and fix it (TODO Later: better way would be to patch Configure)
             cppflags='-lm -s ERROR_ON_UNDEFINED_SYMBOLS=0 -D_GNU_SOURCE -D_POSIX_C_SOURCE -DSTANDARD_C -DPERL_USE_SAFE_PUTENV -DNO_MATHOMS -Wno-null-pointer-arithmetic -fno-strict-aliasing -pipe -fstack-protector-strong -I/usr/local/include'
+
+            libs='-lm'
           EOF
 
       - name: Install Perl static wasm
@@ -146,13 +164,15 @@ jobs:
         run: |
           mkdir wasm && curl -L $URLPERL | tar -xzf - --strip-components=1 --directory=wasm
           cp hintfile_wasm.sh wasm/hints/emscripten.sh
+          # https://github.com/Perl/perl5/issues/22728
           cd wasm
-          emconfigure bash ./Configure -sde -Dman1dir=none -Dman3dir=none -Dmyhostname='localhost' -Dmydomain='.local' -Dperladmin=root -Dlibs='-lm' -Doptimize='-O2' -Dhintfile=emscripten -Dsysroot=$(dirname $(which emcc))/system -Dhostperl=$PWD/../native/miniperl -Dhostgenerate=$PWD/../native/generate_uudmap -Dprefix=$PWD/prefix -Dstatic_ext="mro Devel/Peek File/DosGlob File/Glob Sys/Syslog Sys/Hostname PerlIO/via PerlIO/mmap PerlIO/encoding B attributes Unicode/Normalize Unicode/Collate threads threads/shared IPC/SysV re Digest/MD5 Digest/SHA SDBM_File Math/BigInt/FastCalc Data/Dumper I18N/Langinfo Time/HiRes Time/Piece IO Socket Hash/Util/FieldHash Hash/Util Filter/Util/Call POSIX Encode/Unicode Encode Encode/JP Encode/KR Encode/EBCDIC Encode/CN Encode/Symbol Encode/Byte Encode/TW Compress/Raw/Zlib Compress/Raw/Bzip2 MIME/Base64 Cwd Storable List/Util Fcntl Opcode"
-          
+          #rm ./Configure
+          #cp ../Configure .
+          emconfigure bash ./Configure -sde -Dman1dir=none -Dman3dir=none -Dmyhostname='localhost' -Dmydomain='.local' -Dperladmin=root -Dhintfile=emscripten -Dsysroot=$(dirname $(which emcc))/system -Dhostperl=$PWD/../native/miniperl -Dhostgenerate=$PWD/../native/generate_uudmap -Dprefix=$PWD/prefix -Dstatic_ext="mro Devel/Peek File/DosGlob File/Glob Sys/Syslog Sys/Hostname PerlIO/via PerlIO/mmap PerlIO/encoding B attributes Unicode/Normalize Unicode/Collate threads threads/shared IPC/SysV re Digest/MD5 Digest/SHA SDBM_File Math/BigInt/FastCalc Data/Dumper I18N/Langinfo Time/HiRes Time/Piece IO Socket Hash/Util/FieldHash Hash/Util Filter/Util/Call POSIX Encode/Unicode Encode Encode/JP Encode/KR Encode/EBCDIC Encode/CN Encode/Symbol Encode/Byte Encode/TW Compress/Raw/Zlib Compress/Raw/Bzip2 MIME/Base64 Cwd Storable List/Util Fcntl Opcode"
           sed -i 's/$(generated_pods)//' Makefile
           sed -i 's/public = $(PERL_EXE) utilities/public = $(PERL_EXE)/' Makefile
+          
           emmake make
           node ./perl -e 'print("hello world\n");'
 
-          emmake make install || true
-          cat Makefile
+          emmake make install
