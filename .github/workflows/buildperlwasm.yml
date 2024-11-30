@@ -172,7 +172,7 @@ jobs:
           emmake make
           node ./perl -e 'print("hello world\n");'
 
-          sed -i 's|RUN_PERL = $(LDLIBPTH) $(RUN) ./perl|RUN_PERL = $(LDLIBPTH) $(RUN) ../native/miniperl|' Makefile
-
-          emmake make install || true
+          sed -i 's|RUN_PERL = $(LDLIBPTH) $(RUN) ./perl|RUN_PERL = $(LDLIBPTH) $(RUN) /usr/bin/perl|' Makefile
           cat Makefile
+
+          strace -s 128 -f emmake make install
