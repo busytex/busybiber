@@ -175,4 +175,6 @@ jobs:
           sed -i 's|RUN_PERL = $(LDLIBPTH) $(RUN) ./perl|RUN_PERL = $(LDLIBPTH) $(RUN) /usr/bin/perl|' Makefile
           cat Makefile
 
-          strace -s 128 -f emmake make install
+          #strace -s 128 -f 
+          export SHELL="bash -x"
+          emmake make install
