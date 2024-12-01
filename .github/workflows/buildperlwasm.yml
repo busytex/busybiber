@@ -150,6 +150,7 @@ jobs:
           chmod +x ./perl
           emmake make install
           
+          cp ./perl.wasm ./prefix/bin
           node ./prefix/bin/perl -e 'print("hello world\n");'
           
           find ./prefix
