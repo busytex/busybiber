@@ -151,3 +151,5 @@ jobs:
           emmake make install
           
           node ./prefix/bin/perl -e 'print("hello world\n");'
+          
+          find ./prefix
