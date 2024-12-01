@@ -28,10 +28,6 @@ jobs:
       - name: Heredoc
         run: |
           cat <<'EOF' > hintfile_wasm.sh
-            #osname="emscripten"
-            #archname="wasm"
-            #osvers="2.0.5"
-
             #nm="`which llvm-nm`"  # note from Glossary: 'After Configure runs, the value is reset to a plain "nm" and is not useful.'
 
             #TODO: almost all of the known_extensions are still being built. we should probably exclude some of them! (see also nonxs_ext)
@@ -159,8 +155,9 @@ jobs:
           emconfigure bash ./Configure -sde -Dinc_version_list=none -Dman1dir=none -Dman3dir=none -Dosname="emscripten" -Darchname="wasm" -Dosvers="2.0.5" -Dmyhostname='localhost' -Dmydomain='.local' -Dperladmin=root -Dcc=emcc -Dld=emcc -Dar=$(which emar) -Dranlib=$(which emranlib) -Doptimize="-O2" -Dlibs='-lm' -Dhintfile=emscripten -Dsysroot=$(dirname $(which emcc))/system -Dhostperl=$PWD/../native/miniperl -Dhostgenerate=$PWD/../native/generate_uudmap -Dprefix=$PWD/prefix -Dstatic_ext="mro Devel/Peek File/DosGlob File/Glob Sys/Syslog Sys/Hostname PerlIO/via PerlIO/mmap PerlIO/encoding B attributes Unicode/Normalize Unicode/Collate threads threads/shared IPC/SysV re Digest/MD5 Digest/SHA SDBM_File Math/BigInt/FastCalc Data/Dumper I18N/Langinfo Time/HiRes Time/Piece IO Socket Hash/Util/FieldHash Hash/Util Filter/Util/Call POSIX Encode/Unicode Encode Encode/JP Encode/KR Encode/EBCDIC Encode/CN Encode/Symbol Encode/Byte Encode/TW Compress/Raw/Zlib Compress/Raw/Bzip2 MIME/Base64 Cwd Storable List/Util Fcntl Opcode"
           
           sed -i 's/$(generated_pods)//' Makefile
-          emmake make utils/Makefile
-          emmake make -C utils PERL=$PWD/../native/miniperl #REALPERL=$PWD/../native/miniperl
+          #emmake make utils/Makefile
+          #emmake make -C utils PERL=$PWD/../native/miniperl
+          emmake make utilities PERL=$PWD/../native/miniperl
           emmake make
           node ./perl -e 'print("hello world\n");'
           
