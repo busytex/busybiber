@@ -28,8 +28,6 @@ jobs:
       - name: Heredoc
         run: |
           cat <<'EOF' > hintfile_wasm.sh
-            #nm="`which llvm-nm`"  # note from Glossary: 'After Configure runs, the value is reset to a plain "nm" and is not useful.'
-
             #TODO: almost all of the known_extensions are still being built. we should probably exclude some of them! (see also nonxs_ext)
             #dynamic_ext=''
             #noextensions='IPC/SysV'
@@ -112,15 +110,6 @@ jobs:
             d_pthread_attr_setscope='undef'
             d_pthread_yield='undef'
 
-            # We're avoiding all the 64-bit stuff for now.
-            # Commented out stuff is correctly detected.
-            #TODO: JavaScript uses 64-bit IEEE double FP numbers - will Perl use those?
-            #TODO: Now that we've switched to WebAssembly, can we use 64 bits everywhere?
-            # see https://groups.google.com/forum/#!topic/emscripten-discuss/nWmO3gi8_Jg
-            #use64bitall='undef'
-            #use64bitint='undef'
-            #usemorebits='undef'
-            #usequadmath='undef'
             #TODO Later: Why does Configure seem to ignore the following? (and do we care?)
             d_quad='undef'
 
