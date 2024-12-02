@@ -110,7 +110,7 @@ jobs:
             d_pthread_yield='undef'
 
             #TODO Later: Why does Configure seem to ignore the following? (and do we care?)
-            d_quad='undef'
+            #d_quad='undef'
 
             #TODO Later: The test for "selectminbits" seems to fail,
             # the error appears to be coming from this line (because apparently stream.stream_ops is undefined):
@@ -149,7 +149,8 @@ jobs:
           emmake make install
           cp ./perl.wasm ./prefix/bin
           node ./prefix/bin/perl -e 'print("hello world\n");'
-#      - name: Artifacts
-#        uses: actions/upload-artifact@v4
-#        with:
-#          path: wasm/Makefile.bak
+
+      - name: Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          path: wasm/config.h
