@@ -144,7 +144,7 @@ jobs:
           
           ln -s $PWD/pod/perldelta.pod .
           for f in README.* ; do ln $PWD/$f ..; done
-          #emmake make pod/perltoc.pod extra.pods pod/perl5400delta.pod pod/perlapi.pod pod/perlintern.pod pod/perlmodlib.pod pod/perluniprops.pod RUN_PERL="$PWD/../native/miniperl -Ilib -I."
+#          emmake make pod/perltoc.pod extra.pods pod/perl5400delta.pod pod/perlapi.pod pod/perlintern.pod pod/perlmodlib.pod pod/perluniprops.pod RUN_PERL="$PWD/../native/miniperl -Ilib -I."
           
 #          sed -i 's/$(generated_pods)//' Makefile
           emmake make utilities PERL="$PWD/../native/miniperl"
