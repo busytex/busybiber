@@ -105,7 +105,7 @@ jobs:
             d_pthread_yield='undef'
 
             #TODO Later: Why does Configure seem to ignore the following? (and do we care?)
-            #d_quad='undef'
+            d_quad='undef'
 
             #TODO Later: The test for "selectminbits" seems to fail,
             # the error appears to be coming from this line (because apparently stream.stream_ops is undefined):
