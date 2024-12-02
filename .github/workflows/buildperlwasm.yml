@@ -40,7 +40,7 @@ jobs:
             # Because of this and other issues I've had with symlinks, I'm switching to hard links instead.
             # (Another possible fix might be to fix the Makefile steps so that they use the -o option, but this solution works for now.)
             #TODO Later: In NODEFS, does Perl's -e test work correctly on symlinks? (./t/TEST was having issues detecting ./t/perl, a symlink to ./perl).
-            lns="/bin/ln"
+            #lns="/bin/ln"
 
             usemymalloc="n"
             uselargefiles="n"
@@ -141,15 +141,15 @@ jobs:
           cp hintfile_wasm.sh wasm/hints/emscripten.sh
           
           cd wasm 
-
-          emconfigure bash ./Configure -sde -Dinc_version_list=none -Dloclibpth='' -Dglibpth='' -Dman1dir=none -Dman3dir=none -Dosname="emscripten" -Darchname="wasm" -Dosvers="2.0.5" -Dmyhostname='localhost' -Dmydomain='.local' -Dperladmin=root -Dcc=emcc -Dld=emcc -Dar=$(which emar) -Dranlib=$(which emranlib) -Doptimize="-O2" -Dlibs='-lm' -Dhintfile=emscripten -Dsysroot=$(dirname $(which emcc))/system -Dhostperl=$PWD/../native/miniperl -Dhostgenerate=$PWD/../native/generate_uudmap -Dprefix=$PWD/prefix -Dstatic_ext="mro Devel/Peek File/DosGlob File/Glob Sys/Syslog Sys/Hostname PerlIO/via PerlIO/mmap PerlIO/encoding B attributes Unicode/Normalize Unicode/Collate threads threads/shared IPC/SysV re Digest/MD5 Digest/SHA SDBM_File Math/BigInt/FastCalc Data/Dumper I18N/Langinfo Time/HiRes Time/Piece IO Socket Hash/Util/FieldHash Hash/Util Filter/Util/Call POSIX Encode/Unicode Encode Encode/JP Encode/KR Encode/EBCDIC Encode/CN Encode/Symbol Encode/Byte Encode/TW Compress/Raw/Zlib Compress/Raw/Bzip2 MIME/Base64 Cwd Storable List/Util Fcntl Opcode"
+          emconfigure bash ./Configure -sde -Dinc_version_list=none -Dloclibpth='' -Dglibpth='' -Dlns='/bin/ln' -Dman1dir=none -Dman3dir=none -Dosname="emscripten" -Darchname="wasm" -Dosvers="2.0.5" -Dmyhostname='localhost' -Dmydomain='.local' -Dperladmin=root -Dcc=emcc -Dld=emcc -Dar=$(which emar) -Dranlib=$(which emranlib) -Doptimize="-O2" -Dlibs='-lm' -Dhintfile=emscripten -Dsysroot=$(dirname $(which emcc))/system -Dhostperl=$PWD/../native/miniperl -Dhostgenerate=$PWD/../native/generate_uudmap -Dprefix=$PWD/prefix -Dstatic_ext="mro Devel/Peek File/DosGlob File/Glob Sys/Syslog Sys/Hostname PerlIO/via PerlIO/mmap PerlIO/encoding B attributes Unicode/Normalize Unicode/Collate threads threads/shared IPC/SysV re Digest/MD5 Digest/SHA SDBM_File Math/BigInt/FastCalc Data/Dumper I18N/Langinfo Time/HiRes Time/Piece IO Socket Hash/Util/FieldHash Hash/Util Filter/Util/Call POSIX Encode/Unicode Encode Encode/JP Encode/KR Encode/EBCDIC Encode/CN Encode/Symbol Encode/Byte Encode/TW Compress/Raw/Zlib Compress/Raw/Bzip2 MIME/Base64 Cwd Storable List/Util Fcntl Opcode"
           
           #emmake make extra.pods pod/perl5400delta.pod pod/perlapi.pod pod/perlintern.pod pod/perlmodlib.pod pod/perluniprops.pod pod/perltoc.pod 
           emmake make pod/perldelta.pod                 pod/perlapi.pod pod/perlintern.pod pod/perlmodlib.pod pod/perluniprops.pod
-          
+          #emmake make extra.pods
+          ls -lah pod/
+          emmake make pod/perl5400delta.pod  
           #emmake make pod/perltoc.pod
           
-          ls -lah pod/
           
 #          sed -i 's/$(generated_pods)//' Makefile
 #          emmake make utilities PERL=$PWD/../native/miniperl
