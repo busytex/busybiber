@@ -160,6 +160,9 @@ jobs:
           echo PERLUNIPROPS
           emmake make pod/perluniprops.pod
           
+          echo PERLTOC
+          emmake make pod/perltoc.pod
+          
           ls -lah pod/
           
 #          sed -i 's/$(generated_pods)//' Makefile
