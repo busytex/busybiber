@@ -145,7 +145,6 @@ jobs:
           ln -s $PWD/pod/perldelta.pod .
           for f in README.* ; do ln $PWD/$f ..; done
 #          emmake make pod/perltoc.pod extra.pods pod/perl5400delta.pod pod/perlapi.pod pod/perlintern.pod pod/perlmodlib.pod pod/perluniprops.pod RUN_PERL="$PWD/../native/miniperl -Ilib -I."
-          
 #          sed -i 's/$(generated_pods)//' Makefile
           emmake make utilities PERL="$PWD/../native/miniperl"
           emmake make RUN_PERL="$PWD/../native/miniperl -Ilib -I."
@@ -153,7 +152,6 @@ jobs:
 #          emmake make install
 #          cp ./perl.wasm ./prefix/bin
 #          node ./prefix/bin/perl -e 'print("hello world\n");'
-
 #      - name: Artifacts
 #        uses: actions/upload-artifact@v4
 #        with:
