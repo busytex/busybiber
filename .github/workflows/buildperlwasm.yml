@@ -25,11 +25,6 @@ jobs:
           make -C native
           make -C native install
           
-      - name: Artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          path: native/Makefile
-
       - name: Heredoc
         run: |
           cat <<'EOF' > hintfile_wasm.sh
