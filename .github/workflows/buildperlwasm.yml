@@ -146,6 +146,10 @@ jobs:
           
           #emmake make extra.pods pod/perl5400delta.pod pod/perlapi.pod pod/perlintern.pod pod/perlmodlib.pod pod/perluniprops.pod pod/perltoc.pod 
           emmake make pod/perldelta.pod
+          ls -lah pod/perldelta.pod
+
+          emmake make pod/perlintern.pod
+          ls -lah pod/perlintern.pod
           
 #          sed -i 's/$(generated_pods)//' Makefile
 #          emmake make utilities PERL=$PWD/../native/miniperl
