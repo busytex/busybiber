@@ -108,8 +108,8 @@ jobs:
             # the error appears to be coming from this line (because apparently stream.stream_ops is undefined):
             # https://github.com/kripken/emscripten/blob/ddfc3e32f65/src/library_syscall.js#L750
             # For now, just use this number from a build with an earlier version where this didn't fail:
-            selectminbits='32'
-            alignbytes='4'
+            #selectminbits='32'
+            #alignbytes='4'
 
 
             ldflags="$ldflags -lm -O2 -s NO_EXIT_RUNTIME=1 -s ALLOW_MEMORY_GROWTH=1 -Wno-almost-asm -s ERROR_ON_UNDEFINED_SYMBOLS=0 -s WASM=1"
@@ -147,7 +147,4 @@ jobs:
       - name: Artifacts
         uses: actions/upload-artifact@v4
         with:
-          path: |
-            wasm/config.h
-            wasm/perlembed
-            wasm/perlembed.wasm
+          path: wasm/config.h
