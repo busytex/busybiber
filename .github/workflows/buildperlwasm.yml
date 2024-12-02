@@ -144,7 +144,7 @@ jobs:
           
           #emmake make extra.pods pod/perl5400delta.pod pod/perlapi.pod pod/perlintern.pod pod/perlmodlib.pod pod/perluniprops.pod pod/perltoc.pod 
           ln -s $PWD/pod/perldelta.pod .
-          emmake make pod/perldelta.pod pod/perlapi.pod pod/perlintern.pod pod/perlmodlib.pod pod/perluniprops.pod pod/perl5400delta.pod
+          emmake make             pod/perl5400delta.pod pod/perlapi.pod pod/perlintern.pod pod/perlmodlib.pod pod/perluniprops.pod 
           #emmake make extra.pods
           #emmake make pod/perltoc.pod
           
