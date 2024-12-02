@@ -104,9 +104,6 @@ jobs:
             d_pthread_attr_setscope='undef'
             d_pthread_yield='undef'
 
-            #TODO Later: Why does Configure seem to ignore the following? (and do we care?)
-            d_quad='undef'
-
             #TODO Later: The test for "selectminbits" seems to fail,
             # the error appears to be coming from this line (because apparently stream.stream_ops is undefined):
             # https://github.com/kripken/emscripten/blob/ddfc3e32f65/src/library_syscall.js#L750
