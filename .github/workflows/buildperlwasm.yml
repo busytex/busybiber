@@ -95,7 +95,7 @@ jobs:
             # Emscripten doesn't actually have these either (see "$EMSCRIPTEN/src/library.js")
             d_wait4='undef'
             d_waitpid='undef'
-            d_fork='define' # BUT, perl needs this one to at least build
+            #d_fork='define' # BUT, perl needs this one to at least build
             d_vfork='undef'
             d_pseudofork='undef'
 
