@@ -45,10 +45,10 @@ jobs:
             d_dlopen='undef'
             
             dlsrc='none'
-            d_getgrgid_r='define'
-            d_getgrnam_r='define'
-            d_libname_unique="define"
-            d_getnameinfo='define'
+            #d_getgrgid_r='define'
+            #d_getgrnam_r='define'
+            #d_libname_unique="define"
+            #d_getnameinfo='define'
 
             d_setrgid='undef'
             d_setruid='undef'
@@ -95,7 +95,6 @@ jobs:
             # Emscripten doesn't actually have these either (see "$EMSCRIPTEN/src/library.js")
             d_wait4='undef'
             d_waitpid='undef'
-            #d_fork='define' # BUT, perl needs this one to at least build
             d_vfork='undef'
             d_pseudofork='undef'
 
@@ -137,7 +136,7 @@ jobs:
           ln -s $PWD/pod/perldelta.pod .; for f in README.* ; do ln $PWD/$f ..; done
           emmake make utilities PERL="$PWD/../native/miniperl"
           emmake make       RUN_PERL="$PWD/../native/miniperl -Ilib -I."
-          chmod +x ./perl
+          chmod +x ./perl # export EMMAKEN_JUST_CONFIGURE=1 before emmake make
           emmake make install
           cp ./perl.wasm ./prefix/bin
           node ./prefix/bin/perl -e 'print("hello world\n");'
