@@ -73,7 +73,8 @@ jobs:
           
           #export PERLPREFIX=$RUNNER_WORKSPACE/localperlstatic
           export PERLPREFIX=$RUNNER_WORKSPACE/busybiber/packfs
-          export TRUEPREFIX=/__w/busybiber/busybiber/packfs
+          #export TRUEPREFIX=/__w/busybiber/busybiber/packfs
+          export TRUEPREFIX=/opt/busybiber/busybiber/packfs
           export LD_LIBRARY_PATH=$PERLPREFIX/lib:$LD_LIBRARY_PATH
 
           mkdir perlsourcestatic && curl -L $URLPERL | tar -xzf - --strip-components=1 --directory=perlsourcestatic
