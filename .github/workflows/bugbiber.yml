@@ -29,4 +29,5 @@ jobs:
           make -C perlsourcestatic
           make -C perlsourcestatic install
           
+          export PERLLIB=$PERLINSTALLPREFIX/lib/$PERLVER:$PERLINSTALLPREFIX/lib/$PERLVER/x86_64-linux:$PERLINSTALLPREFIX/lib/site_perl/$PERLVER
           $PERLINSTALLPREFIX/bin/perl $PERLINSTALLPREFIX/bin/cpan -T Alien::Base::Wrapper 
