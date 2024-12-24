@@ -1,47 +1,9 @@
 name: bugbiber
 
 on: workflow_dispatch
-# https://github.com/plk/biber/blob/dev/dist/linux_x86_64/build.sh
 env:
   PERLVER: "5.40.0"
   URLPERL: https://www.cpan.org/src/5.0/perl-5.40.0.tar.gz
-  # curl https://fastapi.metacpan.org/v1/download_url/IO::Compress::Brotli | grep download_url | cut -d'"' -f4
-  URL_Biber: https://github.com/plk/biber/archive/v2.20.tar.gz
-  URL_Params_Validate_XS : https://cpan.metacpan.org/authors/id/D/DR/DROLSKY/Params-Validate-1.31.tar.gz
-  URL_Text_BibTeX: https://cpan.metacpan.org/authors/id/A/AM/AMBS/Text-BibTeX-0.89.tar.gz
-  URL_IO_Compress_Brotli : https://cpan.metacpan.org/authors/id/T/TI/TIMLEGGE/IO-Compress-Brotli-0.017.tar.gz
-  URL_Sort_Key: https://cpan.metacpan.org/authors/id/S/SA/SALVA/Sort-Key-1.33.tar.gz
-  URL_Encode_EUCJPASCII: https://cpan.metacpan.org/authors/id/N/NE/NEZUMI/Encode-EUCJPASCII-0.03.tar.gz
-  URL_Encode_JIS2K: https://cpan.metacpan.org/authors/id/D/DA/DANKOGAI/Encode-JIS2K-0.05.tar.gz
-  URL_Encode_HanExtra: https://cpan.metacpan.org/authors/id/A/AU/AUDREYT/Encode-HanExtra-0.23.tar.gz
-  URL_XML_LibXML: https://cpan.metacpan.org/authors/id/S/SH/SHLOMIF/XML-LibXML-2.0210.tar.gz
-  URL_XML_LibXML_Simple: https://cpan.metacpan.org/authors/id/M/MA/MARKOV/XML-LibXML-Simple-1.01.tar.gz
-  URL_autovivification: https://cpan.metacpan.org/authors/id/V/VP/VPIT/autovivification-0.18.tar.gz
-  URL_Devel_Caller: https://cpan.metacpan.org/authors/id/R/RC/RCLAMP/Devel-Caller-2.07.tar.gz
-  URL_Devel_LexAlias: https://cpan.metacpan.org/authors/id/R/RC/RCLAMP/Devel-LexAlias-0.05.tar.gz
-  URL_XML_LibXSLT: https://cpan.metacpan.org/authors/id/S/SH/SHLOMIF/XML-LibXSLT-2.003000.tar.gz
-  URL_XML_Parser_Expat: https://cpan.metacpan.org/authors/id/T/TO/TODDR/XML-Parser-2.47.tar.gz
-  URL_Unicode_LineBreak: https://cpan.metacpan.org/authors/id/N/NE/NEZUMI/Unicode-LineBreak-2019.001.tar.gz
-  URL_Clone: https://cpan.metacpan.org/authors/id/A/AT/ATOOMIC/Clone-0.47.tar.gz
-  URL_PadWalker: https://cpan.metacpan.org/authors/id/R/RO/ROBIN/PadWalker-2.5.tar.gz
-  URL_PerlIO_utf8_strict: https://cpan.metacpan.org/authors/id/L/LE/LEONT/PerlIO-utf8_strict-0.010.tar.gz
-  URL_HTML_Parser: https://cpan.metacpan.org/authors/id/O/OA/OALDERS/HTML-Parser-3.83.tar.gz
-  URL_List_MoreUtils_XS: https://cpan.metacpan.org/authors/id/R/RE/REHSACK/List-MoreUtils-XS-0.430.tar.gz
-  URL_List_SomeUtils_XS: https://cpan.metacpan.org/authors/id/D/DR/DROLSKY/List-SomeUtils-XS-0.58.tar.gz
-  URL_DBI: https://cpan.metacpan.org/authors/id/H/HM/HMBRAND/DBI-1.645.tgz
-  URL_Net_SSLeay: https://cpan.metacpan.org/authors/id/C/CH/CHRISN/Net-SSLeay-1.94.tar.gz
-  URL_Sub_Identify: https://cpan.metacpan.org/authors/id/R/RG/RGARCIA/Sub-Identify-0.14.tar.gz
-  URL_DateTime: https://cpan.metacpan.org/authors/id/D/DR/DROLSKY/DateTime-1.65.tar.gz
-  URL_Storable: https://cpan.metacpan.org/authors/id/N/NW/NWCLARK/Storable-3.25.tar.gz
-  URL_Variable_Magic: https://cpan.metacpan.org/authors/id/V/VP/VPIT/Variable-Magic-0.64.tar.gz
-  URL_Class_XSAccessor: https://cpan.metacpan.org/authors/id/S/SM/SMUELLER/Class-XSAccessor-1.19.tar.gz
-  URL_Package_Stash_XS: https://cpan.metacpan.org/authors/id/E/ET/ETHER/Package-Stash-XS-0.30.tar.gz
-  URL_Params_Util: https://cpan.metacpan.org/authors/id/R/RE/REHSACK/Params-Util-1.102.tar.gz
-  URL_DBD_SQLite: https://cpan.metacpan.org/authors/id/I/IS/ISHIGAKI/DBD-SQLite-1.76.tar.gz
-  URL_Text_CSV_XS: https://cpan.metacpan.org/authors/id/H/HM/HMBRAND/Text-CSV_XS-1.56.tgz
-  URL_Log_Log4perl: https://cpan.metacpan.org/authors/id/E/ET/ETJ/Log-Log4perl-1.57.tar.gz
-  URL_Text_CSV: https://cpan.metacpan.org/authors/id/I/IS/ISHIGAKI/Text-CSV-2.04.tar.gz
-  URL_Business_ISSN: https://cpan.metacpan.org/authors/id/B/BD/BDFOY/Business-ISSN-1.005.tar.gz
 
 jobs:
   bugbiber:
@@ -49,24 +11,22 @@ jobs:
     container: alpine:3.14
     steps:
       - name: Install Prerequisites
-        run:  |
-          apk add --update --no-cache libnsl libnsl-dev build-base coreutils gdb cmake git xz curl gperf p7zip zip autoconf automake libtool pkgconfig gnupg libxml2-dev libxslt-dev expat-dev openssl-dev openssl  zlib-static expat-static wget
-          apk add --update --no-cache --repository=https://dl-cdn.alpinelinux.org/alpine/edge/main libxml2-static libxslt-static openssl-libs-static xz-static libgcrypt-static libgpg-error-static
+        run:  apk add --update --no-cache libnsl libnsl-dev build-base coreutils gdb cmake git xz curl gperf p7zip zip autoconf automake libtool pkgconfig gnupg libxml2-dev libxslt-dev expat-dev openssl-dev openssl  zlib-static expat-static wget
 
       - uses: actions/checkout@v4
       
       - name: Install Perl static
         shell: bash
         run: |
-          export PERLPREFIX=$RUNNER_WORKSPACE/busybiber/packfs
-          #export TRUEPREFIX=/__w/busybiber/busybiber/packfs
-          export TRUEPREFIX=/opt/busybiber/busybiber/packfs
-          export LD_LIBRARY_PATH=$PERLPREFIX/lib:$LD_LIBRARY_PATH
+          export PERLINSTALLPREFIX=$RUNNER_WORKSPACE/myperlinstallprefix
+          #export PERLPREFIX=/__w/busybiber/busybiber/packfs
+          export PERLPREFIX=/opt/myperlprefix
+          export LD_LIBRARY_PATH=$PERLINSTALLPREFIX/lib:$LD_LIBRARY_PATH
 
           mkdir perlsourcestatic && curl -L $URLPERL | tar -xzf - --strip-components=1 --directory=perlsourcestatic
           export BUILD_ZLIB=0
-          cd perlsourcestatic && sh +x ./Configure -sde -Dman1dir=none -Dman3dir=none -Dprefix="$TRUEPREFIX" -Dinstallprefix="$PERLPREFIX" -Dusedevel -Uversiononly -Dlibs="-lpthread -ldl -lm -lutil -lc /lib/libz.a" -Dstatic_ext="mro Devel/Peek File/DosGlob File/Glob Sys/Syslog Sys/Hostname PerlIO/via PerlIO/mmap PerlIO/encoding B attributes Unicode/Normalize Unicode/Collate threads threads/shared IPC/SysV re Digest/MD5 Digest/SHA SDBM_File Math/BigInt/FastCalc Data/Dumper I18N/Langinfo Time/HiRes Time/Piece IO Socket Hash/Util/FieldHash Hash/Util Filter/Util/Call POSIX Encode/Unicode Encode Encode/JP Encode/KR Encode/EBCDIC Encode/CN Encode/Symbol Encode/Byte Encode/TW Compress/Raw/Zlib Compress/Raw/Bzip2 MIME/Base64 Cwd Storable List/Util Fcntl Opcode" && cd -
+          cd perlsourcestatic && sh +x ./Configure -sde -Dman1dir=none -Dman3dir=none -Dprefix="$PERLPREFIX" -Dinstallprefix="$PERLINSTALLPREFIX" -Dusedevel -Uversiononly -Dlibs="-lpthread -ldl -lm -lutil -lc /lib/libz.a" -Dstatic_ext="mro Devel/Peek File/DosGlob File/Glob Sys/Syslog Sys/Hostname PerlIO/via PerlIO/mmap PerlIO/encoding B attributes Unicode/Normalize Unicode/Collate threads threads/shared IPC/SysV re Digest/MD5 Digest/SHA SDBM_File Math/BigInt/FastCalc Data/Dumper I18N/Langinfo Time/HiRes Time/Piece IO Socket Hash/Util/FieldHash Hash/Util Filter/Util/Call POSIX Encode/Unicode Encode Encode/JP Encode/KR Encode/EBCDIC Encode/CN Encode/Symbol Encode/Byte Encode/TW Compress/Raw/Zlib Compress/Raw/Bzip2 MIME/Base64 Cwd Storable List/Util Fcntl Opcode" && cd -
           make -C perlsourcestatic
           make -C perlsourcestatic install
           
-          $PERLPREFIX/bin/perl $PERLPREFIX/bin/cpan -T Alien::Base::Wrapper #Alien::Build Alien::Build::MM Alien::cmake3 Alien::Libxml2 inc::Module::Install Module::Implementation Config::AutoConf ExtUtils::LibBuilder DBI  Data::Compare Data::Dump Data::Uniqid DateTime::Calendar::Julian DateTime::Format::Builder IO::String Lingua::Translit Parse::RecDescent Regexp::Common Text::Roman Class::Accessor List::AllUtils LWP::Protocol::https Business::ISBN Business::ISMN Mozilla::CA XML::SAX::Exception MIME::Charset Business::ISSN
+          $PERLINSTALLPREFIX/bin/perl $PERLINSTALLPREFIX/bin/cpan -T Alien::Base::Wrapper 
