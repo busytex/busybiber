@@ -20,6 +20,7 @@ jobs:
         run: |
           export PERLINSTALLPREFIX=$RUNNER_WORKSPACE/myperlinstallprefix
           export PERLPREFIX=/opt/myperlprefix
+          #export PERLPREFIX=/__w/busybiber/busybiber/opt/myperlprefix
           export LD_LIBRARY_PATH=$PERLINSTALLPREFIX/lib:$LD_LIBRARY_PATH
 
           mkdir perlsourcestatic && curl -L $URLPERL | tar -xzf - --strip-components=1 --directory=perlsourcestatic
@@ -30,4 +31,4 @@ jobs:
           
           export PERLLIB=$PERLINSTALLPREFIX/lib/$PERLVER:$PERLINSTALLPREFIX/lib/$PERLVER/x86_64-linux:$PERLINSTALLPREFIX/lib/site_perl/$PERLVER
           export CPATH=$PERLINSTALLPREFIX/lib/$PERLVER/x86_64-linux/CORE
-          for mod in Alien::Base::Wrapper Alien::Build Alien::Build::MM Alien::cmake3 Alien::Libxml2 inc::Module::Install Module::Implementation Config::AutoConf ExtUtils::LibBuilder DBI  Data::Compare Data::Dump Data::Uniqid DateTime::Calendar::Julian DateTime::Format::Builder IO::String Lingua::Translit Parse::RecDescent Regexp::Common Text::Roman Class::Accessor List::AllUtils LWP::Protocol::https Business::ISBN Business::ISMN Mozilla::CA XML::SAX::Exception MIME::Charset Business::ISSN; do echo "BEGIN $mod"; $PERLINSTALLPREFIX/bin/perl $PERLINSTALLPREFIX/bin/cpan -T $mod; echo "END $mod"; done 
+          for mod in Alien::Base::Wrapper Alien::Build Alien::Build::MM Alien::cmake3 Alien::Libxml2 inc::Module::Install Module::Implementation Config::AutoConf; do echo "BEGIN $mod"; $PERLINSTALLPREFIX/bin/perl $PERLINSTALLPREFIX/bin/cpan -T $mod; echo "END $mod"; done # ExtUtils::LibBuilder DBI  Data::Compare Data::Dump Data::Uniqid DateTime::Calendar::Julian DateTime::Format::Builder IO::String Lingua::Translit Parse::RecDescent Regexp::Common Text::Roman Class::Accessor List::AllUtils LWP::Protocol::https Business::ISBN Business::ISMN Mozilla::CA XML::SAX::Exception MIME::Charset Business::ISSN 
