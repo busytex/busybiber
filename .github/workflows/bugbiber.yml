@@ -31,5 +31,6 @@ jobs:
           
           export PERLLIB=$PERLINSTALLPREFIX/lib/$PERLVER:$PERLINSTALLPREFIX/lib/$PERLVER/x86_64-linux:$PERLINSTALLPREFIX/lib/site_perl/$PERLVER
           export CPATH=$PERLINSTALLPREFIX/lib/$PERLVER/x86_64-linux/CORE
-          $PERLINSTALLPREFIX/bin/perl $PERLINSTALLPREFIX/bin/cpan -T Alien::Base::Wrapper Alien::Build Alien::Build::MM Alien::cmake3 Alien::Libxml2 inc::Module::Install Module::Implementation Config::AutoConf
+          $PERLINSTALLPREFIX/bin/perl $PERLINSTALLPREFIX/bin/cpan -T Config::AutoConf
+          #$PERLINSTALLPREFIX/bin/perl $PERLINSTALLPREFIX/bin/cpan -T Alien::Base::Wrapper Alien::Build Alien::Build::MM Alien::cmake3 Alien::Libxml2 inc::Module::Install Module::Implementation Config::AutoConf
           #for mod in Alien::Base::Wrapper Alien::Build Alien::Build::MM Alien::cmake3 Alien::Libxml2 inc::Module::Install Module::Implementation Config::AutoConf; do echo "BEGIN $mod"; $PERLINSTALLPREFIX/bin/perl $PERLINSTALLPREFIX/bin/cpan -T $mod; echo "END $mod"; done # ExtUtils::LibBuilder DBI  Data::Compare Data::Dump Data::Uniqid DateTime::Calendar::Julian DateTime::Format::Builder IO::String Lingua::Translit Parse::RecDescent Regexp::Common Text::Roman Class::Accessor List::AllUtils LWP::Protocol::https Business::ISBN Business::ISMN Mozilla::CA XML::SAX::Exception MIME::Charset Business::ISSN 
