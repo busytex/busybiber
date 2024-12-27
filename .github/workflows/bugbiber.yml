@@ -19,8 +19,8 @@ jobs:
         shell: bash
         run: |
           export PERLINSTALLPREFIX=$RUNNER_WORKSPACE/myperlinstallprefix
-          #export PERLPREFIX=/opt/myperlprefix
-          export PERLPREFIX=$PERLINSTALLPREFIX # starts with /__w/
+          export PERLPREFIX=/opt/myperlprefix
+          #export PERLPREFIX=$PERLINSTALLPREFIX # starts with /__w/
           export LD_LIBRARY_PATH=$PERLINSTALLPREFIX/lib:$LD_LIBRARY_PATH
 
           mkdir perlsourcestatic && curl -L $URLPERL | tar -xzf - --strip-components=1 --directory=perlsourcestatic
