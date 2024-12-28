@@ -87,7 +87,7 @@ jobs:
           $PERLINSTALLPREFIX/bin/perl $PERLINSTALLPREFIX/bin/cpan -T Alien::Base::Wrapper Alien::Build Alien::Build::MM Alien::cmake3 Alien::Libxml2 inc::Module::Install Module::Implementation Config::AutoConf ExtUtils::LibBuilder DBI  Data::Compare Data::Dump Data::Uniqid DateTime::Calendar::Julian DateTime::Format::Builder IO::String Lingua::Translit Parse::RecDescent Regexp::Common Text::Roman Class::Accessor List::AllUtils LWP::Protocol::https Business::ISBN Business::ISMN Mozilla::CA XML::SAX::Exception MIME::Charset Business::ISSN
           #  XML::Writer not installed, unneded: SDBM_File Time/Piece Storable
 
-          $PERLINSTALLPREFIX/bin/perl -MCPAN -e 'o conf makepl_arg LINKTYPE=static; install Sort::Key;' #i https://stackoverflow.com/questions/25490730/how-to-install-multiple-perl-modules-at-once-using-cpan
+          $PERLINSTALLPREFIX/bin/perl -MCPAN -e '$CPAN::Config->{makepl_arg}="LINKTYPE=static"; install Sort::Key;' #i https://stackoverflow.com/questions/25490730/how-to-install-multiple-perl-modules-at-once-using-cpan
           for MOD in Encode::EUCJPASCII Encode::JIS2K Encode::HanExtra XML::LibXML autovivification Devel::Caller Devel::LexAlias XML::LibXSLT XML::Parser::Expat Unicode::LineBreak Clone PadWalker  PerlIO::utf8_strict HTML::Parser List::MoreUtils::XS List::SomeUtils::XS Net::SSLeay Sub::Identify DateTime Storable Variable::Magic Class::XSAccessor Package::Stash::XS Params::Util DBI DBD::SQLite Text::CSV_XS    Params::Validate::XS Text::BibTeX IO::Compress::Brotli Log::Log4perl Text::CSV XML::LibXML::Simple Biber; do
               echo BEFORE $MOD
               PKG=URL_${MOD//::/_}
