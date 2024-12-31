@@ -180,9 +180,9 @@ jobs:
           #  XML::Writer not installed, unneded: SDBM_File Time/Piece Storable
 
           echo BEFORECPAN; find $PERLINSTALLPREFIX -name '*.a' -o -name '*.so'
-          printf "o conf makepl_arg LINKTYPE=static\nnotest install Sort::Key\nnotest install Encode::EUCJPASCII\nnotest install Encode::JIS2K\nnotest install Encode::HanExtra\nnotest install autovivification\nnotest force install Devel::Caller\nnotest force install Devel::LexAlias\nnotest force install List::MoreUtils::XS\nnotest force install List::SomeUtils::XS\nnotest force install Clone\nnotest force install PadWalker\nnotest force install DateTime\nnotest force install HTML::Parser\nnotest force install Unicode::LineBreak\nnotest force install Variable::Magic\nnotest force install Log::Log4perl\nnotest force install Class::XSAccessor\nnotest force install Package::Stash::XS\nnotest force install Params::Util\nnotest force install Text::CSV_XS\nnotest force install Text::CSV\nnotest force install Text::BibTeX\n" | $PERLINSTALLPREFIX/bin/cpan
+          printf "o conf makepl_arg LINKTYPE=static\nnotest install Sort::Key\nnotest install Encode::EUCJPASCII\nnotest install Encode::JIS2K\nnotest install Encode::HanExtra\nnotest install autovivification\nnotest force install Devel::Caller\nnotest force install Devel::LexAlias\nnotest force install List::MoreUtils::XS\nnotest force install List::SomeUtils::XS\nnotest force install Clone\nnotest force install PadWalker\nnotest force install DateTime\nnotest force install HTML::Parser\nnotest force install Unicode::LineBreak\nnotest force install Variable::Magic\nnotest force install Log::Log4perl\nnotest force install Class::XSAccessor\nnotest force install Package::Stash::XS\nnotest force install Params::Util\nnotest force install Text::CSV_XS\nnotest force install Text::CSV\nnotest force install Params::Validate::XS\n" | $PERLINSTALLPREFIX/bin/cpan
           echo AFTERCPAN ; find $PERLINSTALLPREFIX -name '*.a' -o -name '*.so'
-          for MOD in XML::LibXML XML::LibXSLT XML::Parser::Expat PerlIO::utf8_strict Net::SSLeay Sub::Identify Storable DBI DBD::SQLite Params::Validate::XS              IO::Compress::Brotli XML::LibXML::Simple Biber; do
+          for MOD in XML::LibXML XML::LibXSLT XML::Parser::Expat PerlIO::utf8_strict Net::SSLeay Sub::Identify Storable DBI DBD::SQLite                                  Text::BibTeX IO::Compress::Brotli XML::LibXML::Simple Biber; do
           #for MOD in Sort::Key Encode::EUCJPASCII Encode::JIS2K Encode::HanExtra XML::LibXML autovivification Devel::Caller Devel::LexAlias XML::LibXSLT XML::Parser::Expat Unicode::LineBreak Clone PadWalker  PerlIO::utf8_strict HTML::Parser List::MoreUtils::XS List::SomeUtils::XS Net::SSLeay Sub::Identify DateTime Storable Variable::Magic Class::XSAccessor Package::Stash::XS Params::Util DBI DBD::SQLite Text::CSV_XS    Params::Validate::XS Text::BibTeX IO::Compress::Brotli Log::Log4perl Text::CSV XML::LibXML::Simple Biber; do
               echo BEFORE $MOD
               PKG=URL_${MOD//::/_}
@@ -206,7 +206,7 @@ jobs:
               echo AFTER $MOD
           done
 
-          ar crs $PERLINSTALLPREFIX/lib/perl5/site_perl/$PERLVER/x86_64-linux/auto/Params/Validate/XS/XS.a myext/URL_Params_Validate_XS/lib/Params/Validate/XS.o
+          #ar crs $PERLINSTALLPREFIX/lib/perl5/site_perl/$PERLVER/x86_64-linux/auto/Params/Validate/XS/XS.a myext/URL_Params_Validate_XS/lib/Params/Validate/XS.o
           ar crs $PERLINSTALLPREFIX/lib/libbtparse.a $(printf "myext/URL_Text_BibTeX/btparse/%s " src/init.o src/input.o src/bibtex.o src/err.o src/scan.o src/error.o src/lex_auxiliary.o src/parse_auxiliary.o src/bibtex_ast.o src/sym.o src/util.o src/postprocess.o src/macros.o src/traversal.o src/modify.o src/names.o src/tex_tree.o src/string_util.o src/format_name.o)
           ar crs $PERLINSTALLPREFIX/lib/perl5/site_perl/$PERLVER/x86_64-linux/auto/Text/BibTeX/BibTeX.a $(printf "myext/URL_Text_BibTeX/%s " xscode/BibTeX.o xscode/btxs_support.o)
 
