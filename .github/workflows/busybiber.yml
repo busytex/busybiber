@@ -98,10 +98,11 @@ jobs:
             $PWD/../perlprefixdynamic/bin/biber
           ./biber --help
           unzip -l ./biber
-          cd testfiles && ../biber --validate-datamodel --convert-control test
+          cd testfiles && ../biber --validate-datamodel --convert-control test && test -f test.bcf.html
 
       - name: Artifacts
         uses: actions/upload-artifact@v4
+        name: buildbiber
         with:
           path: biberpp/biber
 
@@ -202,6 +203,7 @@ jobs:
 
       - name: Artifacts
         uses: actions/upload-artifact@v4
+        name: busybiber
         with:
           path: |
             busybiber
