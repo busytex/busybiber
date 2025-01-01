@@ -147,43 +147,27 @@ jobs:
           $PERLINSTALLPREFIX/bin/perl $PERLINSTALLPREFIX/bin/cpan -T Alien::Base::Wrapper Alien::Build Alien::Build::MM Alien::cmake3 Alien::Libxml2 inc::Module::Install Module::Implementation Config::AutoConf ExtUtils::LibBuilder DBI  Data::Compare Data::Dump Data::Uniqid DateTime::Calendar::Julian DateTime::Format::Builder IO::String Lingua::Translit Parse::RecDescent Regexp::Common Text::Roman Class::Accessor List::AllUtils LWP::Protocol::https Business::ISBN Business::ISMN Mozilla::CA XML::SAX::Exception MIME::Charset Business::ISSN
           # XML::Writer not installed, unneded: SDBM_File Time/Piece Storable
 
-          printf "o conf makepl_arg LINKTYPE=static\nnotest install Sort::Key\nnotest install Encode::EUCJPASCII\nnotest install Encode::JIS2K\nnotest install Encode::HanExtra\nnotest install autovivification\nnotest force install Devel::Caller\nnotest force install Devel::LexAlias\nnotest force install List::MoreUtils::XS\nnotest force install List::SomeUtils::XS\nnotest force install Clone\nnotest force install PadWalker\nnotest force install DateTime\nnotest force install HTML::Parser\nnotest force install Unicode::LineBreak\nnotest force install Variable::Magic\nnotest force install Log::Log4perl\nnotest force install Class::XSAccessor\nnotest force install Package::Stash::XS\nnotest force install Params::Util\nnotest force install Text::CSV_XS\nnotest force install Text::CSV\nnotest force install Net::SSLeay\nnotest force install DBI\nnotest force install DBD::SQLite\nnotest force install XML::LibXML\nnotest force install XML::LibXSLT\nnotest force install XML::Parser::Expat\nnotest force install XML::LibXML::Simple\nnotest force install PerlIO::utf8_strict\nnotest force install Sub::Identify\nnotest force install Storable\n" | $PERLINSTALLPREFIX/bin/perl $PERLINSTALLPREFIX/bin/cpan 
+          #printf "o conf makepl_arg LINKTYPE=static\nnotest install Sort::Key\nnotest install Encode::EUCJPASCII\nnotest install Encode::JIS2K\nnotest install Encode::HanExtra\nnotest install autovivification\nnotest force install Devel::Caller\nnotest force install Devel::LexAlias\nnotest force install List::MoreUtils::XS\nnotest force install List::SomeUtils::XS\nnotest force install Clone\nnotest force install PadWalker\nnotest force install DateTime\nnotest force install HTML::Parser\nnotest force install Unicode::LineBreak\nnotest force install Variable::Magic\nnotest force install Log::Log4perl\nnotest force install Class::XSAccessor\nnotest force install Package::Stash::XS\nnotest force install Params::Util\nnotest force install Text::CSV_XS\nnotest force install Text::CSV\nnotest force install Net::SSLeay\nnotest force install DBI\nnotest force install DBD::SQLite\nnotest force install XML::LibXML\nnotest force install XML::LibXSLT\nnotest force install XML::Parser::Expat\nnotest force install XML::LibXML::Simple\nnotest force install PerlIO::utf8_strict\nnotest force install Sub::Identify\nnotest force install Storable\n" | $PERLINSTALLPREFIX/bin/perl $PERLINSTALLPREFIX/bin/cpan 
+          printf "o conf makepl_arg LINKTYPE=static\nnotest force install %s\n" Sort::Key Encode::EUCJPASCII Encode::JIS2K Encode::HanExtra autovivification Devel::Caller Devel::LexAlias List::MoreUtils::XS List::SomeUtils::XS Clone PadWalker DateTime HTML::Parser Unicode::LineBreak Variable::Magic Log::Log4perl Class::XSAccessor Package::Stash::XS Params::Util Text::CSV_XS Text::CSV Net::SSLeay DBI DBD::SQLite XML::LibXML XML::LibXSLT XML::Parser::Expat XML::LibXML::Simple PerlIO::utf8_strict Sub::Identify Storable | $PERLINSTALLPREFIX/bin/perl $PERLINSTALLPREFIX/bin/cpan 
           
-          # for MOD in Params::Validate::XS Text::BibTeX IO::Compress::Brotli Biber; do
-          #     echo BEFORE $MOD
-          #     PKG=URL_${MOD//::/_}
-          #     declare -n PKGREF=$PKG; URL=${PKGREF};
-          #     mkdir -p myext/$PKG && curl -L $URL | tar -xzf - --strip-components=1 --directory myext/$PKG
-          #     cd myext/$PKG
-          #     if [ "$MOD" == "Params::Validate::XS" ] || [ "$MOD" == "Text::BibTeX" ] || [ "$MOD" == "Biber" ]; then
-          #         $PERLINSTALLPREFIX/bin/perl ./Build.PL
-          #         $PERLINSTALLPREFIX/bin/perl ./Build && $PERLINSTALLPREFIX/bin/perl ./Build install
-          #     elif [ "$MOD" == "IO::Compress::Brotli" ]; then
-          #         $PERLINSTALLPREFIX/bin/perl Makefile.PL LINKTYPE=static
-          #         # https://github.com/timlegge/perl-IO-Compress-Brotli/issues/5
-          #         sed -i 's/$(CP) $(MYEXTLIB) "$@"/$(CP) $(MYEXTLIB) "$(dir $@)"/' Makefile
-          #         make && make install
-          #     fi
-          #     cd -
-          #     echo AFTER $MOD
-          # done
-          
-
           mkdir -p myext/URL_Params_Validate_XS && curl -L $URL_Params_Validate_XS | tar -xzf - --strip-components=1 --directory myext/URL_Params_Validate_XS && cd myext/URL_Params_Validate_XS
           $PERLINSTALLPREFIX/bin/perl ./Build.PL && $PERLINSTALLPREFIX/bin/perl ./Build && $PERLINSTALLPREFIX/bin/perl ./Build install
           ar crs $PERLINSTALLPREFIX/lib/perl5/site_perl/$PERLVER/x86_64-linux/auto/Params/Validate/XS/XS.a lib/Params/Validate/XS.o
           cd -
+          
           mkdir -p myext/URL_Text_BibTeX && curl -L $URL_Text_BibTeX | tar -xzf - --strip-components=1 --directory myext/URL_Text_BibTeX && cd myext/URL_Text_BibTeX
           $PERLINSTALLPREFIX/bin/perl ./Build.PL && $PERLINSTALLPREFIX/bin/perl ./Build && $PERLINSTALLPREFIX/bin/perl ./Build install
           ar crs $PERLINSTALLPREFIX/lib/libbtparse.a btparse/src/init.o btparse/src/input.o btparse/src/bibtex.o btparse/src/err.o btparse/src/scan.o btparse/src/error.o btparse/src/lex_auxiliary.o btparse/src/parse_auxiliary.o btparse/src/bibtex_ast.o btparse/src/sym.o btparse/src/util.o btparse/src/postprocess.o btparse/src/macros.o btparse/src/traversal.o btparse/src/modify.o btparse/src/names.o btparse/src/tex_tree.o btparse/src/string_util.o btparse/src/format_name.o
           ar crs $PERLINSTALLPREFIX/lib/perl5/site_perl/$PERLVER/x86_64-linux/auto/Text/BibTeX/BibTeX.a xscode/BibTeX.o xscode/btxs_support.o
           cd -
+          
           mkdir -p myext/URL_IO_Compress_Brotli && curl -L $URL_IO_Compress_Brotli | tar -xzf - --strip-components=1 --directory myext/URL_IO_Compress_Brotli && cd myext/URL_IO_Compress_Brotli
           $PERLINSTALLPREFIX/bin/perl Makefile.PL LINKTYPE=static
           # https://github.com/timlegge/perl-IO-Compress-Brotli/issues/5
           sed -i 's/$(CP) $(MYEXTLIB) "$@"/$(CP) $(MYEXTLIB) "$(dir $@)"/' Makefile
           make && make install
           cd -
+          
           mkdir -p myext/URL_Biber && curl -L $URL_Biber | tar -xzf - --strip-components=1 --directory myext/URL_Biber && cd myext/URL_Biber
           $PERLINSTALLPREFIX/bin/perl ./Build.PL && $PERLINSTALLPREFIX/bin/perl ./Build && $PERLINSTALLPREFIX/bin/perl ./Build install
           cd -
